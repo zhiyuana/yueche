@@ -1,0 +1,148 @@
+<extend name="Base/common" />
+
+ <block name="body">
+ <style>
+ 	label{float: left;width: 100px;}
+ 	li,ul{list-style: none;}
+    .line{margin-bottom: 39px;border-bottom: 1px solid #ddd;line-height: 38px;}
+ </style>
+  <div class="span9 page_message">
+     
+    <section id="contents"> <include file="Addons/_nav" />
+       <div class="tab-content" style="padding: 20px 40px;"> 
+	<!-- <form action="{:U('Xueyuan/xueyuan_update',array('mdm'=>I('mdm'),'id'=>$list[0]['id']))}" method="post" > -->
+	     <!-- <input type="hidden" class="text input-large" name="id" value="{$vo.id}"> -->
+     <li class="line" style="border-bottom: none;">  
+        <div style="width:47%;float: left;margin-right: 60px;">
+            <label style="line-height: 36px;">姓名：</label>               
+            <!--<input type="text" class="text input-large" name="xname" value="{$list[0]['xname']}"
+            style="border-radius: 5px;float: left;width: 344px;"><br>-->
+             <span style="width: 344px;float: right;">{$list[0]['xname']}</span>
+        </div>
+         <div style="width:47%;float: left;">
+            <label  style="line-height: 36px;">手机号：  </label>              
+            <!--<input type="text" class="text input-large" name="xphone" value="{$list[0]['xphone']}" style="border-radius: 5px;float: left;width: 344px;">--> 
+             <span style="width: 344px;float: right;">{$list[0]['xphone']}</span>
+         </div>
+    </li>
+    <li class="line">
+        <div style="width:47%;float: left;margin-right: 60px;">     	
+            <label >性别： </label>              
+            <!--<input type="radio" class="text input-large" name="xsex" value="1"
+             <if condition="$list[0]['xsex']==1">checked='checked'</if>>&nbsp;男 &nbsp;
+             <input type="radio" class="text input-large" name="xsex" value="2" <if condition="$list[0]['xsex']==2">checked='checked'</if>>&nbsp;女 -->
+             <span style="width: 344px;float: right;"><if condition="$list[0]['xsex']==1">&nbsp;男 &nbsp;<else />女</if></span>
+        </div>
+        <div style="width:47%;float: left;">
+            <label  style="line-height: 36px;">身份证号：  </label>              
+            <!--<input type="text" class="text input-large" name="xcard" value="{$list[0]['xcard']}" style="border-radius: 5px;float: left;width: 344px;">--> 
+             <span style="width: 344px;float: right;" id="card">{$list[0]['xcard']}</span>
+        </div>
+    </li>
+    <li class="line">  
+        <div style="width:47%;margin-right:60px;float: left;">
+            <label  style="line-height: 36px;">微信订单号：   </label>             
+            <!--<input type="text" class="text input-large" name="transaction_id" value="{$list[0]['transaction_id']}" style="border-radius: 5px;float: left;width: 344px;">--> 
+             <span style="width: 344px;float: right;">{$list[0]['transaction_id']}</span>
+        </div>
+        <div style="width:47%;float: left;">
+            <label style="line-height: 36px;">商户订单号：  </label>             
+            <!--<input type="text" class="text input-large" name="out_trade_no" value="{$list[0]['out_trade_no']}" style="border-radius: 5px;float: left;width: 344px;" >--> 
+             <span style="width: 344px;float: right;">{$list[0]['out_trade_no']}</span>
+        </div>
+    </li>
+    <li class="line">      
+         <div style="width:47%;margin-right: 60px;float: left;">
+            <label  style="line-height: 36px;">预约车号：   </label>             
+            <!--<input type="text" class="text input-large" name="pch" value="{$list[0]['pch']}" style="border-radius: 5px;float: left;width: 344px;">--> 
+             <span style="width: 344px;float: right;">{$list[0]['pch']}</span>
+         </div>
+        <div style="width:47%;float: left;">
+            <label  style="line-height: 36px;">预约日期：  </label>             
+            <!--<input type="text" class="text input-large" name="pdata" value="{$list[0]['pdata']}" style="border-radius: 5px;float: left;width: 344px;" >--> 
+             <span style="width: 344px;float: right;">{$list[0]['pdata']}</span>
+        </div>
+    </li>
+    <li class="line">    
+         <div style="width:47%;margin-right: 60px;float: left;">
+            <label  style="line-height: 36px;">预约时间段：   </label>             
+            <!--<input type="text" class="text input-large" name="ptime" value="{$list[0]['ptime']}" style="border-radius: 5px;float: left;width: 344px;">--> 
+             <span style="width: 344px;float: right;">{$list[0]['ptime']}</span>
+         </div>
+        <div style="width:47%;float: left;">
+            <label  style="line-height: 36px;">下单时间：  </label>             
+            <!--<input type="text" class="text input-large" name="daddtime" value="{$list[0]['daddtime']}" style="border-radius: 5px;float: left;width: 344px;" >--> 
+             <span style="width: 344px;float: right;">{$list[0]['daddtime']}</span>
+        </div>
+    </li>
+    <li class="line">
+         <div style="width:47%;margin-right: 60px;float: left;">
+            <label  style="line-height: 36px;">缴费金额：   </label>             
+            <!--<input type="text" class="text input-large" name="money" value="{$list[0]['money']}" style="border-radius: 5px;float: left;width: 344px;">--> 
+             <span style="width: 344px;float: right;">{$list[0]['money']}</span>
+         </div>
+         <div style="width:47%;float: left;">
+            <label  style="line-height: 36px;">组团人员：  </label>             
+            <!--<input type="text" class="text input-large" name="daddtime" value="{$list[0]['daddtime']}" style="border-radius: 5px;float: left;width: 344px;" >--> 
+             <span style="width: 344px;float: right;">{$tuan_name}</span>
+        </div>
+    </li>
+    <li class="line">
+         <div style="width:47%;margin-right: 60px;float: left;">
+            <label  style="line-height: 36px;">教练姓名：   </label>             
+            <!--<input type="text" class="text input-large" name="money" value="{$list[0]['money']}" style="border-radius: 5px;float: left;width: 344px;">--> 
+             <span style="width: 344px;float: right;">{$list[0]['jname']}</span>
+         </div>
+         <div style="width:47%;float: left;">
+            <label  style="line-height: 36px;">驾校名称：  </label>             
+            <!--<input type="text" class="text input-large" name="daddtime" value="{$list[0]['daddtime']}" style="border-radius: 5px;float: left;width: 344px;" >--> 
+             <span style="width: 344px;float: right;">{$list[0]['jxname']}</span>
+        </div>
+    </li>      			 
+        <div class="form-item form_bh">
+            <!--<input type="submit" class="btn" value="确定">-->
+            <!-- <a href="{:U('Dayin/dayin_list')}" class="btn">返回</a> -->
+            <a href="javascript:history.back(-1)" class="btn">返回</a>
+<!--             <script type="text/javascript">
+                $('.btn').click(function(){
+                    var card = $('#card').html();
+                    $('.btn').attr("href","http://yueche.siwoinfo.com/index.php?s=/Home/Dayin/dayin_list/card/"+card); 
+                })
+            </script> -->
+         </div>     
+	     <!-- </form>	 -->
+            </div>
+           </div>
+      </section>
+	
+  </div>
+</block>
+
+<block name="script">
+  <link href="__STATIC__/datetimepicker/css/datetimepicker.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <php>if(C('COLOR_STYLE')=='blue_color') echo '
+    <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    ';</php>
+  <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.js"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-7"></script> 
+  <script type="text/javascript">
+$('#submit').click(function(){
+    $('#form').submit();
+});
+
+$(function(){
+
+	initUploadFile(function(data,name){
+		var old_title = $('#title').val();
+		if(old_title==''){
+			var data = $.parseJSON(data);
+			var title = data.name.replace('.'+data.ext, '');
+			$('#title').val(title);		
+		}
+	});
+    showTab();
+	
+});
+</script> 
+</block>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <meta content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" /> 
+  <meta content="yes" name="apple-mobile-web-app-capable" /> 
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" /> 
+  <meta content="telephone=no" name="format-detection" /> 
+  <meta content="email=no" name="format-detection" /> 
+  <link rel="stylesheet" type="text/css" href="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/css/style.css">
+
+  <script type="text/javascript" src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/js/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/js/jquery.bxslider.js"></script>
+  <link href="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/css/jquery.bxslider.css" rel="stylesheet" type="text/css">
+  <!--<script type="text/javascript">
+      $(document).ready(function(){
+        $('.slider8').bxSlider({ 
+          slideWidth: 1024, 
+    adaptiveHeight: true,
+    startSlides: 0, 
+          slideMargin: 5
+        });
+      });-->
+	  
+	  <script type="text/javascript">
+        $(document).ready(function(){
+          $('.slider2').bxSlider({
+            slideWidth: 1200, 
+      auto: true,
+        autoControls: true,
+            minSlides: 1,
+            maxSlides: 1,
+            slideMargin: 0
+          });
+        });
+    </script>
+  
+ </head> 
+<div class="header">
+ 
+  <div class="header">
+    <ul class="clearfix slider2">
+    	<volist name="slideshow" id="vo">
+        	<li class="slide"><a href="javascript:;"><img src="{$vo.img}" />
+             <p class="p_text" style="  padding: 0.4em 0em; padding-left: 4%; position: absolute;  bottom: 0px;  color: #fff;  font-size: 15px;  line-height: 25px; background: rgba(97, 96, 96, 0.54); overflow: hidden; width: 95%;">{$vo.title}</p></a>
+            </li>
+        </volist>   
+    </ul>
+    
+    
+   <!-- <div class="nav_p">
+        <div></div>
+        <p> <marquee direction="left" scrollamount="5">沙扬娜拉-赠日本女郎</marquee></p>
+      </div>-->
+    </div>
+  <div class="list_index">
+    <ul class="clearfix">
+    	
+    	<volist name="category" key="k" id="vo">
+        <li <?php if($k%3 == 0) { ?> class="list_ri" <?php } ?>><a href="{$vo.url}"><img src="{$vo.icon}"><p>{$vo.title}</p></a></li>
+        </volist>
+        <!--<li><a href=""><img src="img/dal/PC.png"><p>警务微视</p></a></li>
+        <li class="list_ri"><a href=""><img src="img/dal/fengcai.png"><p>警员风采</p></a></li>
+        <li><a href=""><img src="img/dal/account.png"><p>安全防范</p></a></li>
+        <li><a href=""><img src="img/dal/drafts.png"><p>法律法规</p></a></li>
+        <li class="list_ri"><a href=""><img src="img/dal/Messages.png"><p>业务咨询</p></a></li>
+        <li><a href=""><img src="img/dal/Target.png"><p>通缉协办</p></a></li>
+        <li><a href=""><img src="img/dal/jiandu.png"><p>线索举报</p></a></li>
+        <li class="list_ri"><a href=""><img src="img/dal/comments.png"><p>意见建议</p></a></li>-->
+      </ul>
+  </div>
+ </body>
+</html>

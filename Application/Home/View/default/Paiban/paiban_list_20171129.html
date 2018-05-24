@@ -1,0 +1,163 @@
+<extend name="Base/common" />
+<block name="body">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+ <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.min.js"></script>
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+  <div class="span9 page_message">
+    <section id="contents"> <include file="Addons/_nav" />
+
+      <!-- 数据列表 -->
+      <div class="data-table" style="margin-top:20px;">
+      
+        <!-- <div class="table-striped">
+        <div style="padding-bottom: 20px;padding-left: 15px;">
+        <a class="btn" href="{:U('jiaolian_add',array('mdm'=>I('mdm')))}">新 增</a>
+        </div>  
+        </div> -->
+          <input type="text" value="{$data}" id="datetimepicker9" style="width: 140px;"/>
+          <a class="btn" style="margin-bottom: 8px;" id="search_btn">搜索</a>
+          <a class="btn" style="margin-bottom: 8px;" id="s_delete">删除</a>
+
+       </div>
+       <script type="text/javascript">
+         $('#search_btn').click(function(){
+            var data = $('#datetimepicker9').val();
+            if(data == ''){
+              alert('请选择要搜索的日期')
+            }else{
+              //var url = "http://yueche.siwoinfo.com/index.php?s=/Home/Paiban/paiban_list/data/"+data;
+              var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+              var url = skip_url + "?s=/Home/Paiban/paiban_list/data/"+data;
+
+              $('#search_btn').attr('href',url);
+            }
+         });
+
+       </script>
+
+       
+		<div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>
+                  <input id="CheckAll" name='CheckAll' type='checkbox'>
+                  <span class="copy_span">全选</span>
+                </th>
+                <th>编号</th>
+                <th>车辆编号</th>
+      				  <th>日期</th>
+                <th>时间段</th>
+                <th>备注</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody>
+              <volist name="paiban_list" id="vo">
+                <tr>
+                  <td type="headimgurl">
+                    <input id='Check[]' name='Check[]' type='checkbox'  value="{$vo.id}">
+                  </td>
+                  <td type="headimgurl">{$vo.id}</td>
+                  <td type="content">{$vo.ch}</td>
+                  <td >{$vo.data}</td>
+                  <td >{$vo.time}</td>
+                  <td >{$vo.mark}</td>
+      				    <td>
+                    <a href="{:U('paiban_edit',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}">编辑</a> |
+                    <a href="{:U('paiban_del',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}" class="del">删除</a>
+                  </td>
+                </tr>
+              </volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page"> {$_page|default=''} </div>
+    </section>
+  </div>
+
+</block>
+<block name="script"> 
+<script type="text/javascript">
+    //多选删除
+    $("#CheckAll").bind("click",function(){           
+        $("input[name='Check[]']").prop("checked",this.checked);
+            
+    });
+
+    //获取被选中checkbox值
+    var checked = function(){
+      var checks = $("input[name='Check[]']:checked");
+      if(checks.length == 0){ alert('未选中任何项！');return false;}
+          
+      var checkData = new Array();
+      checks.each(function(){ 
+         checkData.push($(this).val()); 
+      });
+      return checkData;
+    };
+
+    //批量删除 
+    $("#s_delete").click(function(){
+      
+      if(val = checked()){    
+          if(confirm('确定要删除所选吗?'))
+          {    
+           // $.get("<{spUrl c=order a=delete}>",{Check:val.toString()},function(result){ if(result = true){ window.location.reload();}});
+           
+              $.ajax({
+
+                  type     :  "POST",
+                  url      :  "{:U('paiban_select_del')}",
+                  data     :  {del_id:val},
+                  dataType :  "json",
+                  success  :  function(data){
+                               if(data == 1){
+                                  alert('删除成功!');
+                                  window.location.reload();
+                                  return false;
+                               }
+                               if(data == 0){
+                                alert('删除失败!');
+                                return false;
+                               }
+
+                  }
+              });
+         }
+      } 
+    }); 
+
+
+
+    $( '.del' ).click( function () {
+    			return confirm('确认要执行删除操作吗？');
+    });
+  function playSound(id,obj){
+  	var audio = document.getElementById(id);
+  	if(audio.paused){
+  		audio.play();
+  		$(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+  		audio.addEventListener('ended', function () {  
+  // 			alert('over');
+  			$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+  		}, false);
+  		return;
+  	}
+  	audio.pause();
+  	$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+  	
+  }
+$('#datetimepicker9').datetimepicker({
+		 lang:"ch", //语言选择中文 注：旧版本 新版方法：$.datetimepicker.setLocale('ch');
+      format:"Y-m-d",      //格式化日期
+      timepicker:false,    //关闭时间选项
+});
+</script> 
+</block>

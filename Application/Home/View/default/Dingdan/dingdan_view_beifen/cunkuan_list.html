@@ -1,0 +1,135 @@
+<extend name="Base/common" />
+<block name="body">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.min.js"></script>
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+  <div class="span9 page_message">
+  
+    <section id="contents"> <include file="Addons/_nav" />
+
+      <!-- 数据列表 -->
+      <div class="data-table" style="margin-top:20px;">
+      <div class="table-striped">
+      <div style="padding-bottom: 20px;">
+		      <form action="{:U('cunkuan_Download',array('mdm'=>I('mdm'),'status'=>0))}" method="post">
+		          <input id="data_riqi" type="hidden" value=""/>
+              <input type="text" value="{$datetimepicker}" id="datetimepicker" name="datetimepicker" placeholder="开始时间段搜索" style="width: 145px;margin-bottom: 0;"/>&nbsp;-
+              <input id="data_riqi1" type="hidden" value=""/>
+              <input type="text" id="datetimepicker1" value="{$datetimepicker1}" name="datetimepicker1" placeholder="结束时间段搜索" style="width: 145px;margin-bottom: 0;"/>
+              <a class="btn" id="sousuo" style="margin: 0 10px;" onclick="search()">搜 索</a>
+              <input type="submit" value="下 载" class="btn" style="margin-right: 40px;">
+		      </form>
+      </div>  
+      </div>
+      </div>
+    <div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>存款日期</th>
+                <th>存款金额 ( 元 )</th>
+                <th>退款金额 ( 元 )</th>
+                <th>手续费 ( 元 )</th>
+                <th>入账金额 ( 元 )</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody>
+              <volist name="cunkuan_list" id="vo">
+                <tr>
+                  <td type="headimgurl">{$vo.dadd}</td>
+                  <td type="content">{$vo.subtotal}</td>
+                  <td type="content">{$vo.subtotal_tui}</td>
+                  <td type="content">{$vo.subtotal_sx}</td>
+                  <td type="content">{$vo.subtotal_rz}</td>
+                </tr>
+              </volist>
+				        <tr>
+                  <td align="left" type="headimgurl">合计</td>
+                  <td align="left" type="headimgurl">{$sum}</td>
+                  <td align="left" type="headimgurl">{$sum_tui}</td>
+                  <td align="left" type="headimgurl">{$sum_sx}</td>
+                  <td align="left" type="headimgurl">{$sum_rz}</td>
+                </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page" id="page"> {$_page} </div>
+      <!-- <div class="page"> {$_page|default=''} </div> -->
+    </section>
+  </div>
+</block>
+<block name="script">
+<script type="text/javascript">
+
+$("#sousuo").click(function(){
+    var datetimepicker = $("#datetimepicker").val();//开始时间段
+    var datetimepicker1 =  $("#datetimepicker1").val();//结束时间段
+    if(datetimepicker == '' || datetimepicker1 == ''){
+      alert('请选择时间段!');
+      return false;
+    }else{
+      var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+      var url = skip_url + "?s=/Home/Dingdan/cunkuan_list/datetimepicker/"+datetimepicker+"/datetimepicker1/"+datetimepicker1;
+      $('#sousuo').attr('href',url);
+    }
+});
+
+// function search(){
+//   alert('aaa');return false;	
+// 	var datetimepicker = $("#datetimepicker").val();
+// 	var datetimepicker1 =  $("#datetimepicker1").val();
+// 	var dataStr = "datetimepicker="+datetimepicker+"&datetimepicker1="+datetimepicker1;
+
+// 	$.ajax({
+// 		url:"",
+// 		type:"POST",
+// 		data:dataStr,
+// 		dataType:"json",
+// 		success:function(adminCount){
+// 			$("#").html("");
+
+// 		}	
+// 	});
+// }
+
+
+$(function(){
+  
+})
+$('#datetimepicker').datetimepicker({
+	format:'Y-m-d',
+	timepicker:false,
+	lang:'ch',
+});
+$('#datetimepicker1').datetimepicker({
+	format:'Y-m-d',
+	timepicker:false,
+	lang:'ch',
+});
+$( '.del' ).click( function () {
+        return confirm('确认要执行删除操作吗？');
+    });
+function playSound(id,obj){
+  var audio = document.getElementById(id);
+  if(audio.paused){
+    audio.play();
+    $(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+    audio.addEventListener('ended', function () {  
+//      alert('over');
+      $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+    }, false);
+    return;
+  }
+  audio.pause();
+  $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+  
+}
+</script> 
+</block>

@@ -1,0 +1,194 @@
+<extend name="Base/common" />
+<block name="body">
+  <link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/bootstrap.min.css" /> -->
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.min.js"></script>
+   <script type="text/javascript" src="__STATIC__/dingdan/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+  <style type="text/css">
+    #dingdan{
+          border: 1px solid #ddd;width: 100%; border-spacing: 0; border-collapse: collapse;    background-color: transparent;margin-bottom: 20px;border: 1px solid #ddd;
+        }
+      #dingdan tr {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
+        }
+       #dingdan  td{
+            border: 1px solid #ddd;
+            padding: 8px;
+          line-height: 1.42857143;
+          vertical-align: top;
+        }
+  </style>
+  <div class="span9 page_message">
+  
+    <section id="contents"> <include file="Addons/_nav" />
+
+      <!-- 数据列表 -->
+      <div class="data-table" style="margin-top:20px;">
+      
+        <div class="table-striped">
+        <div style="padding-bottom: 20px;">
+		<form action="{:U('search',array('mdm'=>I('mdm')))}" method="post">
+        	<input id="data_riqi" type="hidden" value=""/><input type="text" id="datetimepicker" name="datetimepicker" style="width: 145px;margin-bottom: 0;"/>&nbsp;-
+        	<input id="data_riqi1" type="hidden" value=""/><input type="text" id="datetimepicker1" name="datetimepicker1" style="width: 145px;margin-bottom: 0;"/>
+		<input type="submit" value="搜 索" class="btn" style="margin-right: 40px;">		
+        <a class="btn" href="{:U('Download',array('mdm'=>I('mdm')))}">下 载</a>
+		</form>
+        </div>  
+        </div>
+        </div>
+    <div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <!-- <th>选择</th> -->
+                <th>序号</th>
+                <th>日期</th>
+                <th>车号</th>
+                <th>时间段</th>
+                <!-- <th>时长</th> -->
+                <th>收费</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody>
+              <volist name="shoufei_list" id="vo">
+                <tr>
+                  <!-- <td><input type="checkbox" name="radio" value="{$vo.id}"></td> -->
+                  <td type="headimgurl">{$vo.id}</td>
+                  <td type="headimgurl">{$vo.daddtime}</td>
+                  <td type="content">{$vo.pch}</td>
+                  <td >{$vo.ptime}</td>
+                  <!-- <td >1小时</td> -->
+                  <td >{$vo.money}元</td>
+                  <td class="dayin" style="cursor: pointer;">打印</td>
+                </tr>
+              </volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page"> {$_page|default=''} </div>
+    </section>
+  </div> 
+  <div id="div_print" style="display:none;"> 
+      <table id="dingdan"  style="border: 1px solid #ddd;width: 100%; border-spacing: 0; border-collapse: collapse;background-color: transparent;margin-bottom: 20px;border: 1px solid #ddd;">
+        <tr style='display: table-row;vertical-align: inherit;border-color: inherit;'>
+          <td style="border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;">姓名</td>
+          <td style="border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;">预约时间</td>
+          <td style="border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;">微信订单号</td>
+          <!-- <td style="border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;">商户订单号</td> -->
+          <td style="border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;">付款金额</td>
+        </tr>
+      </table> 
+  </div>
+  <script type="text/javascript">
+    $('.dayin').click(function(){
+      var id = $(this).parent().children().eq(0).html();
+      if(id){
+        $.ajax({
+          url:"{:U('ShouFei/dayin')}",
+          type:"POST",
+          data:{id:id},
+          dataType:"json",
+          success:function(result){
+            var list = eval(result[0]);
+            var xname = list.xname;
+            var data = list.pdata + ' ' + list.ptime;
+            var transaction_id = list.transaction_id;
+            var out_trade_no = list.out_trade_no;
+            var money = list.money;
+            var item = "<tr style='display: table-row;vertical-align: inherit;border-color: inherit;'><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+xname+"</td><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+data+"</td><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+transaction_id+"</td><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+money+"</td></tr>";
+            $('#dingdan').append(item);
+            var div_print = document.getElementById("div_print");
+            var status = printdiv(div_print);
+            window.location.href = "http://yueche.siwoinfo.com/index.php?s=/Home/ShouFei/shoufei_list/";
+          } 
+        });
+      }
+    });
+  </script>
+
+  <script type="text/javascript"> 
+    function printdiv(printpage) 
+    { 
+      var newstr = printpage.innerHTML; 
+      var oldstr = document.body.innerHTML; 
+      document.body.innerHTML = newstr; 
+      window.print(); 
+      document.body.innerHTML=oldstr; 
+      return true; 
+    } 
+
+    // window.onload=function()
+    // {
+    // var bt = document.getElementById("bt");
+    // var div_print = document.getElementById("div_print");
+    // bt.onclick=function()
+    // {
+    // printdiv(div_print);
+    // }
+    // }
+  </script>
+</block>
+<block name="script">
+<script type="text/javascript">
+
+function search(){	
+	var datetimepicker = $("#datetimepicker").val();
+	var datetimepicker1 =  $("#datetimepicker1").val();
+	var dataStr = "datetimepicker="+datetimepicker+"&datetimepicker1="+datetimepicker1;
+	$.ajax({
+		url:"",
+		type:"POST",
+		data:dataStr,
+		dataType:"json",
+		beforeSend:function(){
+			$("#beforeCountConfirm").html("正在统计,请稍候....");
+		},
+		success:function(adminCount){
+			$("#beforeCountConfirm").html("统计结束！");
+			$("#pietable_all").html("");
+
+		}	
+	});
+}
+window.onload=search;
+
+
+$(function(){
+  
+})
+$('#datetimepicker').datetimepicker({
+	lang:'ch'
+});
+$('#datetimepicker1').datetimepicker({
+	lang:'ch'
+});
+$( '.del' ).click( function () {
+        return confirm('确认要执行删除操作吗？');
+    });
+function playSound(id,obj){
+  var audio = document.getElementById(id);
+  if(audio.paused){
+    audio.play();
+    $(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+    audio.addEventListener('ended', function () {  
+//      alert('over');
+      $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+    }, false);
+    return;
+  }
+  audio.pause();
+  $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+  
+}
+</script> 
+</block>

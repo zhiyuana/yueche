@@ -1,0 +1,109 @@
+<extend name="Base/common" />
+
+ <block name="body">
+ 
+  <div class="span9 page_message">
+     <style>
+     	li,ul{list-style: none;}
+     	.line{margin-bottom: 39px;border-bottom: 1px solid #ddd;line-height: 38px;}
+     </style>
+    <section id="contents"> <include file="Addons/_nav" />
+        <div class="tab-content"> 
+
+	     <volist name="list" id="vo">
+	     <input type="hidden" class="text input-large" name="id" value="{$vo.id}">
+       <li class="line" style="border-bottom: none;">
+          <div style="width:47%;margin-right: 20px;float: left;">
+            <label><span class="need_flag">* </span>编号：</label>
+  			    <span style="width: 344px;float: right;">{$vo.id}</span>           
+          </div>
+          <div style="width:47%;float: left;">
+            <label><span class="need_flag">* </span>姓名：</label>
+			      <span style="width: 344px;float: right;">{$vo.jname}</span>
+          </div>
+      </li>
+       <li class="line">
+          <div style="width:47%;margin-right: 20px;float: left;">
+              <label style="margin-right: 30px;"><span class="need_flag">* </span>性别： </label>
+              <span style="width: 344px;float: right;"><if condition="$list[0]['jsex']==1">&nbsp;男 &nbsp;<else />女</if></span>
+          </div>
+          <div style="width:47%;margin-right: 20px;float: left;">
+              <label><span class="need_flag">* </span>手机号： </label>
+              <span style="width: 344px;float: right;">{$vo.jphone}</span> 
+          </div>
+      </li>
+       <li class="line">
+          <div style="width:47%;margin-right: 20px;float: left;">
+            <label><span class="need_flag">* </span>身份证号：  </label>
+            <span style="width: 344px;float: right;">{$vo.jcard}</span>
+          </div>
+         <!-- <div style="width:47%;margin-right: 20px;float: left;">
+            <label><span class="need_flag">* </span>驾驶证号 ：  </label> 
+      <span style="width: 344px;float: right;">{$vo.jbh}</span>
+        </div> -->
+        <div style="width:47%;margin-right: 20px;float: left;">
+            <label><span class="need_flag">* </span>教练证号：   </label>
+            <span style="width: 344px;float: right;">{$vo.tbh}</span> 
+        </div>
+      </li>
+       <li class="line"> 
+          <div style="width:47%;margin-right: 20px;float: left;">
+            <label><span class="need_flag">* </span>所属驾校：   </label>
+            <span style="width: 344px;float: right;">{$vo.jxname}</span> 
+          </div>
+        <div style="width:47%;margin-right: 20px;margin-left: 16px;float: left;">
+            <label><span class="need_flag"> </span>备注：  </label>
+            <span style="width: 344px;float: right;">{$vo.jmark}</span>     
+        </div>
+      </li>
+       <!-- <li class="line"> -->
+         <!-- <div style="width:47%;margin-right: 20px;float: left;">
+           <label> <span class="need_flag">* </span>驾龄： </label>
+      <span style="width: 344px;float: right;">{$vo.jl}</span>
+        </div> -->
+        <!-- <div style="width:47%;margin-right: 20px;float: left;">
+            <label><span class="need_flag">* </span>年龄：</label>               
+            <span style="width: 344px;float: right;">{$vo.jage}</span>
+        </div> -->
+         
+      <!-- </li> -->
+     </volist>					 
+        <div class="form-item form_bh">
+            <a href="{:U('Jiaolian/jiaolian_list')}" class="btn">返回</a>
+         </div>     
+	
+          </div>
+        </div>
+      </section>
+	
+  </div>
+</block>
+
+<block name="script">
+  <link href="__STATIC__/datetimepicker/css/datetimepicker.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <php>if(C('COLOR_STYLE')=='blue_color') echo '
+    <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    ';</php>
+  <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.js"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script> 
+  <script type="text/javascript">
+$('#submit').click(function(){
+    $('#form').submit();
+});
+
+$(function(){
+
+	initUploadFile(function(data,name){
+		var old_title = $('#title').val();
+		if(old_title==''){
+			var data = $.parseJSON(data);
+			var title = data.name.replace('.'+data.ext, '');
+			$('#title').val(title);		
+		}
+	});
+    showTab();
+	
+});
+</script> 
+</block>

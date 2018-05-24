@@ -1,0 +1,323 @@
+<extend name="Base/common" />
+<block name="body">
+  <link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/bootstrap.min.css" /> -->
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.min.js"></script>
+   <script type="text/javascript" src="__STATIC__/dingdan/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+  <style type="text/css">
+    #dingdan{
+          border: 1px solid #ddd;width: 100%; border-spacing: 0; border-collapse: collapse;    background-color: transparent;margin-bottom: 20px;border: 1px solid #ddd;
+        }
+      #dingdan tr {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
+        }
+       #dingdan  td{
+            border: 1px solid #ddd;
+            padding: 8px;
+          line-height: 1.42857143;
+          vertical-align: top;
+        }
+        @font-face {
+          font-family: 'iconfont';
+          src: url('__PUBLIC__/iconfont/iconfont.eot');
+          src: url('__PUBLIC__/iconfont/iconfont.eot?#iefix') format('embedded-opentype'),
+          url('__PUBLIC__/iconfont/iconfont.woff') format('woff'),
+          url('__PUBLIC__/iconfont/iconfont.ttf') format('truetype'),
+          url('__PUBLIC__/iconfont/iconfont.svg#iconfont') format('svg');
+        }
+        .iconfont{
+          font-family:"iconfont" !important;
+          font-size:16px;font-style:normal;
+          -webkit-font-smoothing: antialiased;
+          -webkit-text-stroke-width: 0.2px;
+          -moz-osx-font-smoothing: grayscale;
+          /*color:#efef6a;*/
+          color:#75754b;
+        }
+        .jho:hover{
+          /*color:#75754b;*/
+          color:#efef6a;
+        }
+  </style>
+  <div class="span9 page_message">
+  
+    <section id="contents"> <include file="Addons/_nav" />
+
+        <!-- 数据列表 -->
+        <div class="data-table" style="margin-top:20px;">
+        <div class="table-striped">
+        <div style="padding-bottom: 20px;">
+        		<form action="{:U('shoufei_Download',array('mdm'=>I('mdm')))}" method="post">
+                	<input id="data_riqi" type="hidden" value=""/>
+        			    <input type="text" id="datetimepicker" name="datetimepicker" style="width: 145px;margin-bottom: 0;" placeholder="开始时间段搜索" value="{$datetimepicker}"/>&nbsp;-
+                	<input id="data_riqi1" type="hidden" value=""/>
+        			    <input type="text" id="datetimepicker1" name="datetimepicker1" style="width: 145px;margin-bottom: 0;" placeholder="结束时间段搜索" value="{$datetimepicker1}"/>
+        		      <input type="text" name="keywords" id="keywords" value="{$keywords}" style="width: 235;margin: 0 10px;" placeholder="身份证号或手机号搜索">
+        			    <!-- <input type="button" value="搜 索" id="search" class="btn" style=""> -->
+                  <a class="btn" id="sousuo" style="">搜 索</a>
+        			    <input type="submit" value="下 载" class="btn" style="margin-left: 10px;">
+                  <span class="btn iconfont jho" id="weixin" onclick="wechat(1)" style="padding:6px 24px;font-size: 20px; background:#fff">学员：&#xe612;</span>
+                  <span class="btn iconfont jho" id="xianxia" onclick="wechat(2)" style="padding:6px 24px;font-size: 20px; background:#fff">驾校：&#xe65b;</span>
+                  <input type="hidden" id="fs" name="fs" value="{$keyword}">
+        		</form>
+          </div>  
+          </div>
+          </div>
+    <div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>预约日期</th>
+                
+                <!-- <th>订单号</th> -->
+                <th>用车时间</th>
+                <th>车号</th>
+                <th>收费日期</th>
+                <th>收费</th>
+                <th>收费1</th>
+                <th>收费2</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody  id="list">
+              <volist name="shoufei_list" id="vo">
+                <tr>
+                  <td type="headimgurl">{$vo.id}</td>
+                  <td type="headimgurl" style="position: relative">{$vo.xname}
+                    <a  title= "{$vo.jxname}" class="iconfont" style="position:absolute;right:0;top:0; ">
+                      <if condition="$vo['fs'] eq 1">&#xe612;
+                      <else /> 
+                        &#xe65b;
+                      </if>
+                    </a>
+                  </td>
+                  <td >{$vo.pdata}</td>
+
+                  <!-- <td type="headimgurl">{$vo.transaction_id}</td> -->
+                  <!-- <td type="headimgurl">{$vo['transaction_id'] ? $vo['transaction_id'] : $vo['dbh']}</td> -->
+                  <td type="headimgurl">{$vo.ptime}</td>
+                  <td type="content">{$vo.pch}</td>
+                  <td type="headimgurl">{$vo.daddtime|msubstr=0,10,'utf-8',false}</td>
+                  <!-- <td >1小时</td> -->
+                  <td >{$vo.money}元</td>
+                  <td >{$vo.money2}元</td>
+                  <td >{$vo.money3}元</td>
+                  <td class="dayin" style="cursor: pointer;"><a>打印</a></td>
+                </tr>
+              </volist>
+                <tr>
+                  <td >合计</td>
+                  <td > </td>
+                  <td > </td>
+                  <td > </td>
+                  <td > </td>
+                  <td > </td>
+                  <td >{$sum_money}元</td>
+                  <td >{$sum_money2}元</td>
+                  <td >{$sum_money3}元</td>
+                  <td > </td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page">{$_page}</div>
+      <!-- <div class="page"> {$_page|default=''} </div> -->
+    </section>
+  </div> 
+  <div id="div_print" style="display:none;"> 
+      <table id="dingdan"  style="border: 1px solid #ddd;width: 100%; border-spacing: 0; border-collapse: collapse;background-color: transparent;margin-bottom: 20px;border: 1px solid #ddd;">
+        <tr style='display: table-row;vertical-align: inherit;border-color: inherit;'>
+          <td style="border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;">姓名</td>
+          <td style="border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;">预约时间</td>
+          <td style="border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;">微信订单号</td>
+          <!-- <td style="border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;">商户订单号</td> -->
+          <td style="border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;">付款金额</td>
+        </tr>
+      </table> 
+  </div>
+  <script type="text/javascript">
+    $('.dayin').click(function(){
+      var id = $(this).parent().children().eq(0).html();
+      if(id){
+        $.ajax({
+          url:"{:U('Dingdan/dayin')}",
+          type:"POST",
+          data:{id:id},
+          dataType:"json",
+          success:function(result){
+            var list = eval(result[0]);
+            var xname = list.xname;
+            var data = list.pdata + ' ' + list.ptime;
+            var transaction_id = list.transaction_id;
+            var out_trade_no = list.out_trade_no;
+            var money = list.money;
+            var item = "<tr style='display: table-row;vertical-align: inherit;border-color: inherit;'><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+xname+"</td><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+data+"</td><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+transaction_id+"</td><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+money+"</td></tr>";
+            $('#dingdan').append(item);
+            var div_print = document.getElementById("div_print");
+            var status = printdiv(div_print);
+            window.location.href = "http://yueche.siwoinfo.com/index.php?s=/Home/Dingdan/shoufei_list/";
+          } 
+        });
+      }
+    });
+    function dayin(obj){
+      var id = $(obj).parent().children().eq(0).html();
+      if(id){
+        $.ajax({
+          url:"{:U('Dingdan/dayin')}",
+          type:"POST",
+          data:{id:id},
+          dataType:"json",
+          success:function(result){
+            var list = eval(result[0]);
+            var xname = list.xname;
+            var data = list.pdata + ' ' + list.ptime;
+            var transaction_id = list.transaction_id;
+            var out_trade_no = list.out_trade_no;
+            var money = list.money;
+            var item = "<tr style='display: table-row;vertical-align: inherit;border-color: inherit;'><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+xname+"</td><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+data+"</td><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+transaction_id+"</td><td style='border: 1px solid #ddd;padding: 8px;line-height: 1.42857143;vertical-align: top;'>"+money+"</td></tr>";
+            $('#dingdan').append(item);
+            var div_print = document.getElementById("div_print");
+            var status = printdiv(div_print);
+            window.location.href = "http://yueche.siwoinfo.com/index.php?s=/Home/Dingdan/shoufei_list/";
+          } 
+        });
+      }
+    }
+  </script>
+
+  <script type="text/javascript"> 
+    function printdiv(printpage) 
+    { 
+      var newstr = printpage.innerHTML; 
+      var oldstr = document.body.innerHTML; 
+      // document.body.innerHTML = newstr; 
+      window.print(); 
+      document.body.innerHTML=oldstr; 
+      return true; 
+    } 
+
+  </script>
+</block>
+<block name="script">
+  <?php if($keyword == '1'){ ?>
+    <script type="text/javascript">
+      $('#weixin').css('color','#efef6a')
+    </script>
+  <?php }else if($keyword == '2'){ ?>
+    <script type="text/javascript">
+      $('#xianxia').css('color','#efef6a')
+    </script>
+  <?php } ?>
+<script type="text/javascript">
+
+$("#sousuo").click(function(){
+
+	var datetimepicker = $("#datetimepicker").val();
+	var datetimepicker1 =  $("#datetimepicker1").val();
+	var keywords = $("#keywords").val();
+	var dataStr = "datetimepicker="+datetimepicker+"&datetimepicker1="+datetimepicker1+"&keywords="+keywords;
+	
+	if(datetimepicker == "" && datetimepicker1 == "" && keywords == "")
+  {
+    alert("搜索条件不能为空!");
+    return false;
+  }
+  else if((datetimepicker == '' || datetimepicker1 == '') && keywords == "")
+  {
+    alert("请选择时间段");
+    return false;
+  }
+  else
+  {
+    var fs = $('#fs').val();
+    var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+    var url = skip_url + "?s=/Home/Dingdan/shoufei_list/keyword/"+fs+"/datetimepicker/"+datetimepicker+"/datetimepicker1/"+datetimepicker1+"/keywords/"+keywords;
+    $('#sousuo').attr('href',url);
+
+
+		// $.ajax({
+		// 	url:"{:U('Dingdan/shoufei_list')}",
+		// 	type:"POST",
+		// 	data:dataStr,
+		// 	dataType:"json",
+		// 	success:function(json){
+		// 		htmlstr ="";
+		// 		if(json == 'null' || json == null || json.count=='0'){
+		// 			htmlstr += "<tr><td colspan='10'  style='text-align:center'>未检索到相关信息</td></tr>";	
+		// 		}else{
+  //         var percent = 0.006;
+		// 			$.each(json,function(i,n){
+		// 				if(n.transaction_id == ''){
+		// 					n.transaction_id = n.dbh;
+		// 				}
+  //           var shoufei2 = n.money - n.money * percent;
+		// 				htmlstr += "<tr><td>"+n.id+"</td>";
+		// 				htmlstr += "<td>"+n.xname+"</td>";
+  //           //htmlstr += "<td>"+n.pdata+" "+n.ptime+"</td>";
+  //           htmlstr += "<td>"+n.pdata+"</td>";
+		// 				htmlstr += "<td>"+n.ptime+"</td>";
+		// 				htmlstr += "<td>"+n.pch+"</td>";
+		// 				//htmlstr += "<td>"+n.transaction_id+"</td>";
+		// 				htmlstr += "<td>"+n.daddtime+"</td>";
+		// 				// htmlstr += "<td>1小时</td>";
+  //           htmlstr += "<td>"+n.money+"元</td>";
+  //           htmlstr += "<td>"+n.money * percent+"元</td>";
+		// 				htmlstr += "<td>"+shoufei2+"元</td>";
+		// 				htmlstr += "<td onclick='dayin(this)' style='cursor: pointer;'><a>打印</a></td></tr>";					
+		// 			});
+		// 		}
+		// 		$("#list").html(htmlstr);
+		// 	}	
+		// });
+	}
+
+});
+$(function(){  
+})
+$('#datetimepicker').datetimepicker({
+	format:'Y-m-d',
+	timepicker:false,
+	lang:'ch',
+});
+$('#datetimepicker1').datetimepicker({
+	format:'Y-m-d',
+	timepicker:false,
+	lang:'ch',
+});
+$( '.del' ).click( function () {
+        return confirm('确认要执行删除操作吗？');
+    });
+function playSound(id,obj){
+  var audio = document.getElementById(id);
+  if(audio.paused){
+    audio.play();
+    $(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+    audio.addEventListener('ended', function () {  
+//      alert('over');
+      $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+    }, false);
+    return;
+  }
+  audio.pause();
+  $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+}
+function wechat(can){
+  var fs = can;
+  var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+  var url = skip_url + "?s=/Home/Dingdan/shoufei_list/keyword/"+fs;
+  window.location.href = url;
+}
+</script> 
+</block>

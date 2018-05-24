@@ -1,0 +1,140 @@
+<extend name="Base/common" />
+
+ <block name="body">
+ <link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.min.js"></script>
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+  <div class="span9 page_message">  
+    <section id="contents"> <include file="Addons/_nav" />
+       <div class="tab-content"> 
+	<form action="{:U('Paiban/paiban_update',array('mdm'=>I('mdm'),'id'=>$list[0]['id']))}" method="post" >
+	 <volist name="list" id="vo">
+	     <input type="hidden" class="text input-large" name="id" value="{$vo.id}">
+       <div style="width:100%;">
+         <div style="width:48%;margin-right: 20px;float: left;">
+            <label><span class="need_flag">* </span>编号：  </label>            
+            <input type="text" class="text input-large" name="id" value="{$vo.id}" style="border-radius: 5px;background-color: #e5e5e5;
+          cursor: not-allowed;float: right;margin-right: 30px" disabled="disabled"> 
+        </div>
+        <div style="width:48%;float: left;">
+            <label><span class="need_flag">* </span>日期：  </label>    
+            <input type="text"  id="datetimepicker2" readonly="readonly" name="data" class="text input-large"  value="{$vo.data}" style="border-radius: 5px;float: right;margin-right: 30px" />
+       </div>       
+      </div>    
+       <div style="width:100%;">
+         <div style="width:48%;float: left;margin-right: 20px;">
+            <label><span class="need_flag">* </span>车号：</label>               
+            <!--<input type="text" class="text input-large" name="ch" value="{$vo.ch}"
+            style="border-radius: 5px;float: right;margin-right: 30px"><br>-->
+            	<select name="ch" id="ch" style="border-radius: 5px;float: right;margin-right: 30px;width: 73%;">
+            		<option value="{$vo.ch}">{$vo.ch}</option>
+                <?php 
+                  for($i = 1;$i < 41;$i ++){
+                  ?>
+                      <option><?php echo $i; ?></option>
+                <?php
+                  } 
+                ?>
+            	</select>
+        </div>
+        <script type="text/javascript">
+            var ch = $('#ch').find('option').eq(0).html();
+            var num  = ($('#ch').find('option').length) - 1;
+            for (var i = 1; i < 41; i++) {
+              if(ch == $('#ch').find('option').eq(i).html()){
+                $('#ch').find('option').eq(i).remove();
+              }
+            }
+        </script>
+         <div style="width:48%;margin-right: 20px;float: left;">
+            <label><span class="need_flag">* </span>时间段 ：  </label>             
+          <!--  <input type="text" class="text input-large" name="time" value="{$vo.time}" style="border-radius: 5px;float: right;margin-right: 30px" > -->
+            <select name="time" id="time" style="border-radius: 5px;float: right;margin-right: 30px;width: 73%;">
+              <option>{$vo.time}</option>
+            	<option>00:00-01:00</option>
+            	<option>01:00-02:00</option>
+            	<option>02:00-03:00</option>
+            	<option>03:00-04:00</option>
+      				<option>04:00-05:00</option>
+      				<option>05:00-06:00</option>
+      				<option>06:00-07:00</option>
+      				<option>07:00-08:00</option>
+      				<option>08:00-09:00</option>
+      				<option>09:00-10:00</option>
+      				<option>10:00-11:00</option>
+      				<option>11:00-12:00</option>
+      				<option>12:00-13:00</option>
+      				<option>13:00-14:00</option>
+      				<option>14:00-15:00</option>
+      				<option>15:00-16:00</option>
+      				<option>16:00-17:00</option>
+      				<option>17:00-18:00</option>
+      				<option>18:00-19:00</option>
+      				<option>19:00-20:00</option>
+      				<option>20:00-21:00</option>
+      				<option>21:00-22:00</option>
+      				<option>22:00-23:00</option>
+      				<option>23:00-00:00</option>
+            </select>
+         </div>
+      </div>
+      <script type="text/javascript">
+            var time = $('#time').find('option').eq(0).html();
+            var num  = ($('#time').find('option').length) - 1;
+            for (var i = 1; i < 24; i++) {
+              if(time == $('#time').find('option').eq(i).html()){
+                $('#time').find('option').eq(i).remove();
+              }
+            }
+        </script>
+       <div style="width:100%;">
+         <div style="width:48%;margin-right: 20px;float: left;">
+            <label><span class="need_flag"> </span>备注：  </label>             
+            <input type="text" class="text input-large" name="mark" value="{$vo.mark}" style="border-radius: 5px;float: right;margin-right: 30px;" > 
+        </div>
+      </div>
+     </volist>					 
+        <div class="form-item form_bh">
+            <input type="submit" class="btn" value="确定">
+            <a href="{:U('Paiban/paiban_list')}" class="btn">返回</a>
+         </div>     
+	     </form>	
+            </div>
+           </div>
+      </section>
+	
+  </div>
+</block>
+
+<block name="script">
+<!--  <link href="__STATIC__/datetimepicker/css/datetimepicker.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <php>if(C('COLOR_STYLE')=='blue_color') echo '
+    <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    ';</php>
+  <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.js"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script> -->
+  <script type="text/javascript">
+$('#submit').click(function(){
+    $('#form').submit();
+});
+$('#datetimepicker2').datetimepicker({	
+	lang:"ch", 
+	timepicker:false,
+	format:'Y-m-d',
+});
+$(function(){
+
+	initUploadFile(function(data,name){
+		var old_title = $('#title').val();
+		if(old_title==''){
+			var data = $.parseJSON(data);
+			var title = data.name.replace('.'+data.ext, '');
+			$('#title').val(title);		
+		}
+	});
+    showTab();
+	
+});
+</script> 
+</block>

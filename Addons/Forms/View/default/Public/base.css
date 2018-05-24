@@ -1,0 +1,26 @@
+@charset "utf-8";
+/* CSS Document */
+
+* { margin: 0; padding: 0px;  font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+body { font-size: 10px; margin: 0px; padding: 0px; background: #fff;  font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+a { text-decoration: none; text-shadow: none; }
+ul, ol, li { list-style: none }
+img { border: 0 }
+a { text-decoration: none; -webkit-tap-highlight-color: rgba(0,0,0,0); }
+video { display: inline-block; width: 100%; background: #000; }
+p { padding: 0.4em; }
+.big1font { font-size: 1.1em; }
+.ui-input-text, .ui-input-search { border: 0px; }
+.clear { clear: both; }
+.ui-input-text { line-height: normal; margin: 0; border-width: 0px; border-style: none; }
+i, em, b, span, label, a { display: inline-block; font-style: normal; }
+.clearfix:after{display:block;content:’’;clear:both;}
+.clearfix{zoom:1;}
+
+.footer{ background: #f4f4f4; width: 100%; height: 50px; }
+.head{ background: #000; height: 64px; width: 100%;}
+.list_box_p1{ font-size: 17px; color:#605e5e; }
+.pullUpLabel{ width: 100%; background: #dfe1e1; text-align: center; line-height:45px;  }
+.ui-collapsible-content{   background: #f4f4f4; }
+.select_mb{    width: 100%; border-radius: .2125em;  border: none;  color: #a2a2a2; text-indent: .5em; margin-top: 6px; border: 1px solid  #ececec; text-indent: .3em;}
+.select_mb option{  text-indent: .5em;}

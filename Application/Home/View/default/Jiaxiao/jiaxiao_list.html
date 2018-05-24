@@ -1,0 +1,94 @@
+<extend name="Base/common" />
+<block name="body">
+  <div class="span9 page_message">
+  
+    <section id="contents"> <include file="Addons/_nav" />
+
+      <!-- 数据列表 -->
+      <div class="data-table" style="margin-top:20px;">
+      
+        <div class="table-striped">
+            <a class="btn" href="{:U('jiaxiao_add',array('mdm'=>I('mdm')))}" style="margin-bottom: 10px;padding: 8px 15px;margin-left: 0;">新 增</a>
+
+            <a class="btn jx_chaxun" href="javascript:void(0)" style="margin-bottom: 10px;padding: 8px 15px;">查 询</a>
+            <input type="text" name="jx_name" id="jx_name" placeholder="请输入要查询驾校的名字" value="{$jx_name}" style="width:240px;">  
+        </div>
+      </div>
+		<div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>驾校名称</th>
+      				  <th>负责人姓名</th>
+                <th>驾校联系方式</th>
+                <th>教练人数</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody>
+              <volist name="jiaxiao_list" id="vo">
+                <tr>
+                  <td type="headimgurl">{$vo.id}</td>
+                  <td type="content">{$vo.jxname}</td>
+                  <td >{$vo.jxfname}</td>
+                  <td >{$vo.jxphone}</td>
+                  <td >{$vo.num}</td>
+      				    <td>
+                    <a href="{:U('jiaxiao_xq',array('id'=>$vo[id],'jxname'=>$vo[jxname],'mdm'=>$_GET['mdm']))}">查看</a> |
+                    <a href="{:U('jiaxiao_edit',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}">编辑</a> <!-- |
+                    <a href="{:U('jiaxiao_del',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}" class="del">删除</a> -->
+                  </td>
+                </tr>
+              </volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page"> {$_page|default=''} </div>
+    </section>
+  </div>
+</block>
+<block name="script"> 
+  <script type="text/javascript">
+$(function(){
+	
+})
+$( '.del' ).click( function () {
+				return confirm('确认要执行删除操作吗？');
+    });
+function playSound(id,obj){
+	var audio = document.getElementById(id);
+	if(audio.paused){
+		audio.play();
+		$(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+		audio.addEventListener('ended', function () {  
+// 			alert('over');
+			$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+		}, false);
+		return;
+	}
+	audio.pause();
+	$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+	
+}
+
+//查询驾校
+$(".jx_chaxun").click(function(){
+    var jx_name = $('#jx_name').val();
+    if(jx_name == ''){
+      alert('查询驾校名字不能为空!');
+      return false;
+    }else{
+      var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+      var url = skip_url + "?s=/Home/Jiaxiao/jiaxiao_list/jx_name/"+jx_name;
+      $('.jx_chaxun').attr('href',url);
+    }
+});
+</script> 
+</block>

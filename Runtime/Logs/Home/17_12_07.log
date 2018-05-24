@@ -1,0 +1,9 @@
+[ 2017-12-07T15:41:53+08:00 ] 60.216.132.226 /index.php?s=/Home/Dingdan/ding_xq/id/10974.html
+ERR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+
+[ 2017-12-07T15:54:31+08:00 ] 60.208.55.48 /index.php?s=/Home/Dingdan/ding_xq/id/10974.html
+ERR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+
+[ 2017-12-07T15:58:36+08:00 ] 60.208.55.48 /index.php?s=/Home/Dingdan/ding_xq/id/10974.html
+ERR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+

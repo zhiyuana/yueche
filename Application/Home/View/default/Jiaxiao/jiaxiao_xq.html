@@ -1,0 +1,86 @@
+<extend name="Base/common" />
+<block name="body">
+  <div class="span9 page_message">
+  
+    <section id="contents"> <include file="Addons/_nav" />
+
+    <!-- 数据列表 -->
+      
+		<div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>教练姓名</th>
+                <th>教练联系方式</th>
+                <th>驾校名称</th>
+      				  <th>负责人姓名</th>
+                <th>驾校联系方式</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody>
+              <volist name="jiaxiao_xq" id="vo">
+                <tr>
+                  <td type="headimgurl">{$vo.id}</td>
+                  <td >{$vo.jname}</td>
+                  <td >{$vo.jphone}</td>
+                  <td type="content">{$vo.jxname}</td>
+                  <td >{$vo.jxfname}</td>
+                  <td >{$vo.jxphone}</td>
+                </tr>
+              </volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page"> {$_page|default=''} </div>
+      <div class="form-item form_bh" style="border-top: 0px solid #ddd;">
+          <a href="{:U('Jiaxiao/jiaxiao_list')}" class="btn">返回</a>
+      </div>
+    </section>
+  </div>
+</block>
+
+<block name="script"> 
+  <script type="text/javascript">
+$(function(){
+	
+})
+$( '.del' ).click( function () {
+				return confirm('确认要执行删除操作吗？');
+    });
+function playSound(id,obj){
+	var audio = document.getElementById(id);
+	if(audio.paused){
+		audio.play();
+		$(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+		audio.addEventListener('ended', function () {  
+// 			alert('over');
+			$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+		}, false);
+		return;
+	}
+	audio.pause();
+	$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+	
+}
+
+//查询驾校
+$(".jx_chaxun").click(function(){
+    var jx_name = $('#jx_name').val();
+    if(jx_name == ''){
+      alert('查询教练员名字不能为空!');
+      return false;
+    }else{
+      var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+      var url = skip_url + "?s=/Home/Jiaxiao/jiaxiao_list/jx_name/"+jx_name;
+      $('.jx_chaxun').attr('href',url);
+    }
+});
+</script> 
+</block>

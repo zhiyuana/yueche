@@ -1,0 +1,140 @@
+<extend name="Base/common" />
+<block name="body">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.min.js"></script>
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+  <style type="text/css">
+    @font-face {
+      font-family: 'iconfont';
+      src: url('__PUBLIC__/iconfont/iconfont.eot');
+      src: url('__PUBLIC__/iconfont/iconfont.eot?#iefix') format('embedded-opentype'),
+      url('__PUBLIC__/iconfont/iconfont.woff') format('woff'),
+      url('__PUBLIC__/iconfont/iconfont.ttf') format('truetype'),
+      url('__PUBLIC__/iconfont/iconfont.svg#iconfont') format('svg');
+    }
+    .iconfont{
+      font-family:"iconfont" !important;
+      font-size:16px;font-style:normal;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-stroke-width: 0.2px;
+      -moz-osx-font-smoothing: grayscale;
+      /*color:#efef6a;*/
+      color:#75754b;
+    }
+    .jho:hover{
+      /*color:#75754b;*/
+      color:#efef6a;
+    }
+  </style>
+  <div class="span9 page_message">
+  
+    <section id="contents"> <include file="Addons/_nav" />
+
+      <!-- 数据列表 -->
+      <div class="data-table" style="margin-top:20px;">
+      <div class="table-striped">
+      <div style="padding-bottom: 20px;">
+		      <form action="{:U('cunkuan_Download',array('mdm'=>I('mdm'),'status'=>0))}" method="post">
+		          <input id="data_riqi" type="hidden" value=""/>
+              <input type="text" value="{$datetimepicker}" id="datetimepicker" name="datetimepicker" placeholder="选择日期" style="width: 145px;margin-bottom: 0;"/>&nbsp;
+              <a class="btn" id="sousuo" style="margin: 0 10px;">搜 索</a>
+              <span class="btn iconfont jho" id="weixin" onclick="wechat(1)" style="padding:6px 24px;font-size: 20px; background:#fff">学员：&#xe612;</span>
+              <span class="btn iconfont jho" id="xianxia" onclick="wechat(2)" style="padding:6px 24px;font-size: 20px; background:#fff">驾校：&#xe65b;</span>
+              <input type="hidden" id="fs" name="fs" value="{$keyword}">
+              <!-- <input type="submit" value="下 载" class="btn" style="margin-right: 40px;"> -->
+		      </form>
+      </div>  
+      </div>
+      </div>
+    <div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>存款日期</th>
+                <th>队别</th>
+                <th>交款</th>
+                <th>存款金额</th>
+                <th>折现手续费</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody>
+              <volist name="mingxi_list" id="vo">
+              <tr>
+                  <!-- <td type="headimgurl">{$vo.pdata}</td> -->
+                  <td type="headimgurl">{$vo.daddtime}</td>
+                  <td type="content" style="position: relative">
+                    {$vo.xname} 等{$vo.tuan_num}人
+                    <a title= "{$vo.jxname}" class="iconfont" style="position:absolute;right:0;top:0; ">
+                      <if condition="$vo['fs'] eq 1">&#xe612;
+                      <else /> 
+                      &#xe65b;
+                      </if>
+                    </a>
+                  </td>
+                  <td type="content">{$vo.money}</td>
+                  <!-- <td type="content">{$vo['money'] - $vo['money'] * $percent}</td> -->
+                  <!-- <td type="content">{$vo['money'] * $percent}</td> -->
+                  <td type="content">{$vo.money_shiji}</td>
+                  <td type="content">{$vo.money_shouxu}</td>
+              </tr>
+              </volist>
+				        <tr>
+                  <td type="headimgurl">合计</td>
+                  <td align="" type="headimgurl"> </td>
+                  <td align="" type="headimgurl">{$sum_money} 元</td>
+                  <td align="" type="headimgurl">{$sum_money_shiji} 元</td>
+                  <td align="" type="headimgurl">{$sum_money_shouxu} 元</td>
+                </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page" id="page"> {$_page} </div>
+      <!-- <div class="page"> {$_page|default=''} </div> -->
+    </section>
+  </div>
+</block>
+<block name="script">
+<?php if($keyword == '1'){ ?>
+    <script type="text/javascript">
+      $('#weixin').css('color','#efef6a')
+    </script>
+  <?php }else if($keyword == '2'){ ?>
+    <script type="text/javascript">
+      $('#xianxia').css('color','#efef6a')
+    </script>
+  <?php } ?>
+<script type="text/javascript">
+
+$("#sousuo").click(function(){
+    var datetimepicker = $("#datetimepicker").val();//搜索日期
+    if(datetimepicker == ''){
+      alert('请选择日期!');
+      return false;
+    }else{
+        var fs = $('#fs').val();
+        var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+        var url = skip_url + "?s=/Home/Dingdan/mingxi_list/keyword/"+fs+"/datetimepicker/"+datetimepicker;
+      $('#sousuo').attr('href',url);
+    }
+});
+
+$('#datetimepicker').datetimepicker({
+	  lang:"ch", //语言选择中文 注：旧版本 新版方法：$.datetimepicker.setLocale('ch');
+    format:"Y-m-d",      //格式化日期
+    timepicker:false,    //关闭时间选项
+});
+function wechat(can){
+  var fs = can;
+  var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+  var url = skip_url + "?s=/Home/Dingdan/mingxi_list/keyword/"+fs;
+  window.location.href = url;
+}
+</script> 
+</block>

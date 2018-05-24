@@ -1,0 +1,63 @@
+<extend name="Base/common" />
+
+ <block name="body">
+ 
+  <div class="span9 page_message">
+     
+    <section id="contents"> <include file="Addons/_nav" />
+       <div class="tab-content"> 
+        <!-- 表单 -->
+		<php> $post_url || $post_url = U('Material/edit_group',array('mdm'=>I('mdm')));</php>
+	<form action="{$post_url}" method="post" >
+	 <volist name="list" id="vo">
+	  <input type="hidden" class="text input-large" name="id" value="{$vo.id}">
+       <span class="need_flag">*</span>               
+           	   分组名称 <span class="check-tips"></span></label>
+              <div class="controls">
+                <input type="text" class="text input-large" name="title" value="{$vo.title}"> </div><br />
+        	
+				分组描述 <span class="check-tips"></span>
+           	   <label class="textarea">
+                      <textarea name="description" style="width:405px; height:150px;" >{$vo.description}</textarea>
+                     </label>
+  </volist>					 
+				<div class="form-item form_bh">
+                    <button type="submit" value="">确定</button>
+                 </div>
+				 
+	</form>	
+            </div>
+      </div>
+    </section>
+	
+  </div>
+</block>
+
+<block name="script">
+  <link href="__STATIC__/datetimepicker/css/datetimepicker.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <php>if(C('COLOR_STYLE')=='blue_color') echo '
+    <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    ';</php>
+  <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.js"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script> 
+  <script type="text/javascript">
+$('#submit').click(function(){
+    $('#form').submit();
+});
+
+$(function(){
+
+	initUploadFile(function(data,name){
+		var old_title = $('#title').val();
+		if(old_title==''){
+			var data = $.parseJSON(data);
+			var title = data.name.replace('.'+data.ext, '');
+			$('#title').val(title);		
+		}
+	});
+    showTab();
+	
+});
+</script> 
+</block>

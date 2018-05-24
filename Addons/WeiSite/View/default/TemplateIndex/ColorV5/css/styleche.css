@@ -1,0 +1,691 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+* {
+	margin: 0;
+	padding: 0px;
+	font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+body {
+	font-size: 14px;
+	margin: 0px;
+	padding: 0px;
+	background: #fff;
+	box-sizing: border-box;
+	font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+a {
+	text-decoration: none;
+	text-shadow: none;
+}
+
+ul,
+ol,
+li {
+	list-style: none
+}
+
+img {
+	border: 0
+}
+
+a {
+	text-decoration: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+p {
+	padding: 0.4em;
+}
+
+i,
+em,
+b,
+span,
+label,
+a {
+	display: inline-block;
+	font-style: normal;
+}
+
+.clearfix:after {
+	display: block;
+	content: ’’;
+	clear: both;
+}
+
+.clearfix {
+	zoom: 1;
+}
+
+
+/*引用图标*/
+
+@font-face {
+	font-family: 'Glyphicons Halflings';
+	src: url('../glyphicons-halflings-regular.eot');
+	src: url('../glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../glyphicons-halflings-regular.woff') format('woff'), url('../glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+.glyphicon {
+	position: relative;
+	top: 1px;
+	display: inline-block;
+	font-family: 'Glyphicons Halflings';
+	-webkit-font-smoothing: antialiased;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
+/*首页*/
+
+.header {
+	width: 100%;
+	position: relative;
+	overflow-x: hidden;
+}
+
+.header img {
+	width: 100%;
+	height: 180px;
+	vertical-align: middle;
+}
+
+.header ul {
+	overflow: hidden;
+}
+
+.header li {
+	float: left;
+}
+
+.header li a {
+	width: 100%;
+}
+
+.list_index {
+	background: #fff;
+	/*height:200px;*/
+}
+
+.list_index ul {
+	box-sizing: border-box;
+	overflow: hidden;
+	/*height:200px;*/
+}
+
+.p_text {
+	position: absolute;
+	padding: 0.4em 0em;
+	padding-left: 4%;
+	bottom: 0px;
+	color: #fff;
+	font-size: 13px;
+	line-height: 25px;
+	background: rgba(97, 96, 96, 0.54);
+	width: 100%;
+	overflow: hidden;
+	margin-bottom: 0;
+}
+
+.list_index li {
+	height:120px;
+	width: 50%;
+	overflow: hidden;
+	box-sizing: border-box;
+	border: 1px solid #dfe7ec;
+	border-top: none;
+	border-left: none;
+	float: left;
+	background: #fff;
+}
+#last_width,#lat_width{border-bottom: none;}
+#img_jiakao{
+	height:180px;
+}
+.list_index ul .list_ri {
+	border-right: none;
+}
+
+.list_index ul .list_bt {
+	border-bottom: none;
+}
+
+.list_index li a {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.list_index li.list_ri a {
+	width: 99.2%;
+}
+
+.list_index li p {
+	font-size: 13px;
+	margin-top: 10%;
+	margin-bottom: 15%;
+}
+
+.list_index li img {
+	width: 33%;
+	margin-top: 25%;
+}
+li.right_li{
+	border-right: none;
+}
+.lianxi img{
+	width: 13%;
+	margin-top: 6%;
+}
+@media screen and (min-height:480px) and (max-height:568px) {
+	
+	.list_index li img {
+		width: 35%;
+		margin-top: 13%;
+	}
+	.list_index li p {
+		font-size: 13px;
+		margin-top: 6%;
+		margin-bottom: 8%;
+	}
+}
+
+@media screen and (min-height:569px) and (max-height:668px) {
+	.list_index li img {
+		width: 35%;
+		margin-top: 13%;
+	}
+	.list_index li p {
+		font-size: 13px;
+		margin-top: 6%;
+		margin-bottom: 12%;
+	}
+	#img_jiakao{
+		height:200px;
+	}
+	.list_index li {
+		height:140px;
+		width: 50%;
+		overflow: hidden;
+		box-sizing: border-box;
+		border: 1px solid #a4a4a4;
+		border-top: none;
+		border-left: none;
+		float: left;
+		background: #fff;
+	}
+	li.right_li{
+	border-right: none;
+}
+    .lianxi img{
+    	margin-top:3%;
+    	margin-left: 5%;
+    }
+    .lianxi p{
+    	margin-left: 5%;
+    	
+    }
+	
+}
+
+@media screen and (min-height:669px) and (max-height:736px) {
+	.list_index li img {
+		width: 35%;
+		margin-top: 13%;
+	}
+	.list_index li p {
+		font-size: 13px;
+		margin-top: 9.5%;
+		margin-bottom: 12%;
+	}
+	#img_jiakao{
+		height:210px;
+	}
+	.list_index li {
+		height:150px;
+		width: 50%;
+		overflow: hidden;
+		box-sizing: border-box;
+		border: 1px solid #a4a4a4;
+		border-top: none;
+		border-left: none;
+		float: left;
+		background: #fff;
+	}
+	li.right_li{
+	border-right: none;
+}
+	.lianxi img{
+		width: 12%;
+    	margin-top:3%;
+    	margin-left: 6%;
+    	
+    }
+    .lianxi p{
+    	margin-left: 6%;
+    	
+    }
+	
+}	
+
+@media screen and (min-height:640px) and (max-height:640px) {
+	.list_index li img {
+		width: 33%;
+		margin-top: 21%;
+	}
+	.list_index li p {
+		font-size: 13px;
+		margin-top: 6%;
+		margin-bottom: 12%;
+	}
+}
+
+.index_gb {
+	background: #f4f4f4;
+	height: 40px;
+	width: 100%;
+	font-size: 16px;
+	line-height: 40px;
+	text-indent: 1em;
+	font-weight: 600;
+	color: #9b9c9c;
+}
+
+
+/*场地公告*/
+
+.notice {
+	padding: 10px;
+}
+
+
+/*学员个人信息登记*/
+
+header {
+	margin-top: 0;
+	padding: 0;
+}
+
+header h1 {
+	margin: 0;
+	height: 40px;
+	text-align: center;
+	width: 100%;
+	padding: 0;
+	font-size: 18px;
+	line-height: 40px;
+}
+
+.message {
+	padding: 10px 15px 0;
+	overflow-x: hidden;
+}
+
+.lab {
+	padding-right: 0;
+}
+
+.Required {
+	color: red;
+}
+
+.message li {
+	margin-top: 10px;
+}
+
+.message input {
+	width: 100%;
+	text-indent: 5px;
+}
+
+input.sex {
+	width: 20px;
+}
+
+input.agree {
+	width: 20px;
+}
+
+span.camera {
+	position: absolute;
+	right: 16px;
+	top: 9%;
+	height: 34px;
+	width: 34px;
+	font-size: 34px;
+}
+
+.clear {
+	width: 71%;
+	float: left;
+	padding-left: 5px;
+	line-height: 38px;
+}
+
+label {
+	font-weight: normal;
+	float: left;
+	width: 29%;
+	padding-top: 6px;
+	min-width: 6em;
+}
+
+.agree_submit {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.btn_submit {
+	margin-top: 20px;
+}
+
+
+/*车辆预约*/
+
+.car {
+	padding: 10px 15px 0;
+	overflow-x: hidden;
+}
+
+.car li {
+	margin-top: 10px;
+}
+
+.car input {
+	width: 100%;
+	text-indent: 5px;
+}
+
+.car_data {
+	margin-top: 10px;
+}
+
+th,
+td {
+	text-align: center;
+	font-weight: 500;
+}
+
+td input {
+	width: 15px;
+	height: 15px;
+}
+
+table {
+	display: block;
+	width: 600px;
+	overflow-x: auto;
+}
+
+#demo1 {
+	border-radius: 5px;
+}
+
+
+/*在线支付*/
+
+.pay {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.detail {
+	padding: 10px 0 0 10px;
+	font-size: 16px;
+}
+
+.pay_row {
+	margin-bottom: 10px;
+	position: relative;
+	padding: 0 10px;
+}
+
+.pay_detail {
+	background: #fff;
+	padding: 10px 15px 10px 15px;
+}
+
+
+/*.pay_detail img{width:100px;height:100px;}*/
+
+.show {
+	float: left;
+	width: 30%;
+	height: 100px;
+	padding: 0;
+	/*margin-left:15px ;*/
+}
+
+.car_number {
+	float: left;
+	width: 70%;
+	padding-right: 0;
+}
+
+.pay_detail span {
+	width: 100%;
+	display: block;
+	/*line-height: 24px;*/
+	margin-bottom: 5px;
+}
+.data_time i{
+	float: left;
+}
+.data_dian{
+	float: left;
+}
+.data_dian span{
+	width: 80px;
+	margin-right: 20px;
+}
+.red {
+	color: red;
+	float: left;
+}
+
+
+/*.pay_sub{background: #fff;margin-right: -15px;margin-left: -15px;padding:0 0 5px;}
+.pay_int{border: 1px solid #ccc;background: #fff;margin-left: 78%;}
+.pay_int{padding:2px}*/
+
+.comment {
+	float: right;
+}
+
+.pay_money {
+	margin-top: 20px;
+	height: 40px;
+	background: #fff;
+	margin-left: -15px;
+	margin-right: -15px;
+	line-height: 40px;
+}
+
+.mount {
+	color: red;
+	font-size: 18px;
+	text-align: center;
+}
+
+.button_submit {
+	margin-top: 20px;
+	width: 100%;
+}
+
+.pay-immediately {
+	margin-right: -10px;
+	margin-left: -10px;
+	height: 35px;
+}
+
+.pay-immediately-count-num {
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+}
+
+.pay-immediately-count {
+	float: left;
+}
+
+.time-item {
+	width: 100px;
+	background: #C71C60;
+	color: #fff;
+	line-height: 40px;
+	font-size: 14px;
+	font-family: Arial;
+	padding: 0 10px;
+	border-radius: 5px;
+	margin-left: 21%;
+}
+
+.pay-immediately div:nth-of-type(1) {
+	width: 70%;
+	background: #1c94f7;
+	height: 35px;
+	line-height: 35px;
+	text-align: left;
+	border-radius: 0px 0px 0px 10px;
+	color: #ffffff;
+	padding-left: 10px;
+	white-space: nowrap;
+}
+
+.pay-immediately div:nth-of-type(2) {
+	width: 30%;
+	height: 35px;
+	background: #097bd9;
+	line-height: 35px;
+	text-align: center;
+	border-radius: 0px 0px 10px 0px;
+	color: #ffffff;
+	float: right;
+}
+
+.del-order {
+	display: none;
+	text-align: center;
+	background: #999999;
+	height: 35px;
+	border-radius: 0px 0px 10px 10px;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	color: #fff;
+	line-height: 35px;
+}
+
+.arrow_mask {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 1;
+	background: #333333;
+	opacity: 0.55;
+	display: none;
+}
+
+.cancel-order-dialog {
+	display: none;
+	width: 260px;
+	height: 206px;
+	background: #ddd;
+	border-radius: 6px;
+	position: absolute;
+	top: 0px;
+	margin-top: 200px;
+	left: 50%;
+	margin-left: -130px;
+	z-index: 1;
+	padding-top: 33px;
+}
+
+.cancel-dialog div:nth-of-type(1) {
+	text-align: center;
+	/* border-right: 1px solid #999;
+        padding: 10px;
+        border-top: 1px solid #999;*/
+}
+
+.cancel-dialog-btn {
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	/* margin-top: -8px;*/
+}
+
+.cancel-dialog-btn div:nth-of-type(1) {
+	width: 130px;
+	border-right: 1px solid #999;
+	padding: 10px;
+	border-top: 1px solid #999;
+}
+
+.cancel-dialog-btn div:nth-of-type(2) {
+	width: 130px;
+	text-align: center;
+	padding: 10px;
+	border-top: 1px solid #999;
+}
+
+.space-underline2 {
+	margin-top: 116px;
+}
+
+.space-underline3 {
+	width: 100%;
+	height: 10px;
+	-webkit-border-image: url(../../images/hotel/border.gif) 1 stretch;
+	-webkit-transform: scaleX(0.2);
+	-moz-transform: scaleX(0.2);
+}
+
+
+/*订单查询*/
+
+.check {
+	overflow-x: hidden;
+	background: #eee;
+}
+
+.pay_check {
+	margin-bottom: 0;
+}
+
+.pay_mon {
+	height: 38px;
+	line-height: 38px;
+	;
+	background: #fff;
+	margin-left: -15px;
+	margin-right: -15px;
+}
+
+.btn_blank {
+	float: right;
+	margin-right: 4%;
+}
+
+
+/*.mou {
+	text-align: right;
+	margin-right: 20px;
+}*/
+
+.pay_order {
+	padding: 10px 10px 0;
+}

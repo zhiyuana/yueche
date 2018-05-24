@@ -1,0 +1,369 @@
+<extend name="Base/common" />
+
+ <block name="body">
+ <style>
+    label{float: left;width: 100px;}
+    li,ul{list-style: none;}
+    .line{margin-bottom: 39px;border-bottom: 1px solid #ddd;line-height: 38px;}
+    .bottom{position: absolute;bottom: 0;}
+     .tab-nav{margin-bottom: 0;}
+     .form_bh {padding: 20px 0 0;margin: 0;}
+
+    .poy_left{float: left;margin-left: 10%;margin-top: 7%;}
+    .poy_left span{display: inline-block}
+ </style>
+ <input type="hidden" id="code_url" value="">
+ <input type="hidden" id="out_trade_no" value="">
+  <div class="span9 page_message">  
+    <section id="contents">
+        <ul class="tab-nav nav">
+            <li class="current"><a href="javascript:void(0)">订单信息</a></li>
+        </ul>
+       <div class="tab-content" style="padding: 20px 40px;"> 
+
+     <li class="line" style="border-bottom: none;"> 
+        <div style="width:48%;margin-right: 20px;float: left;">
+            <label>驾校名称：</label>            
+            <span style="width: 344px;float: right;">{$dingdaninfo['jxname']}</span> 
+        </div>
+        <div style="width:48%;float: left;">
+            <label>教练姓名：</label>
+            <span style="width: 344px;float: right;">{$dingdaninfo['jlname']}</span> 
+        </div>
+    </li>
+    
+    <li class="line">                     
+        <div style="width:48%;margin-right: 20px;float: left;">
+            <label>预约车号：   </label>
+             <span style="width: 344px;float: right;">{$dingdaninfo['ch']}</span>
+        </div>
+         <div style="width:48%;margin-right: 20px;float: left;">
+            <label>预约日期：  </label>
+            <span style="width: 344px;float: right;">{$dingdaninfo['data']}</span>
+        </div>
+     </li>
+     
+    <li class="line">               
+        <div style="width:48%;margin-right: 20px;float: left;">
+            <label>预约时间段：   </label>
+            <span style="width: 344px;float: right;">{$dingdaninfo['ptime']}</span>
+         </div>
+         <div style="width:48%;margin-right: 20px;float: left;">
+            <label>支付金额：  </label>
+            <span style="width: 344px;float: right;">{$dingdaninfo['pay_money']}</span>
+            <input type="hidden" name="pay_money" id="pay_money" value="{$dingdaninfo['pay_money']}">
+            <input type="hidden" id="paying" name="paying" value="{$paying}">
+            <input type="hidden" id="pid" name="pid" value="{$pid}">
+            <input type="hidden" id="datatime" name="datatime" value="{$addtime}">
+        </div>
+         
+     </li>
+    <volist name="xueyuan_list" id="vo">
+
+    <li class="line">                     
+        <div style="width:48%;margin-right: 20px;float: left;">
+            <label>组团人员：   </label>
+            <span style="width: 344px;float: right;">{$vo.xname}</span>
+        </div>
+        <div style="width:48%;margin-right: 20px;float: left;">
+            <label>身份证号：   </label>
+            <span style="width: 344px;float: right;">{$vo.xcard}</span>
+        </div>
+    </li>
+    </volist>
+                 
+      <div class="form-item form_bh">
+        <div class="poy_left" style="margin-top:0;">
+            <span style="font-size: 16px;">等待付款</span>
+            <div class="time-item1">剩
+            <span id="minute_show1">00分</span>
+            <span id="second_show1">00秒</span>自动关闭
+          </div>
+        </div>
+           <!-- <div style="float: left"><span id="m" style="color:red;margin-right:10px;"></span>:<span id="s" style="color:red;margin:0 10px"></span>后自动取消订单</div> -->
+            <!-- <a href="{:U('Jxyueche/native_pays',array('paying_id'=>$paying))}" class="btn" style="float: right;margin-right:10px">去付款</a> -->
+            <input type="button" onclick="go_paying()" value="去付款"  class="btn" style="float: right;margin-right:10px">
+            <input type="button" onclick="not_pay()" value="取消订单" class="btn" style="float: right;margin-right: 10px;background-color:orange">
+
+        </div> 
+        <div align="center" id="qrcode" style="display: none;margin-top:30px;">
+          <div id = "over">
+            <!-- <input type="button" onclick="finish()" value="完成付款"  class="btn" style="float: right;margin-right:10px"> -->
+          </div>
+              
+       </div>   
+    </div>
+    </div>
+    </section>
+    
+  </div>
+
+    
+    
+    <!--<div align="center">
+        <p>订单号：<?php echo $out_trade_no; ?></p>
+    </div>-->
+<!--     <div align="right" style="float:right">
+        <form  action="./refund.php" method="post">
+            <input name="out_trade_no" type='hidden' value="<?php echo $out_trade_no; ?>">
+            <input name="refund_fee" type='hidden' value="1">
+            <button type="submit" >未完成付款</button>
+        </form>
+    </div>
+     <div align="right" style="float:right">
+        <form  action="./order_query.php" method="post">
+            <input name="out_trade_no" type='hidden' value="<?php echo $out_trade_no; ?>">
+            <button type="submit" >已完成付款</button>
+        </form>
+    </div> -->
+
+    <br>
+</block>
+
+<block name="script">
+  <link href="__STATIC__/datetimepicker/css/datetimepicker.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <php>if(C('COLOR_STYLE')=='blue_color') echo '
+    <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    ';</php>
+  <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.js"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script> 
+    <script src="__PUBLIC__/static/qrcode.js"></script>
+
+<script type="text/javascript">
+// JiShi(15);
+function not_pay(){
+  var out_trade_no = $('#out_trade_no').val();
+  if(out_trade_no != ""){
+    $.ajax({
+      url:"{:U('Home/Jxyueche/OrderQuery')}",
+      data:{out_trade_no:out_trade_no},
+      type:'post',
+      success:function(res){
+        var status = res.status;
+        var url = res.url;
+        var msg = res.msg;
+        if(msg == 'OK'){
+          alert('对不起，您已经完成付款，不能取消该订单！');
+          window.location.href = url;
+        }else{
+          var r=confirm("你确定要取消该订单吗？");
+          var paying = $('#paying').val();
+          var pid = $('#pid').val();
+          if(r == true){
+            $.ajax({
+              url:"{:U('Jxyueche/cancel_dingdan')}",
+              type:'post',
+              data:{paying:paying,pid:pid},
+              success:function(result){
+                // alert(res.url);return false;
+                var ddstatus = result.status;
+                if(ddstatus){
+                  alert('取消订单成功！');
+                  window.location.href = result.url;
+                }else{
+                  alert('取消订单失败！请重新下单。');
+                  return false;
+                }
+              }
+            });
+          }
+        }
+      }
+    });
+  }else{
+    var r=confirm("你确定要取消该订单吗？");
+    var paying = $('#paying').val();
+    var pid = $('#pid').val();
+    if(r == true){
+      $.ajax({
+        url:"{:U('Home/Jxyueche/cancel_dingdan')}",
+        type:'post',
+        data:{paying:paying,pid:pid},
+        success:function(res){
+          var status = res.status;
+          if(status){
+            alert('取消订单成功！');
+            window.location.href = res.url;
+          }else{
+            alert('取消订单失败！请联系管理员。');
+          }
+        }
+      });
+    }
+  }
+
+    
+  // }
+}
+// function JiShi (num){
+//     var time = num*60;
+//     var t = setInterval(function(){
+//         time--;
+//         document.getElementById('m').innerHTML = Math.floor(time/60)<10?'0'+Math.floor(time/60):Math.floor(time/60);
+//         document.getElementById('s').innerHTML = time%60<10?'0'+time%60:time%60;
+//         if(time==0){
+//           clearInterval(t);
+//           cancel_pay();
+//         }
+//     },1000)
+//  }
+function cancel_pay(){
+  var paying = $('#paying').val();
+  var pid = $('#pid').val();
+  $.ajax({
+    url:"{:U('Jxyueche/cancel_dingdan')}",
+    type:'post',
+    data:{paying:paying,pid:pid},
+    success:function(res){
+      var status = res.status;
+      if(status){
+        // alert('已取消订单！');
+        window.location.href = res.url;
+      }//else{
+        // alert('取消订单失败！请联系管理员。');
+      // }
+    }
+  });
+}
+
+$(function(){
+
+    initUploadFile(function(data,name){
+        var old_title = $('#title').val();
+        if(old_title==''){
+            var data = $.parseJSON(data);
+            var title = data.name.replace('.'+data.ext, '');
+            $('#title').val(title);     
+        }
+    });
+    showTab();
+
+    function time(){         
+      //获取下单时间
+      // var startime = $("input[name='datatime']").val();
+      var startime = $("#datatime").val();
+      // alert(startime);
+      // console.log(startime);
+      //获取15分钟过期时间
+      var endtime =parseInt(startime)+900;
+      //获取当前时间
+      var dangqiantime = parseInt(new Date().getTime()/1000); 
+      //当前时间减去过期时间
+      var leftTime=endtime-dangqiantime;
+      setInterval(function(){
+        if(leftTime>=0){                  
+          var minute=Math.floor(leftTime/60); 
+          //alert(minute);
+          var second=Math.floor(leftTime-minute*60); 
+          if(minute <= 9) minute = '0' + minute;
+          if(second <= 9) second = '0' + second;
+          $('#minute_show1').html('<s></s>' + minute + '分');
+          $('#second_show1').html('<s></s>' + second + '秒');
+          leftTime--;
+        }else{
+          clearInterval();
+          cancel_pay();
+        }
+      },1000);
+    }
+    $(function(){
+      time();
+    });
+});
+
+var gopayflag = true;
+function go_paying(){
+  var paying_id = $('#paying').val();
+  $.ajax({
+    url:"{:U('Home/Jxyueche/native_pays')}",
+    data:{paying_id:paying_id},
+    type:"post",
+    success:function(res){
+      var status = res.status;
+      if(status == 0){
+        var code_url = res.code_url;
+        var out_trade_no = res.out_trade_no;
+        $('#code_url').val(code_url);
+        $('#out_trade_no').val(out_trade_no);
+        if(gopayflag){
+           qrcode_url();
+           gopayflag = false;
+        }
+      }else{
+        alert('获取二维码失败,请重试!');
+        return false;
+      }
+    }
+  });
+}
+
+function qrcode_url(){
+  $('#qrcode').css('display','block')
+  var code_url = $('#code_url').val();
+  var out_trade_no = $('#out_trade_no').val();
+  //参数1表示图像大小，取值范围1-10；参数2表示质量，取值范围'L','M','Q','H'
+  var qr = qrcode(10, 'M');
+  qr.addData(code_url);
+  qr.make();
+  // console.log(qr.createImgTag());
+  var wording=document.createElement('p');
+  wording.className = "myp";
+  wording.innerHTML = "请使用微信扫描二维码完成付款";
+  var code=document.createElement('DIV');
+  code.innerHTML = qr.createImgTag();
+  var element=document.getElementById("qrcode");
+  // console.log(element);
+  element.insertBefore(wording,element.children[0]);
+  element.insertBefore(code,element.children[0]);
+  // code.prependTo($('#qrcode'));
+  // wording.prependTo($('#qrcode'));
+  intval();
+}
+// console.log(skip_url + '/index.php?s=/Home/Jxyueche/ding_lis');
+
+function intval(){
+  var t = setInterval(function(){
+    var out_trade_no = $('#out_trade_no').val();
+    $.ajax({
+      url:"{:U('Home/Jxyueche/OrderQuery')}",
+      data:{out_trade_no:out_trade_no},
+      type:"post",
+      success:function(res){
+        var msg = res.msg;
+        if(msg == "OK"){
+          clearInterval(t);
+          $('.myp').html('<img src="__PUBLIC__/static/pay_pic/fukuan.png" width=20; height=20; style="vertical-align:middle;">已完成付款');
+          var skip_url =   "http://" + window.location.hostname;
+          setTimeout(function(){
+          window.location.href = skip_url + '/index.php?s=/Home/Jxyueche/ding_list';
+          },3000);
+        }
+      }
+    });
+  }, 5000);
+}
+// function finish(){
+//   var out_trade_no = $('#out_trade_no').val();
+//   $.ajax({
+//     url:"{:U('Home/Jxyueche/OrderQuery')}",
+//     data:{out_trade_no:out_trade_no},
+//     type:'post',
+//     success:function(res){
+//       var status = res.status;
+//       var url = res.url;
+//       var msg = res.msg;
+//       if(status == 0){
+//         alert('支付成功！');
+//         // alert(msg);
+//         clearInterval();
+//         window.location.href = url;
+//       }else{
+//         alert(msg);
+//       }
+//     }
+//   });
+// }
+</script> 
+</block>
+

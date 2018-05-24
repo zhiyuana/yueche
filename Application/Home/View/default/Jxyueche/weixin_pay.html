@@ -1,0 +1,199 @@
+<extend name="Base/common" />
+<block name="body">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+    <script type="text/javascript" src="__STATIC__/dingdan/js/jquery-1.7.1.js"></script>
+    <!-- <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script> -->
+    <script type="text/javascript" src="__STATIC__/dingdan/js/bootstrap.min.js"></script>
+    <!-- <script type="text/javascript" src="__STATIC__/dingdan/js/jiao_select.js"></script> -->
+    <!-- <script type="text/javascript" src="__STATIC__/dingdan/js/select.js"></script> -->
+    <style>
+        ul,
+        li {
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        /*.car {height:40px;}*/
+        
+        .sub {
+            padding: 15px;
+            color: #000;
+        }
+        
+        .car_date,
+        .car_all {
+            display: inline-block;
+        }
+        
+        .car_date {
+            margin-right: 30px;
+            color: #000;
+        }
+        
+        .car_date label {
+            font-weight: normal;
+        }
+        
+        .car_date input {
+            color: #000;
+        }
+        
+        label {
+            float: left;
+            margin-right: 20px;
+            line-height: 34px;
+        }
+        
+        .form-control {
+            float: left;
+            width: 8%;
+            margin-right: 50px;
+        }
+        
+        #data {
+            height: 17px;
+            width: 150px;
+        }
+        
+        select {
+            width: 167px;
+            height: 34px;
+        }
+        
+        .car_data {
+            margin-top: 60px;
+        }
+        
+        .day i {
+            background: url(__STATIC__/dingdan/item_sel.gif) no-repeat;
+            display: none;
+            bottom: 0;
+            height: 12px;
+            overflow: hidden;
+            position: absolute;
+            right: 0;
+            text-indent: -9999em;
+            width: 12px;
+        }
+        
+        .data-table table tr>th:first-child {
+            width: 30px;
+        }
+        
+        .data-table table tr>td:first-child {
+            width: 30px;
+            text-align: center;
+        }
+        
+        .day1 {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 2px 4px;
+            text-align: center;
+            position: relative
+        }
+        
+        .day {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 2px 4px;
+            text-align: center;
+            position: relative
+        }
+        .day_dis {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 2px 4px;
+            text-align: center;
+            position: relative
+        }
+        
+        .fenduan {
+            height: 220px;
+            overflow-y: auto;
+            padding: 15px;
+            overflow-x: auto;
+            width: 1162px;
+        }
+        
+        .fenduan table {
+            border: 1px solid #ddd;
+            width: 100%;
+            border-spacing: 0;
+            border-collapse: collapse;
+            background-color: transparent;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        
+        .fenduan tr {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
+        }
+        
+        .fenduan table th {
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+        }
+        
+        .fenduan td {
+            border: 1px solid #ddd;
+            padding: 6px;
+            line-height: 1.42857143;
+            vertical-align: top;
+        }
+        
+        .fenduan td .day {
+            cursor: pointer;
+        }
+        /*.fenduan .table{
+			width: 100%;
+            max-width: 100%;
+		}*/
+        
+        .select {
+            width: 100px;
+            height: 37px;
+        }
+        .day_dis{
+            height: 26px;
+        }
+    </style>
+    <div class="span9 page_message">
+        <form action='{:U("Jxyueche/add_dingdan")}' method="post" id="myform">
+        <section id="contents">
+            <ul class="tab-nav nav">
+            <li class="current"><a href="javascript:void(0)">微信扫码支付</a></li>
+            </ul>
+            <div style="margin-bottom: 20px;" class="fenduan">
+                <table class="table table-bordered">
+                    <thead>
+                        <th colspan="6">
+                            <div style="display: inline-block; ">微信扫码支付</div>
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr class='mytr' colspan="6">
+                            <td style="text-align: -webkit-center;"><img src="__PUBLIC__/Home/images/pay_pic/qrcode.png"></td>
+                        <tr>
+                    </tbody>
+                </table>
+                
+            </div>
+
+        </section>
+        </form>
+    </div>
+</block>
+<block name="script">
+<script>
+
+</script>
+    
+</block>

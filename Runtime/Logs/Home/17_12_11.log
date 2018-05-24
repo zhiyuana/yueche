@@ -1,0 +1,6 @@
+[ 2017-12-11T13:42:34+08:00 ] 112.229.127.196 /index.php?s=/Home/Dingdan/wei_xq/id/15558/mdm/1832.html
+ERR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+
+[ 2017-12-11T13:42:44+08:00 ] 112.229.127.196 /index.php?s=/Home/Dingdan/wei_xq/id/15558/mdm/1832.html
+ERR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+

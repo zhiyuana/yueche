@@ -1,0 +1,160 @@
+<extend name="Base/common" />
+<block name="body">
+  <div class="span9 page_message">
+  
+    <section id="contents"><include file="Addons/_nav" />
+        <!-- <ul class="tab-nav nav">
+            <li class=""><a href="{:U('Jxyueche/jxyc_index')}">驾校约车</a></li>
+            <li class="current"><a href="{:U('Jxyueche/jxueyuan_list')}">学员管理</a></li>
+        </ul> -->
+
+    <div class="table-striped">
+      <div style="padding-bottom: 5px;padding-left: 20px;">
+          <input type="text" name="xy_name" id="xy_name" placeholder="请输入学员姓名/身份证号" value="{$xy_name}" style="float:left;">
+          <a class="btn xy_chaxun" href="javascript:void(0)" style="margin-bottom: 10px;padding: 8px 15px;float:left;margin-left:10px;">查询</a>
+          <!-- <form action="{:U('Jxyueche/daoru_excel')}" enctype="multipart/form-data" method="post">
+              <input type="file" name="photo">
+              <input type="submit" value="导入数据">
+              
+          </form> -->
+
+          <span class="btn btn-success fileinput-button" style="width:58px;height:36px;display:block;overflow:hidden;position:relative;padding: 0;line-height: 36px;float: left;margin-left:10px;">
+              <span>导入</span>
+              <input id="fileupload" type="file" name="files[]" style="width:58px;height:36px;display:block;position:absolute;left:0;top:0;opacity:0;" multiple>
+          </span>
+          <span class="btn btn-success fileinput-button" style="width:80px;height:36px;display:block;overflow:hidden;position:relative;padding: 0;line-height: 36px;float: left;margin-left:10px;">
+              <span><a href="__PUBLIC__/static/excelmuban/xueyuanmuban.xlsx" style="color:white;font-size:14px;">模板下载</a></span>
+          </span>
+          <?php
+              $a = strrchr($_SERVER['DOCUMENT_ROOT'],'/');
+              $b = substr($a,1);
+              if($_SESSION["$b"."_home"]['user_auth']['username'] == 'admin'){
+          ?>
+          <a class="btn add_student" href="{:U('Jxyueche/add_student')}" style="margin-bottom: 10px;padding: 8px 15px;float:left;margin-left:10px;display: none;">添加</a>
+          <?php
+              }else{
+          ?>
+          <a class="btn add_student" href="{:U('Jxyueche/add_student')}" style="margin-bottom: 10px;padding: 8px 15px;float:left;margin-left:10px;">添加</a>
+          <?php
+              }
+          ?>
+      </div>
+    </div>
+		<div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+                <tr>
+                  <th>编号</th>
+                  <th>姓名</th>
+        			    <th>性别</th>
+                  <th>手机号</th>
+                  <th>身份证号</th>
+        			    <th>操作</th>
+                </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody>
+              <volist name="xueyuan_list" id="vo">
+                <tr>
+                  <td type="headimgurl">{$vo.id}</td>
+                  <td type="content">{$vo.xname}</td>
+                  <td >{$vo.xsex}</td>
+				          <td >{$vo.xphone}</td>
+				          <td >{$vo.xcard}</td>
+				          <td>
+                    <a href="{:U('jxueyuan_edit',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}">编辑</a> |
+                    <a href="{:U('jxueyuan_del',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}" class="del">删除</a>
+                  </td>
+                </tr>
+              </volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page"> {$_page|default=''} </div>
+    </section>
+  </div>
+</block>
+<block name="script">
+<script type="text/javascript" src="__STATIC__/excel_style/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="__STATIC__/excel_style/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="__STATIC__/excel_style/jquery.fileupload.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+})
+$( '.del' ).click( function () {
+				return confirm('确认要执行删除操作吗？');
+    });
+function playSound(id,obj){
+	var audio = document.getElementById(id);
+	if(audio.paused){
+		audio.play();
+		$(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+		audio.addEventListener('ended', function () {  
+// 			alert('over');
+			$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+		}, false);
+		return;
+	}
+	audio.pause();
+	$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+	
+}
+
+//查询学员
+$(".xy_chaxun").click(function(){
+    var xy_name = $('#xy_name').val();
+    // if(xy_name == ''){
+    //   alert('查询学员信息不能为空!');
+    //   return false;
+    // }else{
+      var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+      var url = skip_url + "?s=/Home/Jxyueche/jxueyuan_list/xy_name/"+xy_name;
+      $('.xy_chaxun').attr('href',url);
+    // }
+
+});
+
+//导入excel
+var url = window.location.hostname === 'blueimp.github.io' ? '//jquery-file-upload.appspot.com/' : "{:U('Jxyueche/daoru_excel')}";
+$('#fileupload').fileupload({
+    url: url,
+    dataType: 'json',
+    done: function (e, data) {
+        if(data.result == 1){
+            alert('导入成功！');
+            window.location.reload();
+        }else if(data.result == 2){
+            alert('导入失败！请查看你的驾校名称是否正确！');
+            return false;
+        }else if(data.result == 3){
+            alert('导入失败！请查看你的教练名称是否正确！');
+            return false;
+        }else if(data.result == 4){
+            alert('导入失败！请查看你的身份证号是否正确！');
+            return false;
+        }else if(data.result == 0){
+            alert('导入失败！请查看你的导入信息是否重复！');
+            return false;
+        }else if(data.result == 5){
+            alert('导入失败！请查看你的导入信息是否存在空信息！');
+            return false;
+        }
+    },
+    progressall: function (e, data) {
+      var progress = parseInt(data.loaded / data.total * 100, 10);
+      //console.log('文件上传中'+progress+'%')
+    }
+})
+
+
+
+
+
+</script> 
+</block>

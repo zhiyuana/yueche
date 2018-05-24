@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+		<title>订单详情</title>
+		<link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/style3.css">
+		<script src="{:ADDON_PUBLIC_PATH}/jquery.min.js" type="text/javascript"></script>
+		<style>
+		    header{width: 100%;height: 100px;background: #ff7e00;color: #fff;}
+		    .poy_left{float: left;margin-left: 10%;margin-top: 7%;}
+		    .poy_left span{display: inline-block}
+		    .poy_right{float: right;width: 80px;height: 60px;margin-top: 7%;margin-right: 10%;}	
+		    .yuyue_name{height: 40px;padding:10px;background: #fff;}	  
+		    .yuyue_name span{display: inline-block}
+		    .kaoshi{height: 40px;padding:10px;background: #fff;}
+		    .jia_name{float: left;}
+		    .red {color:#ff7e00;float: right;font-size: 16px;}
+		    .name{float: left;}  
+		    .phone{float: right;}
+			.data_time i{float: left;}
+			.data_dian{float: left;}
+			.data_dian span{width: 80px;margin-right: 20px;} 
+			.zuihou{height: 75px;background: #fff;margin-top: 10px;padding:0px 10px 10px;}
+			.zuihou p{margin-bottom: 5px;margin-top:0;text-align: right;}
+			.zuihou div{border: 1px solid #ddd;float: right;margin-right: 15px;}
+			.pay_detail span{margin-bottom: 0px;}
+		</style>
+	</head>
+	    <script type="text/javascript">
+		//调用微信JS api 支付
+		function jsApiCall()
+		{
+			WeixinJSBridge.invoke(
+				'getBrandWCPayRequest',
+				<?php echo $jsApiParameters; ?>,
+				function(res){
+					// WeixinJSBridge.log(res.err_msg);
+					// alert(res.err_msg);
+					if (res.err_msg == "get_brand_wcpay_request:ok") {
+						alert('支付成功'); 
+						$.ajax({
+				            type:"post",
+				            url:"{:addons_url('Forms://Wap/Dingdan')}",
+				            dataType:"json",
+				            success:function(result){
+				            	// document.write(result)
+	    		            	if(result.status == 0){
+	    		            		alert(result.msg);
+	    		            	}else{
+	    	    					window.location.href = result.url;
+	    		            	}
+				            }
+				        });
+					}
+				}
+			);
+		}
+
+		function callpay()
+		{
+			if (typeof WeixinJSBridge == "undefined"){
+			    if( document.addEventListener ){
+			        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+			    }else if (document.attachEvent){
+			        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+			        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+			    }
+			}else{
+			    jsApiCall();
+			}
+		}
+		</script>
+		
+	<body style="background: #eee;">
+		
+		<header>			
+			<div class="poy_left">
+			    <span style="font-size: 16px;">等待付款</span>
+			    <div class="time-item1">剩
+					<span id="minute_show1">00分</span>
+					<span id="second_show1">00秒</span>自动关闭
+				</div>
+			</div>
+			<img src="{:ADDON_PUBLIC_PATH}/zhifu.png" alt="正在加载中" class="poy_right"/>
+		</header>
+		<div class="yuyue_name">
+			<span class="name">预约人：张三</span>
+			<span class="phone">1832392199</span>
+		</div>
+		
+		<div class="pay" style="margin-top: 10px;">
+			<div class="kaoshi">
+				<div class="jia_name"><img src="{:ADDON_PUBLIC_PATH}/jiakao.jpg" alt="正在加载中" style="width: 20px;height: 20px;float: left;margin-right: 10px;"><span>考试中心</span></div>
+				<span class="red">等待付款</span>
+			</div>
+			<!-- <p class="detail">订单详情</p> -->
+			<div class="pay_row" style="background: #eee;">
+				<div class="pay_detail row"  style="background: #eee;">
+					<img src="{:ADDON_PUBLIC_PATH}/jiakao.jpg" alt="正在加载中" class="col-sm-3 show" />
+					<div class="col-sm-9 car_number">
+					<input type="hidden" name="wid" value="{$w_list[0]['id']}">
+					<input type="hidden" name="datatime" value="{$datatime}">
+						<span>订单编号：{$w_list[0]['dbh']}</span>
+						<span>下单时间：2017-04-24 12:89</span>
+						<span>车号：{$p_list[0][0]['ch']}</span>
+						<span>日期：{$p_list[0][0]['data']}</span>
+						<span style="color: red;margin-bottom: 0;">单价：￥150.00</span>	
+						<!--<span>总价：￥{$w_list[0]['money']}.00</span>		-->				
+						<div class="data_time">
+							<i>时间段：</i>
+							<div class="data_dian">
+							<?php 
+								foreach($p_list as $k=>$v){
+									foreach($v as $h=>$g){
+							?>
+								<span><?php echo $g['time']; ?></span>
+							<?php
+									}
+								}
+							?>
+							<foreach name="p_list" key="k" item="v">
+								<span>{$v.time}</span>
+							</foreach>
+							</div>
+						</div>				
+					</div>
+				</div>
+			</div>	
+				<div class="zuihou">
+					<p style="border-bottom: 1px dashed #ddd">共x个小时 合计：￥xxx.00（含收续费￥xx.00）</p>
+					<a onclick="callpay()" class="btn" style="color: #fff;text-decoration: none;background:#ff7e00 ;border-radius: 20px;padding: 4px 16px;float: right;">付款</a>
+					<div class="btn" id="cancle-order" style="border-radius: 20px;padding: 4px 6px;">取消订单</div>				
+				</div>
+				<!--<div class="pay-immediately">-->
+					<!--<div class="pay-immediately-count">
+						<div class="pay-immediately-count-num">
+						<a onclick="callpay()" style="color: #fff;text-decoration: none;">立即支付</a>
+							<div class="time-item">还剩
+								<span id="minute_show">00分</span>
+								<span id="second_show">00秒</span>
+							</div>
+						</div>
+					</div>-->
+
+					<script>
+					$(function() {
+					  	function time(){					  	
+		                    //获取下单时间
+						  	var startime = $("input[name='datatime']").val();
+						  	//获取5分钟过期时间
+						  	var endtime =parseInt(startime)+900;
+						  	//获取当前时间
+							var dangqiantime = parseInt(new Date().getTime()/1000);	
+	                        //当前时间减去过期时间
+							var leftTime=endtime-dangqiantime;
+							setInterval(function(){
+								if(leftTime>=0){							    
+									var minute=Math.floor(leftTime/60); 
+									//alert(minute);
+									var second=Math.floor(leftTime-minute*60); 
+									if(minute <= 9) minute = '0' + minute;
+									if(second <= 9) second = '0' + second;
+									$('#minute_show1').html('<s></s>' + minute + '分');
+									$('#second_show1').html('<s></s>' + second + '秒');
+									leftTime--;
+								}else{
+									clearInterval();
+									var wid = $("input[name='wid']").val();
+						    		$.ajax({
+							            type:"post",
+							            url:"{:addons_url('Forms://Wap/Qxdingdan')}",
+							            data:{wid:wid},
+							            dataType:"json",
+							            success:function(result){
+		            		            	if(result.status == 0){
+		            		            		alert(result.msg);
+		            		            	}else{
+		            	    					window.location.href = result.url;
+		            		            	}
+							            }
+							          });
+								}
+							},1000);
+						}
+					  	$(function(){
+							time();
+						});
+					})					  
+					</script>
+					<!--<div class="cancle-order">取消订单</div>
+					</div>
+			</div>-->
+		<!--</div>-->
+		<!--点击取消订单的确认-->
+		<div class="cancel-order-dialog" style="background: #ddd;">
+            <div class="cancel-dialog">
+                <div>你确定要取消该订单吗？</div>
+                <div class="space-underline2"></div>
+                <div class="shuxian"></div>
+                <div class="cancel-dialog-btn">
+                    <div class="cancle-order-btn">取消</div>
+                    <div class="certain-order">确定</div>
+                </div>
+            </div>
+		 </div>
+		<script>
+			/* 点击取消订单按钮*/
+	        $('#cancle-order').click(function(){
+	            $(".cancel-order-dialog").show()
+	        })
+	       /* 弹框的设置---取消键*/
+	        $(".cancle-order-btn").click(function(){
+	            $(".cancel-order-dialog").hide();
+	        });
+	        /* 弹框的设置---确定键*/
+	        $(".certain-order").click(function(){
+	        	$(".cancel-order-dialog").hide();
+				var wid = $("input[name='wid']").val();
+	    		$.ajax({
+		            type:"post",
+		            url:"{:addons_url('Forms://Wap/Qxdingdan')}",
+		            data:{wid:wid},
+		            dataType:"json",
+		            success:function(result){
+     		            	if(result.status == 0){
+     		            		alert(result.msg);
+     		            	}else{
+     		            		alert("订单取消成功！");
+     	    					window.location.href = result.url;
+     		            	}
+		            }
+		          });
+	        });
+		</script>
+		<div class="arrow_mask"></div>
+	</body>
+
+</html>

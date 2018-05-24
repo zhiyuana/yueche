@@ -1,0 +1,697 @@
+<extend name="Base/common" />
+<block name="body">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.min.js"></script>
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+   <script type="text/javascript" src="__STATIC__/dingdan/js/bootstrap.min.js"></script>
+   <style>
+   	.MsoNormal{mso-style-name: 正文;mso-style-parent: "";margin: 0pt;margin-bottom: .0001pt;mso-pagination: none;
+    text-align: justify;text-justify: inter-ideograph;font-family: 'Times New Roman';font-size: 10.5000pt;mso-font-kerning: 1.0000pt;}
+   </style>
+  <div class="span9 page_message">
+  
+    <section id="contents"> <include file="Addons/_nav" />
+
+      <!-- 数据列表 -->
+      <div class="data-table" style="margin-top:20px;">
+        
+        	<div class="call" style="border: 1px solid #ddd;overflow: hidden;padding: 20px;margin: 20px;display: none;">
+    	  		<!--<HR><center>-->
+		       <form  id="form" method="post"  onsubmit="return checkForm();" style="display: inline-block;float: left;width: 600px;">
+		       	<div  style="padding: 10px 20px;">
+		       <table class="s1" >
+		          <tr>
+		           <!-- <td width="12%" ><IMG height=126 alt="" width=102 border=0 name=photo id=jpgfile style="left:10px;"></td>-->
+		            <td>
+		            	 <input type="hidden" name="jx" id="jx" value="{$jx}">
+		            	<input type="hidden" name="jl" id="jl" value="{$jl}">
+		                <table width="400" border="1" style="color:#0011CC;"  >
+		                  <tr>
+		                    <td align="right">提示信息</td>
+		                    <td><input name="tResult" type="text" size="40" /></td>
+		                    
+		                  </tr>
+		                  <tr>		                  
+		                    <td align="right">姓名</td>
+		                    <td><input name="tNameL" id="tName"  type="text" size="40" /></td>
+		                  </tr>
+		                  <tr>		                   
+		                    <td align="right">性别</td>
+		                    <td><input name="tSexL"  type="text" size="40" /></td>
+		                  </tr>		 
+		                  <tr>
+		                    <td align="right">公民身份号码</td>
+		                    <td><input name="tcardID" id="tcardID" type="text" size="40" /></td>		                    
+		                  </tr>
+		                  <tr>		                  
+		                    <td align="right">手机号</td>
+		                    <td><input name="phone" id="phone" value="" type="text" size="40" /></td>
+		                  </tr>		                 
+		                </table>
+		             </td>
+		       </tr>
+		     </table>
+		    </div>
+		    </form>
+		    <div style="float: left;margin-top: 10px;margin-left: 50px;">
+			<OBJECT
+				  classid="clsid:F1317711-6BDE-4658-ABAA-39E31D3704D3"                  
+				  codebase="SDRdCard.cab#version=1,3,6,4"
+				  width=330
+				  height=210
+				  align=center
+				  hspace=0
+				  vspace=0
+				  id=idcard
+				  name=rdcard	
+			>
+			</OBJECT>
+    	  	 </div>
+    	  	 <!--</div>-->
+    	  </div> 
+    	 
+        <div class="table-striped">
+        <div style="padding-bottom: 20px;">
+		    <div style="float:left;width: 30%;margin-right: 20px;">
+		    	<label>学员身份证:</label>
+		    	<input type="text" id="xcard" name="xcard" value="" style="margin-bottom: 0;"/>
+		    </div>
+		    <!-- <div style="float:left;width: 30%;margin-right: 20px;">
+		    	<label>教练身份证:</label>
+		    	<input type="text" id="jcard" name="" value="" style="margin-bottom: 0;"/>
+		    </div> -->
+		    <input type="submit" onclick="chaxun()"  value="搜 索" class="btn" >	
+        <p id="xueyuan_name"></p>	
+
+        </div>
+       
+        </div>
+        </div>
+    <div id="div_print" style="display:none"> 
+    	<p style="display: inline-block;float: right;">NO:<span class="bianhao"></span></p>
+    	<div style="clear: both;"></div>
+      <h3 style="text-align:center;font-size: 24px;line-height: 28.0000pt;letter-spacing:  2px;margin-top: 0;">数字化考试车使用协议</h4>
+      <p class="MsoNormal" style="text-align: left;line-height: 30px;"></p>
+      <p class="MsoNormal" style="text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;">甲方:济南市机动车驾驶员考试服务中心</p>
+      <p class="MsoNormal" style="text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;">乙方:学员：<span id="xycard" style="display: inline-block;" ></span></p>
+      <p class="MsoNormal" style="text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;">乙方:教练员：<span id="jlcard" style="display: inline-block;" ></span></p>
+      <p style="text-indent: 32.0000pt;text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;" class="MsoNormal" >甲方提供数字化考试车给乙方使用,为明确甲、乙双方的权利和义务,经双方协商,按照平等互利的自愿原则,就车辆、场地的使用相关事宜签订本协议</p>
+        <p style="text-indent: 32.0000pt;text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;" class="MsoNormal" >1、甲方提供的车辆应设备完好齐全、车况干净整洁。</p>
+        <p style="text-indent: 32.0000pt;text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;" class="MsoNormal" >2、甲方应保证训练场地完好,环境舒适。</p>
+        <p style="text-indent: 32.0000pt;text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;" class="MsoNormal" >3、对乙方在使用甲方提供的车辆过程中应接受甲方的监督和管理。</p>
+        <p style="text-indent: 32.0000pt;text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;" class="MsoNormal" >4、乙方凭有效教练证网上预约成功后应提前到窗口办理租车手续。超过预约时间到租车点租车,按实际到达时间登记租车。超过时间不予补足,租车时间结束准时收车。</p>
+        <p style="text-indent: 32.0000pt;text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;" class="MsoNormal" >5、为保障训练人员安全,乙方在施教过程中应随车施教,无教练员随车施教的,一经查实甲方有权取消乙方租车资格。</p>
+        <p style="text-indent: 32.0000pt;text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;" class="MsoNormal" >6、乙方应确保施训过程中的安全和车辆设备的完好,不按规定施教发生车辆设备损坏或事故的由乙方教练员承担全部责任,造成损失的照价赔偿。</p>
+        <p style="text-indent: 32.0000pt;text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;" class="MsoNormal" >7、乙方应服从场地管理人员管理，遵守场地管理规定。严重违规违纪，恶意延迟交车时间，以及上车教练员、学员信息与本协议书不一致的的情况，一经查实甲方有权取消乙方及其所在驾校租车资格。</p>
+        <p id="pdata" style="text-indent: 32.0000pt;text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 15px;" class="MsoNormal" ></p>
+        <p style="text-indent: 32.0000pt;text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;" class="MsoNormal" >9、本协议履行过程中发生争议。由双方协商解决</p>
+        <p style="text-indent: 32.0000pt;text-align: left;line-height: 30px;letter-spacing:  2px;font-size: 16px;" class="MsoNormal" >10、本协议当天车辆使用结束自动失效。</p>  
+        <p class="MsoNormal" style="text-align: left;float:left;display:inline-block;margin-top:60px;line-height: 30px;letter-spacing:  2px;font-size: 16px;">甲方:济南市机动车驾驶员考试服务中心</p>
+        <p class="MsoNormal" style="text-align: left;margin-left:150px;display:inline-block;margin-top:20px;line-height: 30px;letter-spacing:  2px;font-size: 16px;"><span style="width: 200px;">乙方：教练员</span><br><span style="width: 200px;">乙方：学员</span></p>
+    </div>
+    <div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>学员姓名</th>
+                <!-- <th>教练姓名</th> -->
+                <th>预约日期</th>
+                <th>订单号</th>
+                <th>下单时间</th>
+                <th>缴费金额</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <!-- 列表 -->
+            <input type='hidden' name='pdata' id='pdata' value="">
+            <input type="hidden" id="date_id"  value="" name=""/>
+            <tbody class="list">
+             
+            </tbody>
+          </table>
+          <script type="text/javascript">
+           $("#xcard").click(function(){
+			document.onkeydown=function(event){
+             var e = event || window.event || arguments.callee.caller.arguments[0];          
+             	if(e && e.keyCode==13){
+              	 var xcard = $('#xcard').val();
+              //alert(xcard)
+              //var jcard = $('#jcard').val();
+              if(xcard){
+                $.ajax({
+                      type:"post",
+                      url:"{:U('Dayin/chaxun')}",
+                      // data:{xcard:xcard,jcard:jcard},
+                      data:{xcard:xcard},
+                      dataType:"json",
+                      success:function(data){
+                        $('.list').html('');
+                        if(data == 0){
+                          alert('没有查询到订单！');
+                          return false;
+                        }else{
+                            var list = eval(data);
+                             $.each(list, function (index, item) {
+                               //循环获取数据    
+                               var id = list[index].id;
+                               $("#date_id").val(id);                               
+                               var xname = list[index].xname;
+                               var pdata = list[index].pdata;
+                               var ptime = list[index].ptime;
+                               var data = pdata + ' ' + ptime;
+                               var transaction_id = list[index].transaction_id;
+                               if(transaction_id == null){
+                                transaction_id = list[index].dbh;
+                               }
+                               var out_trade_no = list[index].out_trade_no;
+                               var daddtime = list[index].daddtime;
+                               var money = list[index].money;
+                               var pdata = list[index].pdata;
+                               $('#pdata').val(pdata);
+                               var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+                               // alert(pdata)
+                               var item = "<tr><td>"+id+"</td><td>"+xname+"</td><td>"+data+"</td><td>"+transaction_id+"</td><td>"+daddtime+"</td><td>"+money+"</td><td><a href="+skip_url+"?s=/Home/Dayin/dayin_xq/id/"+id+">查看</a> | <a onclick='dayin(this)' style='cursor:pointer'>打印</a> | <a href="+skip_url+"?s=/Home/Dayin/down_pdf/id/"+id+" style='cursor:pointer'>下载补打</a></td></tr>"; 
+                              $('.list').append(item);  
+                            });  
+                        }  
+                      } 
+                    });
+              }else{
+                // alert('学员身份证号和教练身份证号必须同时存在');
+                alert('请输入学员身份证号');
+                return false;
+              }
+              }
+             	}
+			 })
+             
+            function chaxun(){
+              var xcard = $('#xcard').val();
+              //alert(xcard)
+              //var jcard = $('#jcard').val();
+              if(xcard){
+                $.ajax({
+                      type:"post",
+                      url:"{:U('Dayin/chaxun')}",
+                      // data:{xcard:xcard,jcard:jcard},
+                      data:{xcard:xcard},
+                      dataType:"json",
+                      success:function(data){
+                        $('.list').html('');
+                        if(data == 0){
+                          alert('没有查询到订单！');
+                          return false;
+                        }else{
+                            var list = eval(data);
+                             $.each(list, function (index, item) {
+                               //循环获取数据    
+                               var id = list[index].id;
+                               $("#date_id").val(id);
+                               var xname = list[index].xname;
+                               var pdata = list[index].pdata;
+                               var ptime = list[index].ptime;
+                               var data = pdata + ' ' + ptime;
+                               var transaction_id = list[index].transaction_id;
+                               if(transaction_id == null){
+                                transaction_id = list[index].dbh;
+                               }
+                               var out_trade_no = list[index].out_trade_no;
+                               var daddtime = list[index].daddtime;
+                               var money = list[index].money;
+                               var pdata = list[index].pdata;
+                               $('#pdata').val(pdata);
+                               var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+                               // alert(pdata)
+                               var item = "<tr><td>"+id+"</td><td>"+xname+"</td><td>"+data+"</td><td>"+transaction_id+"</td><td>"+daddtime+"</td><td>"+money+"</td><td><a href="+skip_url+"?s=/Home/Dayin/dayin_xq/id/"+id+">查看</a> | <a onclick='dayin(this)' style='cursor:pointer'>打印</a> | <a href="+skip_url+"?s=/Home/Dayin/down_pdf/id/"+id+" style='cursor:pointer'>下载补打</a></td></tr>"; 
+                              $('.list').append(item);  
+                            });  
+                        }  
+                      } 
+                    });
+              }else{
+                // alert('学员身份证号和教练身份证号必须同时存在');
+                alert('请输入学员身份证号');
+                return false;
+              }
+            }
+          </script>
+          <script type="text/javascript">
+          function dayin(obj){
+          	var idd = $("#date_id").val()
+          	//alert(idd)
+            var pdata = $('#pdata').val();
+            var myDate = new Date();  
+            var year = myDate.getFullYear();
+              var month = myDate.getMonth()+1;   
+              var strDate = myDate.getDate(); 
+              if (month >= 1 && month <= 9) {
+                  month = "0" + month;
+              }
+              if (strDate >= 0 && strDate <= 9) {
+                  strDate = "0" + strDate;
+              }
+              var datatime = year+'-'+month+'-'+strDate;
+              var data_time = year+month+strDate;
+              //alert(data_time)
+              
+              var bianhao=data_time+idd;
+              //alert(bianhao)
+              //alert(bianhao)
+           	$(".bianhao").html(bianhao)
+            if(pdata < datatime){
+               alert('当前时间段已过期');
+               return false;
+            }
+             var id = $(obj).parent().parent().children().eq(0).html();
+              if(id){
+                $.ajax({
+                  url:"{:U('Dayin/dayin')}",
+                  type:"POST",
+                  data:{id:id},
+                  dataType:"json",
+                  success:function(result){
+                    var list = eval(result[0][0]);
+                    var xueyuan_list = eval(result[1]);
+                    var changdu = xueyuan_list.length;
+                    if(list){
+                      var xname = list.xname;
+                      var jname = list.jname;
+                      var xycard = list.xcard;
+                      var jlcard = list.jcard;
+                      var pdata = list.pdata;
+                      var ptime = list.ptime;
+                      var data = pdata + ' ' + ptime;
+                      var ch = list.pch;
+                      $('#xycard').text(xname+' '+xycard);
+                      $('#jlcard').text(jname+' '+jlcard);
+                      $('#chehao').text(ch);
+                      var item = "8、您预约的车号为 "+ch+"号车，预约的时间段为 "+data+",";
+                      var item2="";
+                      var xueyuan = '';
+                      var xue_xcard='';
+                        $.each(xueyuan_list,function(i,v){
+                        	//alert(xueyuan_list)
+                          xue_xcard=xueyuan_list[i].xcard;
+                          xueyuan = xueyuan_list[i].xname;
+                          //alert(xueyuan)
+//                        if(xueyuan != undefined){
+                            item2+="学员姓名："+xueyuan+",身份证号："+xue_xcard+"。";
+                            //$('#xueyuan_name').append(xueyuan);
+                            
+//                        }
+                        });
+                      //var name_list = $('#xueyuan_name').html();
+                      $('#pdata').append(item+item2);
+                      var div_print = document.getElementById("div_print");
+                      var status = printdiv(div_print);
+                      // window.location.href = "http://yueche.siwoinfo.com/index.php?s=/Home/Dayin/dayin_list/";
+                       $.ajax({
+                          url:"{:U('Dayin/dayin_list')}",
+                          type:"POST",
+                          data:{id:id},
+                          dataType:"json",
+                          success:function(result){
+                            var status = result.status;
+                            if(status == 0){
+                              alert(result.msg);
+                              return false;
+                            }else{
+                              window.location.href = result.url;
+                            } 
+                          }
+                        });
+                    }else{
+                      alert(result);
+                      return false;
+                    } 
+                }
+              });
+        }
+      }
+           function printdiv(printpage) 
+            { 
+              var newstr = printpage.innerHTML; 
+              var oldstr = document.body.innerHTML; 
+              document.body.innerHTML =newstr;  
+               window.print();
+               document.body.innerHTML=oldstr; 
+            } 
+          </script>
+        </div>
+      </div>
+      </if>
+      <div class="page"> {$_page|default=''} </div>
+    </section>
+  </div>
+
+</block>
+<block name="script"> 
+  <script type="text/javascript">
+$(function(){
+  
+})
+$('#datetimepicker').datetimepicker({
+	lang:'ch'
+});
+$('#datetimepicker1').datetimepicker({
+	lang:'ch'
+});
+$( '.del' ).click( function () {
+        return confirm('确认要执行删除操作吗？');
+    });
+function playSound(id,obj){
+  var audio = document.getElementById(id);
+  if(audio.paused){
+    audio.play();
+    $(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+    audio.addEventListener('ended', function () {  
+//      alert('over');
+      $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+    }, false);
+    return;
+  }
+  audio.pause();
+  $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+  
+}
+</script> 
+ <script for=idcard event="Readed()">
+      //alert('Readed');
+	      getinfo_onclick();
+	</script>
+	
+	<script for=idcard event="Closed()">
+	      //window.close();
+	</script>
+	
+	<script for=idcard event="Opened()">
+	      //window.close();
+	</script>
+	
+	<SCRIPT>
+
+
+  	function SaveCard_onclick(){
+	var  pp
+	pp = rdcard.ExportBMP("D:\\"); 
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="保存成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="保存失败: "+pp;
+        }
+	}
+    myopen_onclick();
+	function myopen_onclick(){
+	var  pp ;
+	pp=rdcard.openport();
+        //alert(pp);
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="openport成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="openport失败: "+pp;
+        }	
+    }	
+	    
+	function myclose_onclick(){
+	var  pp
+	pp=rdcard.closeport();
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="closeport成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="closeport失败: "+pp;
+        }		
+	}
+        function Unload(){
+		MyClose_onclick();
+		//alert("Page is Close");
+	}
+
+	function endread_onclick(){
+	var  pp
+	pp=rdcard.endread();
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="endread成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="endread失败: "+pp;
+        }		
+	}
+
+	function handread_onclick(){ 
+		
+	var  pp
+	pp=rdcard.readcard();
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="readcard成功";
+            //showjpg_onclick();
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="readcard失败: "+pp;
+        }
+	}
+	beginread_onclick();
+	function beginread_onclick(){
+		
+	var  pp
+	pp=rdcard.ReadCard2();
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="ReadCard2成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="ReadCard2失败: "+pp;
+        }
+	}
+	function read3_onclick(){
+		
+	var  pp
+	pp=rdcard.ReadCard3();
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="ReadCard3成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="ReadCard3失败: "+pp;
+        }
+	}
+    
+	function ReadsNum_onclick(){
+	var  pp
+	pp = rdcard.ReadSecurityNum();
+	if(pp==0)
+        {
+            document.getElementsByName("tsNum")[0].value=rdcard.SecurityNum;	
+            document.getElementsByName("tResult")[0].value=rdcard.sResultMsg;
+        }
+        else
+        {
+            document.getElementsByName("tsNum")[0].value="读模块号码失败";	
+            document.getElementsByName("tResult")[0].value="读模块号码失败: "+pp;
+        }
+	}
+	
+
+	function showjpgIE6(){
+        //alert('读照片成功');
+        document.getElementsByName("photo")[0].src = "file:///C|/null.JPEG";
+
+	if(rdcard.PhotoPath == "")  
+	  document.getElementsByName("photo")[0].src = "file:///C|/null.JPEG";
+	else 	
+	  document.getElementsByName("photo")[0].src = rdcard.PhotoPath	;	
+    }
+	function showjpgIE8(){
+        //alert('读照片成功');
+        document.all['photo'].src  = 'data:image/jpeg;base64,' + rdcard.JPGBuffer;	
+    }
+
+
+     function getinfo_onclick(){
+	var  r1,r2;
+	
+	document.getElementsByName("tNameL")[0].value=rdcard.NameL;
+	
+	document.getElementsByName("tSexL")[0].value=rdcard.SexL;
+	
+	document.getElementsByName("tcardID")[0].value=rdcard.CardNo;
+	//alert(rdcard.CardNo)
+    document.getElementsByName("xcard")[0].value=rdcard.CardNo;
+    //alert($("#xcard").val())
+//      document.getElementsByName("Fchar1")[0].value=rdcard.FGchar1;
+//      document.getElementsByName("Fchar2")[0].value=rdcard.FGchar2;
+        r1 = rdcard.FGNUM1;
+        r2 = rdcard.FGNUM2;
+	switch(r1)
+	{
+	case 11:
+	  document.getElementsByName("FNUM1")[0].value="右手拇指";
+	  break;
+	case 12:
+	  document.getElementsByName("FNUM1")[0].value="右手食指";
+	  break;
+	case 13:
+	  document.getElementsByName("FNUM1")[0].value="右手中指";
+	  break;
+	case 14:
+	  document.getElementsByName("FNUM1")[0].value="右手环指";
+	  break;
+	case 15:
+	  document.getElementsByName("FNUM1")[0].value="右手小指";
+	  break;
+	case 16:
+	  document.getElementsByName("FNUM1")[0].value="左手拇指";
+	  break;
+	case 17:
+	  document.getElementsByName("FNUM1")[0].value="左手食指";
+	  break;
+	case 18:
+	  document.getElementsByName("FNUM1")[0].value="左手中指";
+	  break;
+	case 19:
+	  document.getElementsByName("FNUM1")[0].value="左手环指";
+	  break;
+	case 20:
+	  document.getElementsByName("FNUM1")[0].value="左手小指";
+	  break;
+	default:
+	  document.getElementsByName("FNUM1")[0].value="";
+	}	
+	switch(r2)
+	{
+	case 11:
+	  document.getElementsByName("FNUM2")[0].value="右手拇指";
+	  break;
+	case 12:
+	  document.getElementsByName("FNUM2")[0].value="右手食指";
+	  break;
+	case 13:
+	  document.getElementsByName("FNUM2")[0].value="右手中指";
+	  break;
+	case 14:
+	  document.getElementsByName("FNUM2")[0].value="右手环指";
+	  break;
+	case 15:
+	  document.getElementsByName("FNUM2")[0].value="右手小指";
+	  break;
+	case 16:
+	  document.getElementsByName("FNUM2")[0].value="左手拇指";
+	  break;
+	case 17:
+	  document.getElementsByName("FNUM2")[0].value="左手食指";
+	  break;
+	case 18:
+	  document.getElementsByName("FNUM2")[0].value="左手中指";
+	  break;
+	case 19:
+	  document.getElementsByName("FNUM2")[0].value="左手环指";
+	  break;
+	case 20:
+	  document.getElementsByName("FNUM2")[0].value="左手小指";
+	  break;
+	default:
+	  document.getElementsByName("FNUM2")[0].value="";
+	}
+
+
+        r1 = rdcard.FGQualityScore1;
+        r2 = rdcard.FGQualityScore2;
+	if(r1 == 0)  
+	  document.getElementsByName("Fzl1")[0].value="";
+	else 	
+	  document.getElementsByName("Fzl1")[0].value=rdcard.FGQualityScore1;
+	if(r2 == 0)  
+	  document.getElementsByName("Fzl2")[0].value="";
+	else 	
+	  document.getElementsByName("Fzl2")[0].value=rdcard.FGQualityScore2;
+
+
+        r1 = rdcard.FGRegistry1;
+        r2 = rdcard.FGRegistry2;
+	switch(r1)
+	{
+	case 1:
+	  document.getElementsByName("Fzhuce1")[0].value="注册成功";
+	  break;
+	case 2:
+	  document.getElementsByName("Fzhuce1")[0].value="注册失败";
+	  break;
+	case 3:
+	  document.getElementsByName("Fzhuce1")[0].value="未注册";
+	  break;
+	case 9:
+	  document.getElementsByName("Fzhuce1")[0].value="未知";
+	  break;
+	default:
+	  document.getElementsByName("Fzhuce1")[0].value="";
+	}
+	switch(r2)
+	{
+	case 1:
+	  document.getElementsByName("Fzhuce2")[0].value="注册成功";
+	  break;
+	case 2:
+	  document.getElementsByName("Fzhuce2")[0].value="注册失败";
+	  break;
+	case 3:
+	  document.getElementsByName("Fzhuce2")[0].value="未注册";
+	  break;
+	case 9:
+	  document.getElementsByName("Fzhuce2")[0].value="未知";
+	  break;
+	default:
+	  document.getElementsByName("Fzhuce2")[0].value="";
+	}
+        document.getElementsByName("tResult")[0].value=idcard.sResultMsg;
+        document.all['photo'].src  = 'data:image/jpeg;base64,' + rdcard.JPGBuffer;	
+
+     }
+
+
+
+
+	function savepath_onclick(){
+	rdcard.strSavePath= "c:\\aa";
+	document.getElementsByName("tResult")[0].value="路径设置成功";
+	}
+
+
+	function MyClear_onclick(){
+        var  pp		
+        pp = rdcard.ClearAll();
+        getinfo_onclick();
+        document.getElementsByName("tsNum")[0].value="";
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="清空成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="清空失败: "+pp;
+        }
+	}
+
+
+	function window_onUnload(){
+		  rdcard.DeleteOutputFile();
+		  rdcard.DeleteAllPicture();
+	}  
+    </script>
+</block>

@@ -1,0 +1,3 @@
+[ 2017-12-17T13:54:06+08:00 ] 140.207.54.75 /index.php?s=/home/weixin/index/id/1.html&signature=4dfdddab9902f84b6935eaeca26a3d1859f25773&timestamp=1513490046&nonce=137921775&openid=oaeErwsEZKnip8LMdSp3o2D4t1N8
+ERR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'oaeErwsEZKnip8LMdSp3o2D4t1N8-gh_d667ab9e8a74' for key 'openid'
+

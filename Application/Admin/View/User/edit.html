@@ -1,0 +1,54 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+    <script type="text/javascript" src="__STATIC__/dingdan/js/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+    <script type="text/javascript" src="__STATIC__/dingdan/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/dingdan/js/jiao_select.js"></script>
+    <script type="text/javascript" src="__STATIC__/dingdan/js/select.js"></script>
+    <div class="main-title">
+        <h2>编辑用户</h2>
+    </div>
+    <!-- <form action="{:U('User/edit')}" method="post"> -->
+	<form action="{:U()}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">用户名</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="username" value="{$user_detail['nickname']}" disabled="disabled">
+                <input type="hidden" name="uid" value="{$user_detail['uid']}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">所属驾校：</label>
+            <div class="controls">
+                <input type="text" class="text input-large" id="jiaxiao" name="jiaxiao" value="{$user_detail['jxname']}" />
+                <input type="hidden" name="jiaxiaoid" id="jiaxiaoid" value="{$user_detail['jxid']}">
+                <input type="hidden" id="date2" value="" name="jxid" />
+            </div>
+        </div>
+        <p id="list" style="display:none">{$json}</p>
+        <script>
+            var list = $("#list").text();
+            var datas = eval(list);
+            $.selectSuggest('jiaxiao', datas);
+            $("#jiaxiao").bind("change", function() {
+                var id = $("#date2").val();
+            });
+        </script>
+        <div class="form-item">
+            <!-- <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button> -->
+            
+            <!-- <input type="submit" value="确 定" class="btn submit-btn">  -->
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('User/index')}');
+    </script>
+</block>

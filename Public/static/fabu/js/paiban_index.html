@@ -1,0 +1,133 @@
+<extend name="Base/common" />
+
+	 <block name="body">
+	 	<link rel="stylesheet" type="text/css" href="__STATIC__/fabu/css/bootstrap.min.css" />
+	 	<link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+	 	<link rel="stylesheet" type="text/css" href="__STATIC__/fabu/css/body.css" />	 	
+		 <script type="text/javascript" src="__STATIC__/fabu/js/jquery.min.js"></script>
+		 <script type="text/javascript" src="__STATIC__/fabu/js/bootstrap.min.js"></script>
+		  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+	 <div class="span9 page_message">
+		  <section id="contents" style="margin-top:50px;"> <include file="Addons/_nav" />
+		<div class="sub" style="margin-top:-15px;">
+<form action='{:U('paiban_add')}' method='post'>
+			<div class="car">
+				<div class="car_date">
+					<label>日期：</label>
+					<input  type="text" id="data"  value="{$data}"/>
+					<!--<input name="control_date" type="text" id="control_date" size="10" maxlength="10" onClick="new Calendar().show(this);" readonly="readonly" style="width: 140px;cursor: pointer;background: #fff;"/>-->
+				</div>
+				<div class="car_all">
+					<input type="checkbox" value="" class="copy_all" name="allChecked" id="allChecked" onclick="DoCheck()"/><span class="copy_span">全选</span>
+				</div>
+				<div style="padding-bottom: 20px;padding-left: 15px;float: right;margin-right: 20px">
+				<button class="btn" href="">发布</button>
+				</div>  
+			</div>	
+			<div id="table_date">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>车号</th>
+						<th>全选</th>
+						<th>00:00-01:00</th>
+						<th>01:00-02:00</th>
+						<th>02:00-03:00</th>
+						<th>03:00-04:00</th>
+						<th>04:00-05:00</th>
+						<th>05:00-06:00</th>
+						<th>06:00-07:00</th>
+						<th>07:00-08:00</th>
+						<th>08:00-09:00</th>
+						<th>09:00-10:00</th>
+						<th>10:00-11:00</th>
+						<th>11:00-12:00</th>
+						<th>12:00-13:00</th>
+						<th>13:00-14:00</th>
+						<th>14:00-15:00</th>
+						<th>15:00-16:00</th>
+						<th>16:00-17:00</th>
+						<th>17:00-18:00</th>
+						<th>18:00-19:00</th>
+						<th>19:00-20:00</th>
+						<th>20:00-21:00</th>
+						<th>21:00-22:00</th>
+						<th>22:00-23:00</th>
+						<th>23:00-00:00</th>
+					</tr>
+				</thead>
+				<tbody>
+					<script>
+						var html='';
+						for(var i=1;i<41;i++){
+							html+="<tr><td>"+i+"</td><td><input type='checkbox'  class='allChecked'></td><td><input type='checkbox' value='00:00-01:00' name='che"+i+"[]'></td><td><input type='checkbox' value='01:00-02:00' name='che"+i+"[]'></td><td><input type='checkbox' value='02:00-03:00' name='che"+i+"[]'></td><td><input type='checkbox' value='03:00-04:00' name='che"+i+"[]'></td><td><input type='checkbox' value='04:00-05:00' name='che"+i+"[]'></td><td><input type='checkbox' value='05:00-06:00' name='che"+i+"[]'></td><td><input type='checkbox' value='06:00-07:00' name='che"+i+"[]'></td><td><input type='checkbox' value='07:00-08:00' name='che"+i+"[]'></td><td><input type='checkbox' value='08:00-09:00' name='che"+i+"[]'></td><td><input type='checkbox' value='09:00-10:00' name='che"+i+"[]'></td><td><input type='checkbox' value='10:00-11:00' name='che"+i+"[]'></td><td><input type='checkbox' value='11:00-12:00' name='che"+i+"[]'></td><td><input type='checkbox' value='12:00-13:00' name='che"+i+"[]'></td><td><input type='checkbox' value='13:00-14:00' name='che"+i+"[]'></td><td><input type='checkbox' value='14:00-15:00' name='che"+i+"[]'></td><td><input type='checkbox' value='15:00-16:00' name='che"+i+"[]'></td><td><input type='checkbox' value='16:00-17:00' name='che"+i+"[]'></td><td><input type='checkbox' value='17:00-18:00' name='che"+i+"[]'></td><td><input type='checkbox' value='18:00-19:00' name='che"+i+"[]'></td><td><input type='checkbox' value='19:00-20:00' name='che"+i+"[]'></td><td><input type='checkbox' value='20:00-21:00' name='che"+i+"[]'></td><td><input type='checkbox' value='21:00-22:00' name='che"+i+"[]'></td><td><input type='checkbox' value='22:00-23:00'  name='che"+i+"[]'></td><td><input type='checkbox' value='23:00-00:00'  name='che"+i+"[]'></td></tr>"							
+							$("tbody").html(html);
+						}
+							$(".allChecked").click(function(){					
+								if($(this).is(":checked")){
+									$(this).parent().nextAll().children().prop("checked","true");
+								}else{
+									$(this).parent().nextAll().children().removeAttr("checked");
+								}
+							
+							})
+							function DoCheck(){
+								var ch=document.getElementsByTagName("input")
+								if(document.getElementsByName("allChecked")[0].checked==true){
+									for(var i=0;i<ch.length;i++){
+									ch[i].checked=true;
+									}
+								}else{
+									for(var i=0;i<ch.length;i++){
+									ch[i].checked=false;
+									}
+								}
+							}	
+						
+					</script>
+				</tbody>
+			</table>
+			</div>
+		</div>
+		</form>
+		  </div>
+		  </section>
+		</div>
+</block>
+<block name="script">
+  <script type="text/javascript">
+$('#submit').click(function(){
+    $('#form').submit();
+});
+ function curDateTime(){  
+        var d = new Date();   
+        var year = d.getFullYear();   
+        var month = d.getMonth()+1;   
+        var date = d.getDate();   
+        var curDateTime= year;  
+        if(month>9)  
+            curDateTime = curDateTime +"-"+month;  
+        else  
+            curDateTime = curDateTime +"-0"+month;  
+        if(date>9)  
+            curDateTime = curDateTime +"-"+date;  
+        else  
+            curDateTime = curDateTime +"-0"+date;  
+        return curDateTime;  
+    }
+ $("#control_date").val(curDateTime())
+$(function(){
+
+	initUploadFile(function(data,name){
+		var old_title = $('#title').val();
+		if(old_title==''){
+			var data = $.parseJSON(data);
+			var title = data.name.replace('.'+data.ext, '');
+			$('#title').val(title);		
+		}
+	});
+    showTab();
+	
+});
+</script> 
+</block>

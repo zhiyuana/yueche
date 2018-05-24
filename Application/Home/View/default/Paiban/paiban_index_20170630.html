@@ -1,0 +1,193 @@
+<extend name="Base/common" />
+<block name="header">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/fabu/css/bootstrap.min.css" />
+		<script type="text/javascript" src="__STATIC__/fabu/js/jquery.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/fabu/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/fabu/js/Calendar.js"></script>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/fabu/css/body.css" />
+		<meta charset="UTF-8">
+		<meta content="{:C('WEB_SITE_KEYWORD')}" name="keywords"/>
+		<meta content="{:C('WEB_SITE_DESCRIPTION')}" name="description"/>
+		<link rel="shortcut icon" href="{:SITE_URL}/favicon.ico">
+		<title><php>echo empty($page_title) ? C('WEB_SITE_TITLE') : $page_title;</php></title>
+		<link href="__STATIC__/font-awesome/css/font-awesome.min.css?v={:SITE_VERSION}" rel="stylesheet">
+		<link href="__CSS__/base.css?v={:SITE_VERSION}" rel="stylesheet">
+		<link href="__CSS__/module.css?v={:SITE_VERSION}" rel="stylesheet">
+		<link href="__CSS__/weiphp.css?v={:SITE_VERSION}" rel="stylesheet">
+		<link href="__STATIC__/emoji.css?v={:SITE_VERSION}" rel="stylesheet">
+		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+		<script src="__STATIC__/bootstrap/js/html5shiv.js?v={:SITE_VERSION}"></script>
+		<![endif]-->
+		<block name="style"></block>
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+		<![endif]-->
+		<!--[if gte IE 9]><!-->
+		<script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script>
+		<!--<![endif]-->
+		<script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/zclip/ZeroClipboard.min.js?v={:SITE_VERSION}"></script>
+		<script type="text/javascript" src="__JS__/dialog.js?v={:SITE_VERSION}"></script>
+		<script type="text/javascript" src="__JS__/admin_common.js?v={:SITE_VERSION}"></script>
+		<script type="text/javascript" src="__JS__/admin_image.js?v={:SITE_VERSION}"></script>
+		<script type="text/javascript" src="__STATIC__/masonry/masonry.pkgd.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/jquery.dragsort-0.5.2.min.js"></script> 
+		<script type="text/javascript">
+		var  IMG_PATH = "__IMG__";
+		var  STATIC = "__STATIC__";
+		var  ROOT = "__ROOT__";
+		var  UPLOAD_PICTURE = "{:U('home/File/uploadPicture',array('session_id'=>session_id()))}";
+		var  UPLOAD_FILE = "{:U('File/upload',array('session_id'=>session_id()))}";
+		var  UPLOAD_DIALOG_URL = "{:U('home/File/uploadDialog',array('session_id'=>session_id()))}";
+		</script>
+		<!-- 页面header钩子，一般用于加载插件CSS文件和代码 -->
+		{:hook('pageHeader')}
+
+</block>
+	 <!--<block name="body">-->
+	 <div class="span9 page_message" style="background: #fff;">
+		  <section id="contents" style="margin-top:8px;margin-left: -90px;"> <include file="Addons/_nav" />
+		<div class="sub" style="margin-top:-15px;background: #fff;">
+		<form action='{:U('paiban_add')}' method='post' name="form">
+			<div class="car">
+				<div class="car_date">
+					<label>日期：</label>
+					<input name="control_date" type="text" id="control_date" size="10" maxlength="10" onClick="new Calendar().show(this);" readonly="readonly" style="width: 140px;cursor: pointer;background: #fff;"/>
+				</div>
+				<div class="car_all">
+					<input type="checkbox" value="" class="copy_all" name="allChecked" id="allChecked" onclick="DoCheck()"/>
+					<span class="copy_span">全选</span>
+				</div>
+				<div style="padding-bottom: 20px;padding-left: 15px;float: right;margin-right: 20px">
+					<button class="btn add_info" href="">发布</button>
+				</div>  
+			</div>	
+			<div id="table_date">
+			<table class="table table-bordered" style="border: none;" id="tbn">
+				<thead tyle="display: block;width:100%">
+					<tr>
+						<th style="padding: 4px 18px;">车号</th>
+						<th style="padding: 4px 18px;">全选</th>
+						<th>00:00-01:00</th>
+						<th>01:00-02:00</th>
+						<th>02:00-03:00</th>
+						<th>03:00-04:00</th>
+						<th>04:00-05:00</th>
+						<th>05:00-06:00</th>
+						<th>06:00-07:00</th>
+						<th>07:00-08:00</th>
+						<th>08:00-09:00</th>
+						<th>09:00-10:00</th>
+						<th>10:00-11:00</th>
+						<th>11:00-12:00</th>
+						<th>12:00-13:00</th>
+						<th>13:00-14:00</th>
+						<th>14:00-15:00</th>
+						<th>15:00-16:00</th>
+						<th>16:00-17:00</th>
+						<th>17:00-18:00</th>
+						<th>18:00-19:00</th>
+						<th>19:00-20:00</th>
+						<th>20:00-21:00</th>
+						<th>21:00-22:00</th>
+						<th>22:00-23:00</th>
+						<th>23:00-00:00</th>
+					</tr>
+				</thead>
+				<tbody style="height: 460px;overflow: auto;width: 101.2%;display: block;">
+					<script>
+						var html='';
+						for(var i=1;i<41;i++){
+							html+="<tr><td>"+i+"</td><td><input type='checkbox'  class='allChecked'></td><td><input type='checkbox' value='00:00-01:00' name='che"+i+"[]'></td><td><input type='checkbox' value='01:00-02:00' name='che"+i+"[]'></td><td><input type='checkbox' value='02:00-03:00' name='che"+i+"[]'></td><td><input type='checkbox' value='03:00-04:00' name='che"+i+"[]'></td><td><input type='checkbox' value='04:00-05:00' name='che"+i+"[]'></td><td><input type='checkbox' value='05:00-06:00' name='che"+i+"[]'></td><td><input type='checkbox' value='06:00-07:00' name='che"+i+"[]'></td><td><input type='checkbox' value='07:00-08:00' name='che"+i+"[]'></td><td><input type='checkbox' value='08:00-09:00' name='che"+i+"[]'></td><td><input type='checkbox' value='09:00-10:00' name='che"+i+"[]'></td><td><input type='checkbox' value='10:00-11:00' name='che"+i+"[]'></td><td><input type='checkbox' value='11:00-12:00' name='che"+i+"[]'></td><td><input type='checkbox' value='12:00-13:00' name='che"+i+"[]'></td><td><input type='checkbox' value='13:00-14:00' name='che"+i+"[]'></td><td><input type='checkbox' value='14:00-15:00' name='che"+i+"[]'></td><td><input type='checkbox' value='15:00-16:00' name='che"+i+"[]'></td><td><input type='checkbox' value='16:00-17:00' name='che"+i+"[]'></td><td><input type='checkbox' value='17:00-18:00' name='che"+i+"[]'></td><td><input type='checkbox' value='18:00-19:00' name='che"+i+"[]'></td><td><input type='checkbox' value='19:00-20:00' name='che"+i+"[]'></td><td><input type='checkbox' value='20:00-21:00' name='che"+i+"[]'></td><td><input type='checkbox' value='21:00-22:00' name='che"+i+"[]'></td><td><input type='checkbox' value='22:00-23:00'  name='che"+i+"[]'></td><td><input type='checkbox' value='23:00-00:00'  name='che"+i+"[]'></td></tr>"							
+							$("tbody").html(html);
+						}
+							$(".allChecked").click(function(){					
+								if($(this).is(":checked")){
+									$(this).parent().nextAll().children().prop("checked","true");
+								}else{
+									$(this).parent().nextAll().children().removeAttr("checked");
+								}
+							
+							})
+							function DoCheck(){
+								var ch=document.getElementsByTagName("input")
+								if(document.getElementsByName("allChecked")[0].checked==true){
+									for(var i=0;i<ch.length;i++){
+									ch[i].checked=true;
+									}
+								}else{
+									for(var i=0;i<ch.length;i++){
+									ch[i].checked=false;
+									}
+								}
+							}	
+						
+					</script>
+				</tbody>
+			</table>
+			</div>
+		</div>
+		</form>
+		  </div>
+		  </section>
+		</div>
+<!--</block>-->
+<block name="script">
+  <link href="__STATIC__/datetimepicker/css/datetimepicker.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <php>if(C('COLOR_STYLE')=='blue_color') echo '
+    <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    ';</php>
+  <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.js"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script> 
+  <script type="text/javascript">
+$('#submit').click(function(){
+    $('#form').submit();
+});
+ function curDateTime(){  
+        var d = new Date();   
+        var year = d.getFullYear();   
+        var month = d.getMonth()+1;   
+        var date = d.getDate();   
+        var curDateTime= year;  
+        if(month>9)  
+            curDateTime = curDateTime +"-"+month;  
+        else  
+            curDateTime = curDateTime +"-0"+month;  
+        if(date>9)  
+            curDateTime = curDateTime +"-"+date;  
+        else  
+            curDateTime = curDateTime +"-0"+date;  
+        return curDateTime;  
+    }
+ $("#control_date").val(curDateTime())
+$(function(){
+
+	initUploadFile(function(data,name){
+		var old_title = $('#title').val();
+		if(old_title==''){
+			var data = $.parseJSON(data);
+			var title = data.name.replace('.'+data.ext, '');
+			$('#title').val(title);		
+		}
+	});
+    showTab();
+	
+});
+
+//判断发布是否选空值
+$(".add_info").click(function(){
+	var add_btn = $("input[type='checkbox']").is(':checked');
+	if(add_btn == false){
+		alert('未选中任何项！!');
+		return false;
+	}
+	if(add_btn == true){
+		form.submit();
+		return false;
+	}
+});
+</script> 
+</block>

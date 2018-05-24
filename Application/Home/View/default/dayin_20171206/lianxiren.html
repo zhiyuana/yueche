@@ -1,0 +1,551 @@
+<extend name="Base/common" />
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/dingdan/js/jquery-1.7.1.js"></script>
+<!--	<script type="text/javascript" src="__STATIC__/dingdan/js/bootstrap.min.js"></script>-->
+	<style>
+	    ul,li{list-style: none;}
+		a{text-decoration: none;}
+		.call{padding:15px;}
+		/*.call input{float: left;margin-right: 5px;}*/
+		input[type='text']{margin-bottom:0;}
+		table input{width: 93%;margin-left: 1%;margin-bottom:0;}
+		.xuanren{margin-top: 10px;background: #fff; padding:0 15px 15px; }
+		.quanxuan{border-bottom: 1px solid #ddd;font-size: 18px;display: none;}
+		.detail_ren{height: 40px;line-height: 40px;border-bottom: 1px solid #ddd;}
+		.detail_ren input{margin-left: 2%;width: 20px;height: 20px;}
+		.quanxuan input{margin-left: 2%;width: 20px;height: 20px;}
+		.detail_ren span:nth-of-type(1){margin-left: 5%;font-size:18px ;}
+		.detail_ren span:nth-of-type(2){margin-left: 10%;font-size:18px;}
+	</style>	
+	<script type="text/javascript">
+		function checkForm()
+        {   
+          if($("#tName").val() == ""){
+        	  alert('姓名不能为空！');
+        	 return false;
+          }
+          if($("#tSex").val() == ""){
+            alert('性别不能为空！');
+            return false;
+          }
+//        if($("#tFolkL").val() == ""){
+//          alert('民族不能为空！');
+//          return false;
+//			}   
+//        if($("#tBirth").val() == ""){
+//          alert('出生年月不能为空！');
+//          return false;
+//        }
+          if($("#phone").val() == ""){
+            alert('手机号不能为空！');
+            return false;
+          }
+           if (!isMobile($("#phone").val()))
+          {
+              alert("手机号格式不正确！");
+              return false;
+          }
+          var data = $("#form").serialize();
+          $.ajax({
+          	url:"{:U('Dayin/addlianxiren')}",
+          	type:"post",
+          	data:data,
+          	dataType:"json",
+          	success: function(result){
+          		if(result.status == 0){
+          			alert(result.msg);
+          		}else{
+          			var leng = $('.add_detail li').length;
+          			if(leng>=0){
+          				$(".quanxuan").css("display","block");
+          			}
+          			if(leng > 5){
+          				alert('添加总人数不能超过6人');
+          				return false;
+          			}
+          			var id = result.id;
+          			var xname = result.xname;
+          			var xcard = result.xcard;
+          			var item = "<li class='detail_ren'><input type='checkbox' name='checked' value="+id+" /><span>"+xname+"</span><span>"+xcard+"</span></li>";
+          			$('.add_detail').append(item);
+          		}
+          	}
+          });
+           
+        }
+        //校验电话：必须以数字开头
+        function isMobile(s) 
+        {
+            var patrn1= /^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/;
+            var patrn=/^(?:13\d|15\d|17\d|18\d|14\d|16\d|19\d|11\d)-?\d{5}(\d{3}|\*{3})$/;
+            if(!patrn.exec(s) && !patrn1.exec(s))
+            {
+                return false;
+            }
+            return true;
+        } 
+								
+		</script>
+	<div class="span9 page_message"> 
+        <section id="contents"> <include file="Addons/_nav" />
+        	
+    	<!--  <div class="data-table" style="margin-top:0px;">-->
+    	  	<!-- <H1  style = "color:#0000A0;" align=center ><font size="6">      神思第二代身份证验证系统——100型</font></H1> -->
+    	  	<div class="call" style="border: 1px solid #ddd;overflow: hidden;padding: 20px;margin: 20px;">
+    	  		<!--<HR><center>-->
+		       <form  id="form" method="post"  onsubmit="return checkForm();" style="display: inline-block;float: left;width: 600px;">
+		       	<div  style="padding: 10px 20px;">
+		       <table class="s1" >
+		          <tr>
+		           <!-- <td width="12%" ><IMG height=126 alt="" width=102 border=0 name=photo id=jpgfile style="left:10px;"></td>-->
+		            <td>
+		            	 <input type="hidden" name="jx" id="jx" value="{$jx}">
+		            	<input type="hidden" name="jl" id="jl" value="{$jl}">
+		                <table width="400" border="1" style="color:#0011CC;"  >
+		                  <tr>
+		                    <td align="right">提示信息</td>
+		                    <td><input name="tResult" type="text" size="40" /></td>
+		                    
+		                  </tr>
+		                  <tr>		                  
+		                    <td align="right">姓名</td>
+		                    <td><input name="tNameL" id="tName"  type="text" size="40" /></td>
+		                  </tr>
+		                  <tr>		                   
+		                    <td align="right">性别</td>
+		                    <td><input name="tSexL"  type="text" size="40" /></td>
+		                  </tr>		 
+		                  <tr>
+		                    <td align="right">公民身份号码</td>
+		                    <td><input name="tcardID" id="tcardID" type="text" size="40" /></td>		                    
+		                  </tr>
+		                  <tr>		                  
+		                    <td align="right">手机号</td>
+		                    <td><input name="phone" id="phone" value="" type="text" size="40" /></td>
+		                  </tr>		                 
+		                </table>
+		             </td>
+		       </tr>
+		     </table>		     
+		     <input type="button" name="" onClick="if(!checkForm())return false;" value="添加" style="margin-top: 20px;width: 60px;text-align: center;float: right;">
+		    </div>
+		    </form>
+		    <div style="float: left;margin-top: 10px;margin-left: 50px;">
+			<OBJECT
+				  classid="clsid:F1317711-6BDE-4658-ABAA-39E31D3704D3"                  
+				  codebase="SDRdCard.cab#version=1,3,6,4"
+				  width=330
+				  height=210
+				  align=center
+				  hspace=0
+				  vspace=0
+				  id=idcard
+				  name=rdcard	
+			>
+			</OBJECT>
+    	  	 </div>
+    	  	 <!--</div>-->
+    	  </div> 
+    	  <div style="clear: both;"></div>
+    	  <HR><center>
+    	  <div class="xuanren">
+        		<h1 style="font-weight: normal;text-align: center;">添加预约用车人</h1>
+	  	 		<div class="quanxuan" style="display: block;text-align: left;">
+					<input type="checkbox" value="" name="allChecked" id="" onclick="DoCheck()" style="margin-left: 2.5%;"/><span style="margin-left: 5%;">全选</span>
+				</div>
+				<div class='add_detail' style="text-align: left;">
+
+				</div>
+			</div>	
+			<input type="hidden" name="pid" id="pid" value="{$pid}">
+			<div class="btn_submit" style="margin-bottom: 40px;">
+				<input id="regBtn" type="button" class="btn" value="提交订单" style="background:#ddd;font-size:18px;color: #000;"/>
+			</div>
+        </section>
+    </div>
+    <script>
+    	$(".btn").click(function(){
+			// var check = $("input[type='checkbox']").is(':checked');
+			var chk_value = []; 
+			$('input[type="checkbox"]:checked').each(function(){
+				chk_value.push($(this).val());
+			});
+			var str_peop = chk_value.toString();
+			if (str_peop.substr(0,1)==','){
+				str_peop=str_peop.substr(1);
+			} 
+			//被选中的人数
+			var num = chk_value.length;
+			var pid = $("#pid").val();
+			var jx = $("#jx").val();
+			var jl = $("#jl").val();
+		   	var str = pid.substring(0,pid.length-1);
+			if(num == 0){
+				alert('请选择预约人！');
+				return false;
+			}
+		   	if(str == ''){
+		   		alert('请重新选择时间段！');
+		   		return false
+		   	}
+		   	if(jx == ''){
+		   		alert('请重新选择驾校');
+		   		return false;
+		   	}
+		   	if(jl == ''){
+		   		alert('请重新选择教练');
+		   		return false;
+		   	}
+		   	//选择的时间段
+		    var strs= new Array(); //定义一数组 
+			strs = str.split(",");
+			var pnum = strs.length;
+			if(num < pnum){ 
+				alert('对不起,您预约的时间段不能大于您选择的人数')
+				return false;
+			}else{
+				$.ajax({
+		            type:"post",
+		            url:"{:U('Dayin/adddingdan')}",
+		            data:{str_peop:str_peop,str:str,jx:jx,jl:jl},
+		            dataType:"json",
+		            success:function(result){
+		            	// document.write(result)
+		            	alert(result.msg);
+                       	window.location.href = result.url;
+		            }
+		        });
+			}
+			
+
+		})
+    	function DoCheck(){
+			var ch=document.getElementsByTagName("input")
+			if(document.getElementsByName("allChecked")[0].checked==true){
+				for(var i=0;i<ch.length;i++){
+					ch[i].checked=true;
+				}
+			}else{
+				for(var i=0;i<ch.length;i++){
+					ch[i].checked=false;
+				}
+			}
+		}
+    </script>
+    <script for=idcard event="Readed()">
+      //alert('Readed');
+	      getinfo_onclick();
+	</script>
+	
+	<script for=idcard event="Closed()">
+	      //window.close();
+	</script>
+	
+	<script for=idcard event="Opened()">
+	      //window.close();
+	</script>
+	
+	<SCRIPT>
+
+
+  	function SaveCard_onclick(){
+	var  pp
+	pp = rdcard.ExportBMP("D:\\"); 
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="保存成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="保存失败: "+pp;
+        }
+	}
+    myopen_onclick();
+	function myopen_onclick(){
+	var  pp ;
+	pp=rdcard.openport();
+        //alert(pp);
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="openport成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="openport失败: "+pp;
+        }	
+    }	
+	    
+	function myclose_onclick(){
+	var  pp
+	pp=rdcard.closeport();
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="closeport成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="closeport失败: "+pp;
+        }		
+	}
+        function Unload(){
+		MyClose_onclick();
+		//alert("Page is Close");
+	}
+
+	function endread_onclick(){
+	var  pp
+	pp=rdcard.endread();
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="endread成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="endread失败: "+pp;
+        }		
+	}
+
+	function handread_onclick(){ 
+		
+	var  pp
+	pp=rdcard.readcard();
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="readcard成功";
+            //showjpg_onclick();
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="readcard失败: "+pp;
+        }
+	}
+	beginread_onclick();
+	function beginread_onclick(){
+		
+	var  pp
+	pp=rdcard.ReadCard2();
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="ReadCard2成功";
+	    
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="ReadCard2失败: "+pp;
+        }
+	}
+	function read3_onclick(){
+		
+	var  pp
+	pp=rdcard.ReadCard3();
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="ReadCard3成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="ReadCard3失败: "+pp;
+        }
+	}
+    
+	function ReadsNum_onclick(){
+	var  pp
+	pp = rdcard.ReadSecurityNum();
+	if(pp==0)
+        {
+            document.getElementsByName("tsNum")[0].value=rdcard.SecurityNum;	
+            document.getElementsByName("tResult")[0].value=rdcard.sResultMsg;
+        }
+        else
+        {
+            document.getElementsByName("tsNum")[0].value="读模块号码失败";	
+            document.getElementsByName("tResult")[0].value="读模块号码失败: "+pp;
+        }
+	}
+	
+
+	function showjpgIE6(){
+        //alert('读照片成功');
+        document.getElementsByName("photo")[0].src = "file:///C|/null.JPEG";
+
+	if(rdcard.PhotoPath == "")  
+	  document.getElementsByName("photo")[0].src = "file:///C|/null.JPEG";
+	else 	
+	  document.getElementsByName("photo")[0].src = rdcard.PhotoPath	;	
+    }
+	function showjpgIE8(){
+        //alert('读照片成功');
+        document.all['photo'].src  = 'data:image/jpeg;base64,' + rdcard.JPGBuffer;	
+    }
+
+
+     function getinfo_onclick(){
+	var  r1,r2;
+	
+	document.getElementsByName("tNameL")[0].value=rdcard.NameL;
+	
+	document.getElementsByName("tSexL")[0].value=rdcard.SexL;
+	
+	document.getElementsByName("tcardID")[0].value=rdcard.CardNo;
+	
+	
+        document.getElementsByName("Fchar1")[0].value=rdcard.FGchar1;
+        document.getElementsByName("Fchar2")[0].value=rdcard.FGchar2;
+        r1 = rdcard.FGNUM1;
+        r2 = rdcard.FGNUM2;
+	switch(r1)
+	{
+	case 11:
+	  document.getElementsByName("FNUM1")[0].value="右手拇指";
+	  break;
+	case 12:
+	  document.getElementsByName("FNUM1")[0].value="右手食指";
+	  break;
+	case 13:
+	  document.getElementsByName("FNUM1")[0].value="右手中指";
+	  break;
+	case 14:
+	  document.getElementsByName("FNUM1")[0].value="右手环指";
+	  break;
+	case 15:
+	  document.getElementsByName("FNUM1")[0].value="右手小指";
+	  break;
+	case 16:
+	  document.getElementsByName("FNUM1")[0].value="左手拇指";
+	  break;
+	case 17:
+	  document.getElementsByName("FNUM1")[0].value="左手食指";
+	  break;
+	case 18:
+	  document.getElementsByName("FNUM1")[0].value="左手中指";
+	  break;
+	case 19:
+	  document.getElementsByName("FNUM1")[0].value="左手环指";
+	  break;
+	case 20:
+	  document.getElementsByName("FNUM1")[0].value="左手小指";
+	  break;
+	default:
+	  document.getElementsByName("FNUM1")[0].value="";
+	}	
+	switch(r2)
+	{
+	case 11:
+	  document.getElementsByName("FNUM2")[0].value="右手拇指";
+	  break;
+	case 12:
+	  document.getElementsByName("FNUM2")[0].value="右手食指";
+	  break;
+	case 13:
+	  document.getElementsByName("FNUM2")[0].value="右手中指";
+	  break;
+	case 14:
+	  document.getElementsByName("FNUM2")[0].value="右手环指";
+	  break;
+	case 15:
+	  document.getElementsByName("FNUM2")[0].value="右手小指";
+	  break;
+	case 16:
+	  document.getElementsByName("FNUM2")[0].value="左手拇指";
+	  break;
+	case 17:
+	  document.getElementsByName("FNUM2")[0].value="左手食指";
+	  break;
+	case 18:
+	  document.getElementsByName("FNUM2")[0].value="左手中指";
+	  break;
+	case 19:
+	  document.getElementsByName("FNUM2")[0].value="左手环指";
+	  break;
+	case 20:
+	  document.getElementsByName("FNUM2")[0].value="左手小指";
+	  break;
+	default:
+	  document.getElementsByName("FNUM2")[0].value="";
+	}
+
+
+        r1 = rdcard.FGQualityScore1;
+        r2 = rdcard.FGQualityScore2;
+	if(r1 == 0)  
+	  document.getElementsByName("Fzl1")[0].value="";
+	else 	
+	  document.getElementsByName("Fzl1")[0].value=rdcard.FGQualityScore1;
+	if(r2 == 0)  
+	  document.getElementsByName("Fzl2")[0].value="";
+	else 	
+	  document.getElementsByName("Fzl2")[0].value=rdcard.FGQualityScore2;
+
+
+        r1 = rdcard.FGRegistry1;
+        r2 = rdcard.FGRegistry2;
+	switch(r1)
+	{
+	case 1:
+	  document.getElementsByName("Fzhuce1")[0].value="注册成功";
+	  break;
+	case 2:
+	  document.getElementsByName("Fzhuce1")[0].value="注册失败";
+	  break;
+	case 3:
+	  document.getElementsByName("Fzhuce1")[0].value="未注册";
+	  break;
+	case 9:
+	  document.getElementsByName("Fzhuce1")[0].value="未知";
+	  break;
+	default:
+	  document.getElementsByName("Fzhuce1")[0].value="";
+	}
+	switch(r2)
+	{
+	case 1:
+	  document.getElementsByName("Fzhuce2")[0].value="注册成功";
+	  break;
+	case 2:
+	  document.getElementsByName("Fzhuce2")[0].value="注册失败";
+	  break;
+	case 3:
+	  document.getElementsByName("Fzhuce2")[0].value="未注册";
+	  break;
+	case 9:
+	  document.getElementsByName("Fzhuce2")[0].value="未知";
+	  break;
+	default:
+	  document.getElementsByName("Fzhuce2")[0].value="";
+	}
+        document.getElementsByName("tResult")[0].value=idcard.sResultMsg;
+        document.all['photo'].src  = 'data:image/jpeg;base64,' + rdcard.JPGBuffer;	
+
+     }
+
+
+
+
+	function savepath_onclick(){
+	rdcard.strSavePath= "c:\\aa";
+	document.getElementsByName("tResult")[0].value="路径设置成功";
+	}
+
+
+	function MyClear_onclick(){
+        var  pp		
+        pp = rdcard.ClearAll();
+        getinfo_onclick();
+        document.getElementsByName("tsNum")[0].value="";
+	if(pp==0)
+        {
+	    document.getElementsByName("tResult")[0].value="清空成功";
+        }
+        else
+        {	
+            document.getElementsByName("tResult")[0].value="清空失败: "+pp;
+        }
+	}
+
+
+	function window_onUnload(){
+		  rdcard.DeleteOutputFile();
+		  rdcard.DeleteAllPicture();
+	}  
+    </script>
+</block>

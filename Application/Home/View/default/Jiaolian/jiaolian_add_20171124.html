@@ -1,0 +1,440 @@
+<extend name="Base/common" />
+
+ <block name="body">
+ 
+  <div class="span9 page_message">
+     
+    <section id="contents"> <include file="Addons/_nav" />
+       <div class="tab-content"> 
+    <!-- <script type="text/javascript" src="__STATIC__/fabu/js/jquery-1.10.1.min.js"></script> -->
+    <!-- <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script> -->
+    <script type="text/javascript" src="__STATIC__/fabu/js/ajaxfileupload.js"></script>
+
+   <script type="text/javascript">
+	//   function checkForm()
+	// {   
+	//   if($("#name").val() == ""){
+	// 	alert('请填写姓名！');
+	// 	return false;
+	//   }
+	//   if($("#age").val() == ""){
+	// 	alert('请填写年龄！');
+	// 	return false;
+	//   }
+	//   if($("#sex1").is(':checked') == false && $("#sex2").is(':checked') == false){
+	// 	alert('请先选择性别！');
+	// 	return false;
+	//   }
+	//   if($("#card").val() == ""){
+	// 	alert('请填写身份证号码！');
+	// 	return false;
+	//   }
+	  
+	//   if($("#jbh").val() == ""){
+	// 	alert('请填写驾驶证号码！');
+	// 	return false;
+	//   }
+	//   if($("#tbh").val() == ""){
+	// 	alert('请填写教练证号码！');
+	// 	return false;
+	//   }   
+	//   if($("#phone").val() == ""){
+	// 	alert('请填写手机号码！');
+	// 	return false;
+	//   }
+	//   if (!isMobile($("#phone").val()))
+	//   {
+	// 	  alert("手机格式不正确!");
+	// 	  return false;
+	//   }
+	//   if($("#jl").val() == ""){
+	// 	alert('请填写驾龄！');
+	// 	return false;
+	//   }
+ //    if($("#jxid").val() == "" || $("#jxid").val() == 0){
+ //      alert('请选择驾校！');
+ //      return false;
+ //    }
+	//   if($("#card_path").val() == 0){
+	// 	alert('请上传身份证照片！');
+	// 	 return false;
+	//   }
+	//   if($("#jiashi_path").val() == 0){
+	// 	alert('请上传驾驶证照片！'); 
+	// 	return false;
+	//   }
+	//   if($("#jiaolian_path").val() == 0){
+	// 	alert('请上教练证照片！');
+	// 	 return false;
+	//   }
+	  
+	   
+	// }
+	//校验电话：必须以数字开头
+	function isMobile(s) 
+	{
+		var patrn1= /^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/;
+		var patrn=/^(?:13\d|15\d|17\d|18\d|14\d|16\d|19\d|11\d)-?\d{5}(\d{3}|\*{3})$/;
+		if(!patrn.exec(s) && !patrn1.exec(s))
+		{
+			return false;
+		}
+		return true;
+	} 
+	</script>
+
+  <!-- <form action="{:U('Jiaolian/jiaolian_insert')}" method="post" onsubmit="return checkForm();" > -->
+	<form action="{:U('Jiaolian/jiaolian_insert')}" method="post" >
+       <div>
+	        <div style="width:47%;margin-right: 20px;float: left;">
+	            <label><span class="need_flag">*</span>姓名：</label>               
+	            <input type="text" class="text input-large" id="name" name="jname" value=""
+	            style="border-radius: 5px;float: right;width: 344px;"><br>
+	        </div>
+	        <div style="width:47%;margin-right: 20px;float: left;">
+	            <label><span class="need_flag">* </span>年龄：</label>               
+	            <input type="number" class="text input-large" id="age" name="jage" value="" style="border-radius: 5px;float: right;width: 344px;" > 
+	        </div>
+      	</div>
+       <div >              
+	        <div style="width:47%;margin-right: 20px;float: left;">
+	            <label style="margin-right: 30px;"><span class="need_flag">* </span>性别： </label>              
+	             	<input type="radio" id="sex1" class="text input-large" name="jsex" value="1"
+		            <if condition="$list[0]['jsex']==1">checked='checked'</if>>&nbsp;男 &nbsp;&nbsp;
+		            <input type="radio" id="sex2" class="text input-large" name="jsex" value="2" <if condition="$list[0]['jsex']==2">checked='checked'</if>>&nbsp;女              
+	        </div>
+	        <div style="width:47%;margin-right: 20px;float: left;">
+	            <label><span class="need_flag">* </span>身份证号：  </label>              
+	            <input type="text" id="card" class="text input-large" name="jcard" value="" style="border-radius: 5px;float: right;width: 344px;"> 
+	        </div>
+	      </div>
+      	<div >       
+	        <div style="width:47%;margin-right: 20px;float: left;">
+	            <label><span class="need_flag">* </span>驾驶证号 ：  </label>             
+	            <input type="text" id="jbh" class="text input-large" name="jbh" value="" style="border-radius: 5px;float: right;width: 344px;" > 
+	        </div>
+	        <div style="width:47%;margin-right: 20px;float: left;">
+	            <label><span class="need_flag">* </span>教练证号：   </label>             
+	            <input type="text" id="tbh" class="text input-large" name="tbh" value="" style="border-radius: 5px;float: right;width: 344px;"> 
+	        </div>
+      	</div>
+      	<div >       
+	        <div style="width:47%;margin-right: 20px;float: left;">
+	            <label><span class="need_flag">* </span>手机号： </label>               
+	            <input type="text" id="phone" class="text input-large" name="jphone" value="" style="border-radius: 5px;float: right;width: 344px;" > 
+	        </div>
+	        <div style="width:47%;margin-right: 20px;float: left;">
+	           <label> <span class="need_flag">* </span>驾龄： </label>               
+	            <input type="text" id="jl" class="text input-large" name="jl" value="" style="border-radius: 5px;float: right;width: 344px;"> 
+	        </div>
+      	</div>
+       	<div >         
+	        <div style="width:47%;margin-right: 20px;float: left;">
+	            <label><span class="need_flag">* </span>驾校：  </label>             
+	            <select  rows="8" class="text input-large" id="jxid" name="jxid" value="" style="border-radius: 5px;float: right;width: 362px; height:30px" >
+                  <option value="0">请选择驾校</option>
+                  <foreach name="list" item="v">
+                    <option value="{$v.id}">{$v.jxname}</option>
+                  </foreach>
+              </select>
+	        </div>  
+           <div style="width:47%;margin-right: 20px;float: left;">
+              <label>备注：  </label>             
+              <textarea  rows="8" class="text input-large" name="jmark" value="" style="border-radius: 5px;float: right;width: 351px;"></textarea>
+          </div>    
+
+      </div>
+      <div> 
+         <div style="width: 47%;float: left">
+           <label style="float: left;"><span class="need_flag">* </span>证件上传：  </label>
+           <div style="width:17%;float: left;text-align: right;">
+             <div  id="preview" style="background: #ddd; width: 70px;height: 70px;display: inline-block;">
+               <img id="imghead" value="0"  name="card"  src="./Uploads/yueche/jiaolian/card/add.png" style="width: 70px;height: 70px;" onclick="$('#previewImg').click();"/>
+             </div><br />
+             <input type="file" name="card" onchange="previewImage(this)" style="display: none;" id="previewImg">
+             <span style="color: red;font-size: 12px;">(身份证上传)</span>              
+           </div>            
+           <div style="width:19%;float: left;text-align: right;">
+             <div id="preview1" style="background: #ddd;width: 70px;height: 70px;display: inline-block;">
+               <img id="imghead1" src="./Uploads/yueche/jiaolian/card/add.png" style="width: 70px;height: 70px;"  onclick="$('#previewImg1').click();"/>
+             </div><br />
+             <input type="file" name="jiashi" onchange="previewImage1(this)" style="display: none;" id="previewImg1">
+             <span style="color: red;font-size: 12px">(驾驶证上传)</span>
+           </div>
+           <div style="width:19%;float: left;text-align: right;">
+             <div id="preview2" style="background: #ddd;width: 70px;height: 70px;display: inline-block;">
+               <img id="imghead2" src="./Uploads/yueche/jiaolian/card/add.png"  style="width: 70px;height: 70px; "onclick="$('#previewImg2').click();"/>
+             </div><br />
+             <input type="file" name="jiaolian" onchange="previewImage2(this)" style="display: none;" id="previewImg2">
+             <span style="color: red;font-size: 12px">(教练证上传)</span>
+           </div>
+           <input type="hidden" id="card_path" name="card_path" value="0">
+           <input type="hidden" id="jiashi_path" name="jiashi_path" value="0">
+           <input type="hidden" id="jiaolian_path" name="jiaolian_path" value="0">
+         </div>       
+      </div>
+      <script>
+//      身份证上传
+      	 //图片上传预览    IE是用了滤镜。
+        function previewImage(file)
+        {
+          $.ajaxFileUpload({
+             url: "{:U('Jiaolian/upload')}",
+             secureurl:false,
+             fileElementId:'previewImg',
+             dataType:'json',
+             success:function(data,status){
+              if(data.status == 1){
+                var path = data.url;
+                $("#imghead").attr("src",path);
+                // $("#card_path").val("1");
+                $("#card_path").val(path);
+              }else{
+                alert(data.msg);
+              }
+             }
+          });
+          var MAXWIDTH  = 70; 
+          var MAXHEIGHT = 70;
+          var div = document.getElementById('preview');
+          if (file.files && file.files[0])
+          {
+              div.innerHTML ='<img id=imghead onclick=$("#previewImg").click()>';
+              var img = document.getElementById('imghead');
+              img.onload = function(){
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                img.style.width  =  "70px";
+                img.style.height =  "70px";
+//                 img.style.marginLeft = rect.left+'px';
+                img.style.marginTop = rect.top+'px';
+              }
+              var reader = new FileReader();
+              reader.onload = function(evt)
+              {
+                 img.src = evt.target.result;
+                
+              }
+              reader.readAsDataURL(file.files[0]);
+              
+          }
+          else //兼容IE
+          {
+            var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+            file.select();
+            var src = document.selection.createRange().text;
+            div.innerHTML = '<img id=imghead>';
+            var img = document.getElementById('imghead');
+            img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+            div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+          }
+         
+        }
+        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+            var param = {top:0, left:0, width:width, height:height};
+            if( width>maxWidth || height>maxHeight ){
+                rateWidth = width / maxWidth;
+                rateHeight = height / maxHeight;
+                
+                if( rateWidth > rateHeight ){
+                    param.width =  maxWidth;
+                    param.height = Math.round(height / rateWidth);
+                }else{
+                    param.width = Math.round(width / rateHeight);
+                    param.height = maxHeight;
+                }
+            }
+            param.left = Math.round((maxWidth - param.width) / 2);
+            param.top = Math.round((maxHeight - param.height) / 2);
+            return param;
+        }
+      </script>
+      <script>
+//      驾驶证上传
+      	 //图片上传预览    IE是用了滤镜。
+        function previewImage1(file)
+        {
+          $.ajaxFileUpload({
+             url: "{:U('Jiaolian/upload')}",
+             secureurl:false,
+             fileElementId:'previewImg1',
+             dataType:'json',
+             success:function(data,status){
+              if(data.status == 1){
+                var path = data.url;
+                $("#imghead1").attr("src",path);
+                $("#jiashi_path").val(path);
+              }else{
+                alert(data.msg);
+              }
+             }
+          });
+          var MAXWIDTH  = 70; 
+          var MAXHEIGHT = 70;
+          var div = document.getElementById('preview1');
+          if (file.files && file.files[0])
+          {
+              div.innerHTML ='<img id=imghead1 onclick=$("#previewImg1").click()>';
+              var img = document.getElementById('imghead1');
+              img.onload = function(){
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                img.style.width  =  "70px";
+                img.style.height =  "70px";
+//                 img.style.marginLeft = rect.left+'px';
+                img.style.marginTop = rect.top+'px';
+              }
+              var reader = new FileReader();
+              reader.onload = function(evt){img.src = evt.target.result;}
+              reader.readAsDataURL(file.files[0]);
+          }
+          else //兼容IE
+          {
+            var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+            file.select();
+            var src = document.selection.createRange().text;
+            div.innerHTML = '<img id=imghead1>';
+            var img = document.getElementById('imghead1');
+            img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+            div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+          }
+        }
+        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+            var param = {top:0, left:0, width:width, height:height};
+            if( width>maxWidth || height>maxHeight ){
+                rateWidth = width / maxWidth;
+                rateHeight = height / maxHeight;
+                
+                if( rateWidth > rateHeight ){
+                    param.width =  maxWidth;
+                    param.height = Math.round(height / rateWidth);
+                }else{
+                    param.width = Math.round(width / rateHeight);
+                    param.height = maxHeight;
+                }
+            }
+            param.left = Math.round((maxWidth - param.width) / 2);
+            param.top = Math.round((maxHeight - param.height) / 2);
+            return param;
+        }
+      </script>
+      <script>
+//     教练证上传
+      	 //图片上传预览    IE是用了滤镜。
+        function previewImage2(file)
+        {
+          $.ajaxFileUpload({
+             url: "{:U('Jiaolian/upload')}",
+             secureurl:false,
+             fileElementId:'previewImg2',
+             dataType:'json',
+             success:function(data,status){
+              if(data.status == 1){
+                var path = data.url;
+                $("#imghead2").attr("src",path);
+                $("#jiaolian_path").val(path);
+              }else{
+                alert(data.msg);
+              }
+             }
+          });
+          var MAXWIDTH  = 70; 
+          var MAXHEIGHT = 70;
+          var div = document.getElementById('preview2');
+          if (file.files && file.files[0])
+          {
+              div.innerHTML ='<img id=imghead2 onclick=$("#previewImg2").click()>';
+              var img = document.getElementById('imghead2');
+              img.onload = function(){
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                img.style.width  =  "70px";
+                img.style.height =  "70px";
+//                 img.style.marginLeft = rect.left+'px';
+                img.style.marginTop = rect.top+'px';
+              }
+              var reader = new FileReader();
+              reader.onload = function(evt){img.src = evt.target.result;}
+              reader.readAsDataURL(file.files[0]);
+          }
+          else //兼容IE
+          {
+            var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+            file.select();
+            var src = document.selection.createRange().text;
+            div.innerHTML = '<img id=imghead2>';
+            var img = document.getElementById('imghead2');
+            img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+            div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+          }
+        }
+        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+            var param = {top:0, left:0, width:width, height:height};
+            if( width>maxWidth || height>maxHeight ){
+                rateWidth = width / maxWidth;
+                rateHeight = height / maxHeight;
+                
+                if( rateWidth > rateHeight ){
+                    param.width =  maxWidth;
+                    param.height = Math.round(height / rateWidth);
+                }else{
+                    param.width = Math.round(width / rateHeight);
+                    param.height = maxHeight;
+                }
+            }
+            param.left = Math.round((maxWidth - param.width) / 2);
+            param.top = Math.round((maxHeight - param.height) / 2);
+            return param;
+        }
+      </script>
+     </volist>					 
+        <div class="form-item form_bh">
+            <!-- <button class="btn">确定</button> -->
+            <input type="submit" class="btn"  value="确定"/>
+            <a class="btn" id="go_back">返回</a>
+        </div>
+	     </form>
+       
+        </div>
+        </div>
+      </section>
+	
+  </div>
+</block>
+
+<block name="script">
+  <link href="__STATIC__/datetimepicker/css/datetimepicker.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <php>if(C('COLOR_STYLE')=='blue_color') echo '
+    <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    ';</php>
+  <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.js"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script> 
+  <script type="text/javascript">
+$('#submit').click(function(){
+    $('#form').submit();
+});
+
+$(function(){
+
+	initUploadFile(function(data,name){
+		var old_title = $('#title').val();
+		if(old_title==''){
+			var data = $.parseJSON(data);
+			var title = data.name.replace('.'+data.ext, '');
+			$('#title').val(title);		
+		}
+	});
+    showTab();
+	
+});
+
+//返回点击事件
+$("#go_back").click(function(){
+  window.history.go(-1);
+});
+</script> 
+</block>

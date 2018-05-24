@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /> 
+  <title>意见建议</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />  
+  <!--响应式，约束缩放-->
+  <link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/style.css">
+  <link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/base.css">
+  <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/jquery-1.9.1.min.js"></script>
+</head>
+
+<body style="background: #fff;">
+<div class="top"><h1 class="bg-primary">意见建议</h1></div>	
+<form action="{:addons_url('Forms://Wap/yijian')}" method="post" class="form-horizontal" role="form" id="form1">
+	<ul class="yijian_box">
+	  <li class="row">
+	    <label class="col-sm-2 control-label lab">您的姓名：</label>
+	    <div class="col-sm-10 left">
+	      <input type="text"  id="username" name="attr_1_0" >
+	    </div>
+	  </li>
+	  <li class="row">
+	    <label  class="col-sm-2 control-label lab">联系电话：</label>
+	    <div class="col-sm-10 left">
+	      <input type="tel" id="phone" name="attr_1_1" >
+	    </div>
+	  </li>
+	  <li class="row">
+	    	<label class="col-sm-2 control-label lab">类型：</label>
+	    	<div class="col-sm-10 left">
+			 <?php
+				   
+				   $select_str = explode(" ",$lists_select[0]['extra']);
+				   //print_r($select_str);
+		     ?>
+			
+		    	 <select class="form-control select_mb" name="select" onchange="fuzhi(this.options[this.selectedIndex].value)">
+		  			<volist name="select_str" id="vo">
+                                <option value="{$key}">{$vo}</option>
+                          </volist> 
+					</select>
+					 <input type="hidden" id="select_content" name="select_content" value="" />
+	    	</div>
+	  </li>
+	  <li class="row ">
+	    <label  class="col-sm-2 control-label lab">标题：</label>
+	    <div class="col-sm-10 left">
+	      <input type="text"  id="title" name="attr_1_3"  >
+	    </div>
+	  </li>
+	  <li class="row last">
+	  	<label  class="col-sm-2 control-label lab">意见建议<span>*</span>：</label>
+	  	<div class="col-sm-10 left">
+	  		<textarea id="content" rows="4" name="attr_1_4"></textarea>
+	  	</div>	
+	  </li>
+	   <input type="button" onClick="if(!checkVal())return false;" class="btn btn-primary" value="提交">
+  </ul>
+	
+</form>	
+
+
+<script type="text/javascript">
+ function fuzhi(a){  
+        document.getElementById("select_content").value=a;  
+    }
+	//验证信息并提交
+function checkVal(){
+	var content = $("#content").val();
+	
+	if(!content){
+		alert("请输入举报内容");
+		$("#content").focus();
+		return false;
+	}
+	
+	var data = $("#form1").serialize();
+	//alert(data);
+	$.ajax({
+		url:"{:addons_url('Forms://Wap/yijianHandle')}",
+		type:"POST",
+		data:data,
+		success: function(result){
+			if(result == 1){
+				alert("提交成功，谢谢参与!");
+				window.location.href = "{:addons_url('Forms://Wap/yijian')}";
+			}else{
+				alert("提交失败，请重新提交!");
+			}
+		}
+	});
+	return false;
+}
+	
+</script>
+</body>
+</html>

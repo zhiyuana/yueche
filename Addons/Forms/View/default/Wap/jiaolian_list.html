@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+		<title>驾校</title>
+		<link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/style.css">
+		<script src="{:ADDON_PUBLIC_PATH}/jquery.min.js"></script>
+		<script src="{:ADDON_PUBLIC_PATH}/select.js"></script>
+		<script src="{:ADDON_PUBLIC_PATH}/jiao_select.js"></script>
+		<script>
+			function checkForm(){ 
+				if($("#testInput").val() == ""){
+		          	alert("请选择教练!");
+		            return false;
+		        }
+				var jid =$("#date1").val(); 
+				// alert(jid)
+				var jxid =$("#jxid").val(); 
+				// alert(jxid)
+				var jxname = $("#testInput").val();
+				window.location.href = "http://yueche.siwoinfo.com/index.php?s=/addon/Forms/Wap/xueyuan/jxid/"+jxid+"/jid/"+jid;
+			}      
+		</script>
+		<style>
+			header{height: 180px;width: 100%;}
+			img{width: 100%;height: 100%;}
+		</style>
+	</head>
+	<body>
+		<header>
+			<img src="{:ADDON_PUBLIC_PATH}/jiakao1.png" alt="图片正在加载" style="position: relative;"/>
+		</header>
+		<form action="" id="form" method="post" onsubmit="return checkForm();">
+		<div class="message">
+	    <ul>
+			<li class="row" style="margin-top: 0;">
+				<label class="col-sm-2 control-label lab">教练<span class="Required">*</span>：</label><br />
+				<div class="col-sm-10 ">
+			        <input id="testInput" type="text"  value="" name="testInput" style="height: 34px;border: 0;border-bottom:1px solid #ddd;outline:medium;width: 100%;padding: 5px 0;">
+			       <!-- <input id="jia_xiao1"  type="hidden" value="" />-->
+					<input type="hidden" id="date1" value="" name="jid"/>
+				</div>
+				<p id="list" style="display:none">{$json}</p>
+				<input type="hidden" name="jxid" id="jxid" value="{$jxid}">
+			</li>
+		</ul>	
+		</div>
+		<div class="btn_submit" style="margin-top: 60px;">
+			<input  onClick="if(!checkForm())return false;"  id="regBtn" class="btn" value="确定" style="width: 53%;margin-left: 23%;font-size:18px;background: #feca14;color: #fff;"/>
+		</div>
+		</form>
+		 <script type="text/javascript">
+	        var list = $("#list").text();
+	        var datas = eval(list);
+			$.select('testInput',datas);  
+			//$("#jiaxiao").bind("change", function(){ 
+//	 			var id =$("#date2").val();   
+//	 			window.location.href = "http://yueche.siwoinfo.com/index.php?s=/addon/Forms/Wap/xueyuan/id/"+id+"";
+//				$.ajax({
+//		            type:"post",
+//		            url:"{:addons_url('Forms://Wap/jiaolian')}",
+//		            data:{id:id},
+//		            dataType:"json",
+//		            success:function(result){
+//	//				    document.write(result)
+//		            	var arr = eval(result);
+//		            	$.select('testInput',arr); 
+//		            }
+//		        });
+		  //});
+ 	   </script>
+</body>
+</html>
+

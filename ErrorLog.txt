@@ -1,0 +1,24 @@
+2017-01-12 17:29:01 Error Info : curl falied. Error Info: Operation timed out after 0 milliseconds with 0 out of 0 bytes received
+2017-04-20 09:26:30 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:28:37 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:28:44 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:29:40 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:30:32 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:32:04 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:32:56 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:33:49 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:34:41 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:35:34 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:36:27 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:37:19 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:38:12 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:39:04 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:39:57 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:40:49 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:41:42 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:42:35 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-04-20 09:54:36 Error Info : curl falied. Error Info: Failed to connect to api.weixin.qq.com port 443: Timed out
+2017-05-12 09:17:02 Error Info : curl falied. Error Info: Unknown SSL protocol error in connection to api.weixin.qq.com:443 
+2017-05-22 11:43:17 Error Info : curl falied. Error Info: Could not resolve host: api.weixin.qq.com
+2017-06-14 09:13:12 Error Info : curl falied. Error Info: Empty reply from server
+2017-06-14 09:34:06 Error Info : curl falied. Error Info: Empty reply from server

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+  <title>首页</title>
+  <link rel="stylesheet" type="text/css" href="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/css/styleche.css">
+  <!-- <link rel="stylesheet" type="text/css" href="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/css/bootstrap.min.css" > -->
+  <script type="text/javascript" src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/js/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/js/jquery.bxslider.js"></script>
+  <!-- <script type="text/javascript" src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/js/bootstrap.min.js"></script> -->
+  <link href="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/css/jquery.bxslider.css" rel="stylesheet" type="text/css">
+ </head> 
+ <body style="font-family: '微软雅黑';"> 
+  <div class="header">
+  	<!-- <div class="carousel slide" id="myCarousel"> -->
+		<!--标示符也就是小圆点-->
+<!-- 		<ul class="carousel-indicators" style="position: absolute;left: 76%;bottom: 0px;">
+			<li class="active" data-target="#myCarousel" data-slide-to="0"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+			<li data-target="#myCarousel" data-slide-to="2"></li>
+		</ul> -->
+		<div class="carousel-inner clearfix">
+      <ul class="clearfix slider2">
+        <volist name="slideshow" id="vo">
+            <li class="slide"><a href="javascript:;"><img src="{$vo.img}" />
+               <!-- <p class="p_text" style="  padding: 0.4em 0em; padding-left: 4%; position: absolute;  bottom: 0px;  color: #fff;  font-size: 15px;  line-height: 25px; background: rgba(97, 96, 96, 0.54); overflow: hidden; width: 95%;">{$vo.title}</p> -->
+               </a>
+              </li>
+        </volist>  
+      </ul> 
+   <!--  <volist name="slideshow" id="vo">
+			<div class="item active">
+				<img src="{$vo.img}" id="img_jiakao"/>
+			</div>
+    </volist>  -->
+		<!-- 	<div class="item">
+				<img src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/img/jiakao1.png" id="img_jiakao"/>
+			</div>
+			<div class="item">
+				<img src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/img/jiakao1.png" id="img_jiakao"/>
+			</div> -->
+		</div>
+  </div> 
+  </div>
+  <div class="list_index">
+  	<div style="width: 100%;height: 100px;background: #333;" class="lianxi">
+  		<a href="http://www.siwoinfo.com" style="width: 100%;height: 100%;"><img src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/img/lianxi.png" style="float: left;margin-left: 16%;
+    "><p style="float: left;font-size: 24px;
+    margin-top: 11px;color: #49c8f7;">联系我们  了解更多</p></a>
+  	</div>
+    <ul class="clearfix">
+      <volist name="category" key="k" id="vo">
+        <li <?php if($k%2 == 0) { ?> class="right_li" <?php } ?>><a href="{$vo.url}"><img src="{$vo.icon}"><p>{$vo.title}</p></a></li>
+        </volist>
+        <!-- <li><a href="场地公告.html"><img src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/img/fagui.png"><p>政策法规</p></a></li>
+        <li class="right_li"><a href=""><img src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/img/gonggao.png"><p>场地公告</p></a></li>
+        <li style="border-bottom: none;"><a href=""><img src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/img/yongche.png"><p>预约用车</p></a></li>      
+        <li class="right_li" style="border-bottom: none;"><a href=""><img src="{:CUSTOM_TEMPLATE_PATH}Index/ColorV5/img/wode.png"><p>个人中心</p></a></li> -->
+    </ul>
+  </div>
+ </body>
+<!--   <script type="text/javascript">
+        $(document).ready(function(){
+        	$("#myCarousel").carousel({
+				interval:3000//每隔2秒切换一次
+			})
+        });
+    </script> -->
+        <script type="text/javascript">
+        $(document).ready(function(){
+          $('.slider2').bxSlider({
+            slideWidth: 1200, 
+      auto: true,
+        autoControls: true,
+            minSlides: 1,
+            maxSlides: 1,
+            slideMargin: 0
+          });
+        });
+    </script>
+</html>

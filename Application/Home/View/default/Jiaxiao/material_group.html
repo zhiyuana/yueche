@@ -1,0 +1,76 @@
+<extend name="Base/common" />
+<block name="body">
+  <div class="span9 page_message">
+  
+    <section id="contents"> <include file="Addons/_nav" />
+
+      <!-- 数据列表 -->
+      <div class="data-table" style="margin-top:20px;">
+      
+        <div class="table-striped">
+        <div style="padding-bottom: 20px;padding-left: 15px;">
+        <a class="btn" href="{:U('group_add',array('mdm'=>I('mdm')))}">新 增</a>
+        </div>  
+        </div>
+		<div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>分组名称</th>
+				 <th width='55%'>分组描述</th>
+				 <th>操作</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody>
+              <volist name="group_list" id="vo">
+                <tr>
+                  <td type="headimgurl">{$vo.id}</td>
+                  <td type="content">{$vo.title}</td>
+				  <td >{$vo.description}</td>
+				  <td><a href="{:U('group_edit',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}">编辑</a>
+                            <a href="{:U('group_del',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}" class="del">删除</a></td>
+                </tr>
+              </volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page"> {$_page|default=''} </div>
+    </section>
+  </div>
+      </div>
+      <div class="page"> {$_page|default=''} </div>
+    </section>
+  </div>
+</block>
+<block name="script"> 
+  <script type="text/javascript">
+$(function(){
+	
+})
+$( '.del' ).click( function () {
+				return confirm('确认要执行删除操作吗？');
+    });
+function playSound(id,obj){
+	var audio = document.getElementById(id);
+	if(audio.paused){
+		audio.play();
+		$(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+		audio.addEventListener('ended', function () {  
+// 			alert('over');
+			$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+		}, false);
+		return;
+	}
+	audio.pause();
+	$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+	
+}
+</script> 
+</block>

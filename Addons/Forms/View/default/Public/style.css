@@ -1,0 +1,76 @@
+@charset "utf-8";
+/* CSS Document */
+
+* { margin: 0; padding: 0px;  font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+body { font-size: 14px; margin: 0px; padding: 0px; background: #fff;  font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+a { text-decoration: none; text-shadow: none; }
+ul, ol, li { list-style: none }
+img { border: 0 }
+/*引用图标*/
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('glyphicons-halflings-regular.eot');
+  src: url('glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('glyphicons-halflings-regular.woff') format('woff'), url('glyphicons-halflings-regular.ttf') format('truetype'), url('glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*学员个人信息登记*/
+header{margin-top:0 ;padding: 0;}
+header h1{margin:0;height: 40px;text-align: center;width: 100%;padding: 0;font-size:18px;line-height: 40px;}
+.message{padding: 10px 15px 0;overflow-x: hidden;}
+.lab{padding-right: 0;}
+.Required{color: red;}
+.message li{margin-top:10px;}
+.message input{width: 100%;text-indent: 5px;}
+input.sex{width: 20px;}
+input.agree{width: 20px;}
+span.camera {position: absolute; right: 16px; top: 10px; height: 34px; width: 34px; font-size: 34px;}
+.clear{width: 71%;float: left;padding-left: 5px;line-height: 38px;}
+label{font-weight: normal;float: left;width: 29%;padding-top: 6px;  min-width: 6em; }
+.agree_submit{margin-top:20px;text-align: center;}
+.btn_submit{margin-top:20px;}
+/*车辆预约*/
+.car{padding: 10px 15px 0;overflow-x: hidden;}
+.car li{margin-top:10px;}
+.car input{width: 100%;text-indent: 5px;}
+.car_data{margin-top:20px;}
+th,td{text-align: center;font-weight: 500;}
+td input{width: 15px;height: 15px;}
+table{display: block;width: 600px;overflow-x: auto;}
+#demo1{border-radius: 5px;}
+/*在线支付*/
+.pay{padding: 10px 15px 0;overflow-x: hidden;overflow-y: auto;}
+.pay_row{margin-bottom: 10px;}
+.pay_detail{background: #fff;padding: 10px;}
+.pay_detail img{width:100px;height:100px;}
+.show{float: left;width: 30%;padding: 0;/*margin-left:15px ;*/}
+.detail{font-size: 16px;}
+.car_number{float: left;width: 66%;padding-right: 0;}
+.pay_detail span{width: 100%;display: block;/*line-height: 24px;*/margin-bottom: 5px;}
+.red{color: red;}
+.pay_sub{background: #fff;margin-right: -15px;margin-left: -15px;padding:0 0 5px;}
+.pay_int{border: 1px solid #ccc;background: #fff;margin-left: 77%;}
+.pay_int{padding:2px}
+.comment{margin-left:30px;}
+.pay_money{margin-top:20px;height: 40px;background: #fff;margin-left: -15px; margin-right: -15px;line-height: 40px;}
+.mount{color: red;font-size: 18px;text-align: center;}
+.button_submit{margin-top:20px;width: 100%;}
+/*订单查询*/
+.check{padding: 10px 15px 0;overflow-x:hidden;background: #eee;}
+.pay_check{margin-bottom: 0;}
+.pay_mon{height: 40px;line-break: 40px;;background: #fff;margin-left: -15px; margin-right: -15px;}
+.mou{text-align: right;margin-right: 30px;}
+.pay_order{margin-bottom: 10px;}
+
+

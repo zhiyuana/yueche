@@ -1,0 +1,42 @@
+<div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>学员姓名</th>
+                <!-- <th>教练姓名</th> -->
+                <th>预约日期</th>
+                <th>微信订单号</th>
+                <th>下单时间</th>
+                <th>金额</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody id="list">
+                <volist name="dingdan_list" id="vo">
+                <tr>
+                  <td type="headimgurl" >{$vo.id}</td>
+                  <td type="content">{$vo.xname}</td>
+                  <td >{$vo.data}</td>
+                  <td >{$vo.transaction_id}</td>
+                  <td >{$vo.daddtime}</td>
+                  <td >{$vo.money}</td>
+                  <td >未消费</td>
+                  <td>
+                  <a href="{:U('ding_xq',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}">查看详情</a><!--  |
+                  <a href="{:U('dingdan_del',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}" class="del">删除</a> -->
+                  </td>
+                </tr>
+                </volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page" id="page"> {$_page} </div>
+        

@@ -1,0 +1,98 @@
+<extend name="Base/common" />
+<block name="body">
+  <div class="span9 page_message">
+  
+    <section id="contents"> <include file="Addons/_nav" />
+
+      <!-- 数据列表 -->
+<!--       <div class="data-table" style="margin-top:20px;">
+      
+        <div class="table-striped">
+        <div style="padding-bottom: 20px;padding-left: 15px;">
+        <a class="btn" href="{:U('xueyuan_add',array('mdm'=>I('mdm')))}">新 增</a>
+        </div>  
+        </div>
+        </div> -->
+    <div class="table-striped">
+      <div style="padding-bottom: 5px;padding-left: 20px;">
+          <input type="text" name="xy_name" id="xy_name" placeholder="请输入要查询学员的名字" value="{$xy_name}">
+          <a class="btn xy_chaxun" href="javascript:void(0)" style="margin-bottom: 10px;padding: 8px 15px;">查询</a>
+      </div>
+    </div>
+		<div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>姓名</th>
+      			<th>性别</th>
+                <th>手机号</th>
+                <th>身份证号</th>
+      			<th>操作</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody>
+              <volist name="xueyuan_list" id="vo">
+                <tr>
+                  <td type="headimgurl">{$vo.id}</td>
+                  <td type="content">{$vo.xname}</td>
+                  <td >{$vo.xsex}</td>
+				  <td >{$vo.xphone}</td>
+				  <td >{$vo.xcard}</td>
+				<td>
+                    <a href="{:U('xueyuan_edit',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}">编辑</a><!--  |
+                    <a href="{:U('xueyuan_del',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}" class="del">删除</a> -->
+                  </td>
+                </tr>
+              </volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page"> {$_page|default=''} </div>
+    </section>
+  </div>
+</block>
+<block name="script"> 
+  <script type="text/javascript">
+$(function(){
+	
+})
+$( '.del' ).click( function () {
+				return confirm('确认要执行删除操作吗？');
+    });
+function playSound(id,obj){
+	var audio = document.getElementById(id);
+	if(audio.paused){
+		audio.play();
+		$(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+		audio.addEventListener('ended', function () {  
+// 			alert('over');
+			$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+		}, false);
+		return;
+	}
+	audio.pause();
+	$(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+	
+}
+
+//查询学员
+$(".xy_chaxun").click(function(){
+    var xy_name = $('#xy_name').val();
+    if(xy_name == ''){
+      alert('查询学员名字不能为空!');
+      return false;
+    }else{
+      var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+      var url = skip_url + "?s=/Home/Xueyuan/xueyuan_list/xy_name/"+xy_name;
+      $('.xy_chaxun').attr('href',url);
+    }
+});
+</script> 
+</block>

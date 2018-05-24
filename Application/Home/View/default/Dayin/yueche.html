@@ -1,0 +1,621 @@
+<extend name="Base/common" />
+<block name="body">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+    <script type="text/javascript" src="__STATIC__/dingdan/js/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+    <script type="text/javascript" src="__STATIC__/dingdan/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/dingdan/js/jiao_select.js"></script>
+    <script type="text/javascript" src="__STATIC__/dingdan/js/select.js"></script>
+    <style>
+        ul,
+        li {
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        /*.car {height:40px;}*/
+        
+        .sub {
+            padding: 15px;
+            color: #000;
+        }
+        
+        .car_date,
+        .car_all {
+            display: inline-block;
+        }
+        
+        .car_date {
+            margin-right: 30px;
+            color: #000;
+        }
+        
+        .car_date label {
+            font-weight: normal;
+        }
+        
+        .car_date input {
+            color: #000;
+        }
+        
+        label {
+            float: left;
+            margin-right: 20px;
+            line-height: 34px;
+        }
+        
+        .form-control {
+            float: left;
+            width: 8%;
+            margin-right: 50px;
+        }
+        
+        #data {
+            height: 17px;
+            width: 150px;
+        }
+        
+        select {
+            width: 167px;
+            height: 34px;
+        }
+        
+        .car_data {
+            margin-top: 60px;
+        }
+        
+        .day i {
+            background: url(__STATIC__/dingdan/item_sel.gif) no-repeat;
+            display: none;
+            bottom: 0;
+            height: 12px;
+            overflow: hidden;
+            position: absolute;
+            right: 0;
+            text-indent: -9999em;
+            width: 12px;
+        }
+        
+        .data-table table tr>th:first-child {
+            width: 30px;
+        }
+        
+        .data-table table tr>td:first-child {
+            width: 30px;
+            text-align: center;
+        }
+        
+        .day1 {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 2px 4px;
+            text-align: center;
+            position: relative
+        }
+        
+        .day {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 2px 4px;
+            text-align: center;
+            position: relative
+        }
+        .day_dis {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 2px 4px;
+            text-align: center;
+            position: relative
+        }
+        
+        .fenduan {
+            height: 220px;
+            overflow-y: auto;
+            padding: 15px;
+            overflow-x: auto;
+            width: 1162px;
+        }
+        
+        .fenduan table {
+            border: 1px solid #ddd;
+            width: 100%;
+            border-spacing: 0;
+            border-collapse: collapse;
+            background-color: transparent;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        
+        .fenduan tr {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
+        }
+        
+        .fenduan table th {
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+        }
+        
+        .fenduan td {
+            border: 1px solid #ddd;
+            padding: 6px;
+            line-height: 1.42857143;
+            vertical-align: top;
+        }
+        
+        .fenduan td .day {
+            cursor: pointer;
+        }
+        /*.fenduan .table{
+			width: 100%;
+            max-width: 100%;
+		}*/
+        
+        .select {
+            width: 100px;
+            height: 37px;
+        }
+    </style>
+    <div class="span9 page_message">
+        <section id="contents">
+            <include file="Addons/_nav" />
+            <!-- 数据列表 -->
+            <div class="data-table" style="margin-top:0px;">
+                <div class="table-striped">
+                    <div class="sub">
+                        <div class="car_date" style="margin-right: 10px;">
+                            <label style="margin:0">车号：</label>
+                            <select name="" id="selected" onchange = "select_request()">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+								<option value="29">29</option>
+								<option value="30">30</option>
+								<option value="31">31</option>
+								<option value="32">32</option>
+								<option value="33">33</option>
+								<option value="34">34</option>
+								<option value="35">35</option>
+								<option value="36">36</option>
+								<option value="37">37</option>
+								<option value="38">38</option>
+								<option value="39">39</option>
+								<option value="40">40</option>
+								</select>
+                        </div>
+                        <div class="car_date" style="margin-right: 10px;">
+                            <label style="margin:0">日期：</label>
+                            <input type="text" id="data" value="{$data}" />
+                        </div>
+                        
+                        <div class="car_date" style="margin-right: 10px;">
+                            <label style="margin:0">驾校：</label>
+                            <input type="text" id="jiaxiao" name="jiaxiao" value="" style="width: 275px;" />
+                            <input type="hidden" id="date2" value="" name="jxid" />
+                        </div>
+                        <p id="list" style="display:none">{$json}</p>
+                        <script>
+                            var list = $("#list").text();
+                            var datas = eval(list);
+                            $.selectSuggest('jiaxiao', datas);
+                            $("#jiaxiao").bind("change", function() {
+                                var id = $("#date2").val();
+                                $.ajax({
+                                    type: "post",
+                                    url: "{:U('Dayin/jiaolian')}",
+                                    data: {
+                                        id: id
+                                    },
+                                    dataType: "json",
+                                    success: function(result) {
+                                        var arr = eval(result);
+                                        $.select('testInput', arr);
+                                    }
+                                });
+                            });
+                        </script>
+                        <div class="car_date" style="margin-right: 10px;">
+                            <label style="margin:0">教练：</label>
+                            <input type="text" id="testInput" name="testInput" value="" />
+                            <input type="hidden" id="date1" value="" name="jid" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="id" value="">
+            <div style="margin-bottom: 20px;" class="fenduan">
+                <table class="table table-bordered">
+                    <thead>
+                        <th colspan="6">
+                            <div style="width: 56px;display: inline-block; ">发布时长</div>
+                        </th>
+                    </thead>
+                    <tbody>
+                            <?php
+                                foreach ($fabu_list as $k => $v) {
+                            ?>
+                                <tr>
+                                    <?php
+                                        foreach ($v as $g => $h) {
+
+                                    ?>
+                                        <td style="width:190px;">
+                                            <?php 
+                                                if($h == null){
+                                                    echo ' ';
+                                                }else{
+                                            ?>
+                                            
+                                                <?php
+                                                    if($h['status'] == 1){
+
+                                                ?>
+
+                                                <div class='day_dis' value="<?php echo $h['id']; ?>" style="background:gray;">
+
+                                                <?php echo $h['time'];?><i></i>
+                                                <?php
+                                                    }else{
+
+                                                ?>
+
+                                                <div class='day' value="<?php echo $h['id']; ?>">
+                                                <?php echo $h['time'];?><i></i>
+
+                                                <?php
+
+                                                    }
+                                                ?>
+                                                
+                                                </div>
+                                            <?php
+                                                }
+                                            ?>
+                                        </td>
+                                    <?php
+                                        }
+                                    ?>
+                                 <tr>
+                            <?php
+                                }
+                            ?>
+
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div style="margin-bottom: 20px;">
+                <input type="submit" class="btn" onClick="checkForm()" value="下一步" style="width: 10%;margin-left: 43%;font-size:18px;background: #feca14;color: #fff;" />
+            </div>
+        </section>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        $(function() {
+            $('#data').datetimepicker({
+                lang: "ch", //语言选择中文 注：旧版本 新版方法：$.datetimepicker.setLocale('ch');
+                format: "Y-m-d", //格式化日期
+                timepicker: false, //关闭时间选项		    
+                onSelectDate: function(ct, $i) {
+
+                        var data = $("#data").val();
+                        var ch = $('#selected').val();
+                        $.ajax({
+                            type: "post",
+                            url: "{:U('Dayin/huoqu')}",
+                            data: {data: data,ch:ch},
+                            dataType: "json",
+                            success: function(result) {
+                                if(result == '过期时间！'){
+                                    $("tbody").html('');
+                                    var htmls = "<tr><td style='text-align:center;margin-top:10%;font-size:16px;'>当前时间已过期，不能预约！</td><tr>";
+                                    $("tbody").append(htmls);
+                                }else if (result == '没有查询到数据！') {
+                                    $("tbody").html('');
+                                    var htmls = "<tr><td style='text-align:center;margin-top:10%;font-size:16px;'>当前没有可以选择的时间段！</td><tr>";
+                                    $("tbody").append(htmls);
+                                } else {
+                                    $("tbody").html('');
+                                    var data = eval(result);
+                                    $.each(data, function(index, item) {
+                                        // var html = "<tr><td>" + index + "</td>";
+                                        var html = "<tr>";
+                                        var htmls = "";
+                                        var i = 0;
+                                        var j = 0;
+                                        $.each(item, function(res, arr) {
+                                            var id = item[res].id;
+                                            var time = item[res].time;
+                                            var status = item[res].status;
+                                            if(time == undefined){
+                                                htmls += "<td> </td>";
+                                            }else{
+                                                if (status == 1) {
+                                                    j++;
+                                                    htmls += "<td style='width:190px;'><div class='day_dis' value=" + id + " style='background: gray;'>" + time + "<i></i></div></td>";
+                                                } else {
+                                                    htmls += "<td style='width:190px;'><div class='day' value=" + id + ">" + time + "<i></i></div></td>";
+                                                }
+                                            }
+                                            
+                                            i++;
+                                        })
+
+                                        // var hy = "<td style='text-align: center;vertical-align: middle;'>" + i + "</td><td style='text-align: center;vertical-align: middle;color:red;'>" + j + "</td>";
+                                        // var hm = html + htmls + hy + '</tr>';
+
+                                        var hm = html + htmls + '</tr>';
+                                        $('tbody').append(hm);
+                                        //$("#fen_duan").attr("colspan", i);
+
+                                    })
+                                    $(".day").toggle(function() {
+                                        this.style.borderColor = "#f90";
+                                        this.style.borderWidth = "2px";
+                                        this.style.padding = "1px 3px";
+                                        var text = $(this).text();
+                                        $(this).find("i").css("display", "block");
+                                        var value = this.getAttribute("value") + ',';
+                                        var data = $("input[name='id']").val();
+                                        var id = data + value;
+                                        $("input[name='id']").val(id);
+                                        $(this).find("i").css("display", "block");
+                                    }, function() {
+                                        this.style.borderColor = "#ddd";
+                                        this.style.borderWidth = "1px";
+                                        this.style.padding = "2px 4px";
+                                        var value = this.getAttribute("value");
+                                        var strs = new Array(); //定义一数组 
+                                        var data = $("input[name='id']").val();
+                                        var str = data.substring(0, data.length - 1);
+                                        var strs = str.split(",");
+                                        var array = new Array();
+                                        for (i = 0; i < strs.length; i++) {
+                                            if (value != strs[i]) {
+                                                array += strs[i] + ',';
+                                            }
+                                        }
+                                        $("input[name='id']").val(array);
+                                        $(this).find("i").css("display", "none");
+                                    });
+                                }
+                            }
+                        });
+                    
+                    
+
+                }
+            })
+            var myDate = new Date();
+            var ch = $("#ch").val();
+            var year = myDate.getFullYear();
+            var month = myDate.getMonth() + 1;
+            var strDate = myDate.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var datatime = year + '-' + month + '-' + strDate;
+            $("#data").val(datatime)
+        })
+        //select option 请求
+        function select_request(){
+            
+            var data = $("#data").val();
+            var ch = $('#selected').val();
+            $.ajax({
+                type: "post",
+                url: "{:U('Dayin/huoqu')}",
+                data: {data: data,ch:ch},
+                dataType: "json",
+                success: function(result) {
+                    if(result == '过期时间！'){
+                        $("tbody").html('');
+                        var htmls = "<tr><td style='text-align:center;margin-top:10%;font-size:16px;'>当前时间已过期，不能预约！</td><tr>";
+                        $("tbody").append(htmls);
+                    }else if (result == '没有查询到数据！') {
+                        $("tbody").html('');
+                        var htmls = "<tr><td style='text-align:center;margin-top:10%;font-size:16px;'>当前没有可以选择的时间段！</td><tr>";
+                        $("tbody").append(htmls);
+                    } else {
+                        $("tbody").html('');
+                        var data = eval(result);
+                        $.each(data, function(index, item) {
+                            // var html = "<tr><td>" + index + "</td>";
+                            var html = "<tr>";
+                            var htmls = "";
+                            var i = 0;
+                            var j = 0;
+                            $.each(item, function(res, arr) {
+                                var id = item[res].id;
+                                var time = item[res].time;
+                                var status = item[res].status;
+                                if(time == undefined){
+                                    htmls += "<td> </td>";
+                                }else{
+                                    if (status == 1) {
+                                        j++;
+                                        htmls += "<td style='width:190px;'><div class='day_dis' value=" + id + " style='background: gray;'>" + time + "<i></i></div></td>";
+                                    } else {
+                                        htmls += "<td style='width:190px;'><div class='day' value=" + id + ">" + time + "<i></i></div></td>";
+                                    }
+                                }
+                                
+                                i++;
+                            })
+
+                            // var hy = "<td style='text-align: center;vertical-align: middle;'>" + i + "</td><td style='text-align: center;vertical-align: middle;color:red;'>" + j + "</td>";
+                            // var hm = html + htmls + hy + '</tr>';
+
+                            var hm = html + htmls + '</tr>';
+                            $('tbody').append(hm);
+                            //$("#fen_duan").attr("colspan", i);
+
+                        })
+                        $(".day").toggle(function() {
+                            this.style.borderColor = "#f90";
+                            this.style.borderWidth = "2px";
+                            this.style.padding = "1px 3px";
+                            var text = $(this).text();
+                            $(this).find("i").css("display", "block");
+                            var value = this.getAttribute("value") + ',';
+                            var data = $("input[name='id']").val();
+                            var id = data + value;
+                            $("input[name='id']").val(id);
+                            $(this).find("i").css("display", "block");
+                        }, function() {
+                            this.style.borderColor = "#ddd";
+                            this.style.borderWidth = "1px";
+                            this.style.padding = "2px 4px";
+                            var value = this.getAttribute("value");
+                            var strs = new Array(); //定义一数组 
+                            var data = $("input[name='id']").val();
+                            var str = data.substring(0, data.length - 1);
+                            var strs = str.split(",");
+                            var array = new Array();
+                            for (i = 0; i < strs.length; i++) {
+                                if (value != strs[i]) {
+                                    array += strs[i] + ',';
+                                }
+                            }
+                            $("input[name='id']").val(array);
+                            $(this).find("i").css("display", "none");
+                        });
+                    }
+                }
+            });
+        }
+
+       
+        function checkForm() {
+            var valarr = [];//时间段id（排班id），
+            for(var i = 0; i < $('.day').length;i++){
+                if($('.day')[i].style.borderWidth == "2px"){
+                    valarr.push($('.day')[i].getAttribute('value'));
+                }
+            }
+            var data = $("#data").val();
+            var ch = $('#selected').val();
+            // alert(typeof(valarr));
+            
+            var id = $("input[name='id']").val();
+            var str = id.substring(0, id.length - 1);
+            var time = str.split(",");
+            var jx = $('#date2').val();
+            var jl = $('#date1').val();
+            // if (jx == '') {
+            //     alert('请选择驾校');
+            //     return false
+            // }
+            // if (jl == '') {
+            //     alert('请选择教练');
+            //     return false
+            // }
+            // var len = time.length;
+            // if (!id) {
+            //     alert('请选择时间段！');
+            //     return false;
+            // }
+            // if (len > 6) {
+            //     alert("最多预约6个小时");
+            //     return false;
+            // }
+            // alert(valarr);
+            // alert(data);
+            // alert(ch);
+            // return false;
+            $.ajax({
+                type: "post",
+                url: "{:U('Dayin/xuanze')}",
+                data: {
+                    data: data,
+                    ch: ch,
+                    //jx: jx,
+                    //jl: jl,
+                    time_pid:valarr
+                },
+                dataType: "json",
+                success: function(result) {
+                    alert(result);return false;
+                    if (result.status == 0) {
+                        alert(result.msg);
+                        window.location.href = result.url;
+                    } else {
+                        //alert("练车必须要有教练跟随!")
+                        window.location.href = result.url;
+                    }
+                }
+            });
+        }
+    </script>
+    <script>
+        $(".day").toggle(function() {
+            //alert(11)
+            this.style.borderColor = "#f90";
+            this.style.borderWidth = "2px";
+            this.style.padding = "1px 3px";
+            var text = $(this).text();
+            $(this).find("i").css("display", "block");
+            var value = this.getAttribute("value") + ',';
+            //alert(value)
+            var data = $("input[name='id']").val();
+            var id = data + value;
+            $("input[name='id']").val(id);
+            //var text = $(this).text();
+            $(this).find("i").css("display", "block");
+        }, function() {
+            this.style.borderColor = "#ddd";
+            this.style.borderWidth = "1px";
+            this.style.padding = "2px 4px";
+            var value = this.getAttribute("value");
+            var strs = new Array(); //定义一数组 
+            var data = $("input[name='id']").val();
+            var str = data.substring(0, data.length - 1);
+            var strs = str.split(",");
+            var array = new Array();
+            for (i = 0; i < strs.length; i++) {
+                if (value != strs[i]) {
+                    array += strs[i] + ',';
+                }
+            }
+            $("input[name='id']").val(array);
+            $(this).find("i").css("display", "none");
+        });
+    </script>
+</block>

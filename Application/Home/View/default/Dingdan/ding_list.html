@@ -1,0 +1,222 @@
+<extend name="Base/common" />
+<block name="body">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.min.js"></script>
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+  <style type="text/css">
+  @font-face {
+    font-family: 'iconfont';
+    src: url('__PUBLIC__/iconfont/iconfont.eot');
+    src: url('__PUBLIC__/iconfont/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('__PUBLIC__/iconfont/iconfont.woff') format('woff'),
+    url('__PUBLIC__/iconfont/iconfont.ttf') format('truetype'),
+    url('__PUBLIC__/iconfont/iconfont.svg#iconfont') format('svg');
+    }
+  .iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    /*color:#efef6a;*/
+    color:#75754b;
+  }
+  .jho:hover{
+    /*color:#75754b;*/
+    color:#efef6a;
+  }
+  </style>
+  <div class="span9 page_message">
+  
+    <section id="contents"> <include file="Addons/_nav" />
+
+      <!-- 数据列表 -->
+      <div class="data-table" style="margin-top:20px;">
+      
+        <div class="table-striped">
+        <div style="padding-bottom: 20px;">
+		<form action="{:U('ding_Download',array('mdm'=>I('mdm'),'status'=>0))}" method="post">
+        	<input id="data_riqi" type="hidden" value=""/>
+			<input type="text" value="{$datetimepicker}" id="datetimepicker" name="datetimepicker" placeholder="开始时间段搜索" style="width: 145px;margin-bottom: 0;"/>&nbsp;-
+        	<input id="data_riqi1" type="hidden" value=""/>
+			<input type="text" id="datetimepicker1" value="{$datetimepicker1}" name="datetimepicker1" placeholder="结束时间段搜索" style="width: 145px;margin-bottom: 0;"/>
+			<input type="text" name="keywords" value="{$keywords}" placeholder="身份证号或手机号搜索" style="width: 235;margin: 0 10px;" id="keywords">
+			<a class="btn" id="sousuo" style="">搜 索</a>
+			<!-- <input type="submit" value="下 载" class="btn" style="margin-right: 40px;"> -->
+			<input type="submit" value="下 载" class="btn" style="margin-left:10px;">
+			<!--  <a class="btn" href="{:U('ding_Download',array('mdm'=>I('mdm')))}">下 载</a> -->
+
+      <span class="btn iconfont jho" id="weixin" onclick="wechat(1)" style="padding:6px 24px;font-size: 20px; background:#fff">学员：&#xe612;</span>
+      <span class="btn iconfont jho" id="xianxia" onclick="wechat(2)" style="padding:6px 24px;font-size: 20px; background:#fff">驾校：&#xe65b;</span>
+      <input type="hidden" id="fs" name="fs" value="{$keyword}">
+		</form>
+        </div>  
+        </div>
+        </div>
+    <div id="ajax_search">
+    <div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>学员姓名</th>
+                <th>预约日期</th>
+                <th>预约时间段</th>
+                <!-- <th>订单号</th> -->
+                <th>预约车号</th>
+                <th>下单时间</th>
+                <th>金额</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody id="list">
+        				<volist name="dingdan_list" id="vo">
+        				<tr>
+        				  <td type="headimgurl" >{$vo.id}</td>
+        				  <td type="content" style="position: relative">{$vo.xname}
+                  <a  title= "{$vo.jxname}" class="iconfont" style="position:absolute;right:0;top:0; ">
+                  <if condition="$vo['fs'] eq 1">&#xe612;
+                  <else /> 
+                  &#xe65b;
+                  </if></a></td>
+                  <td>{$vo.pdata}</td>
+                  <td >{$vo.ptime}</td>
+        				  <td >{$vo.pch}</td>
+        				  <!-- <td >{$vo.transaction_id}</td> -->
+        				  <!-- <td >{$vo['transaction_id'] ? $vo['transaction_id'] : $vo['dbh']}</td> -->
+        				  <td >{$vo.daddtime}</td>
+        				  <td >{$vo.money} 元</td>
+                  <td >未消费</td>
+        				  <td>
+        					<a href="{:U('ding_xq',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}">查看详情</a><!--  |
+        					<a href="{:U('dingdan_del',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}" class="del">删除</a> -->
+        				  </td>
+        				</tr>
+        				</volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page" id="page"> {$_page} </div>
+	  <!-- {$_page|default=''} -->
+    </div>
+    </section>
+  </div>
+</block>
+<block name="script">
+  <?php if($keyword == '1'){ ?>
+    <script type="text/javascript">
+      $('#weixin').css('color','#efef6a')
+    </script>
+  <?php }else if($keyword == '2'){ ?>
+    <script type="text/javascript">
+      $('#xianxia').css('color','#efef6a')
+    </script>
+  <?php } ?>
+<script type="text/javascript">
+$('#sousuo').click(function(){
+  var datetimepicker = $("#datetimepicker").val();
+  var datetimepicker1 =  $("#datetimepicker1").val();
+  var keywords = $("#keywords").val();
+  if(datetimepicker == "" && datetimepicker1 == "" && keywords == "")
+  {
+    alert("搜索条件不能为空!");
+    return false;
+  }
+  else if((datetimepicker == '' || datetimepicker1 == '') && keywords == "")
+  {
+    alert("请选择时间段");
+    return false;
+  }
+  else{
+    var fs = $("#fs").val();
+    //var url = "http://yueche.siwoinfo.com/index.php?s=/Home/Dingdan/ding_list/datetimepicker/"+datetimepicker+"/datetimepicker1/"+datetimepicker1;
+      var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+  	  var url = skip_url + "?s=/Home/Dingdan/ding_list/keyword/"+fs+"/datetimepicker/"+datetimepicker+"/datetimepicker1/"+datetimepicker1+"/keywords/"+keywords;
+      $('#sousuo').attr('href',url);
+  }
+})
+// function search(){	
+// 	var datetimepicker = $("#datetimepicker").val();
+// 	var datetimepicker1 =  $("#datetimepicker1").val();
+//   if(datetimepicker == '' || datetimepicker1 == ''){
+//     alert("请选择时间段");
+//     return false;
+//   }
+//   var url = "http://yueche.siwoinfo.com/index.php?s=/Home/Dingdan/ding_list/datetimepicker/"+datetimepicker+"datetimepicker1/"+datetimepicker1;
+//   $('.btn').attr('href',url);
+// 	$.ajax({
+// 		url:"{:U('Dingdan/ding_list')}",
+// 		type:"POST",
+// 		data:dataStr,
+// 		dataType:"json",
+// 		success:function(json){
+// 		//alert(json[0]._page);return false;
+// 			htmlstr ="";
+// 			if(json == 'null' || json == null || json.count=='0'){
+// 				htmlstr += "<tr><td colspan='8'  style='text-align:center'>未检索到相关信息</td></tr>";	
+// 			}else{
+// 				$.each(json,function(i,n){		
+// 					htmlstr += "<tr><td>"+n.id+"</td>";
+// 					htmlstr += "<td>"+n.xname+"</td>";
+// 					htmlstr += "<td>"+n.data+"</td>";
+// 					htmlstr += "<td>"+n.transaction_id+"</td>";
+// 					htmlstr += "<td>"+n.daddtime+"</td>";
+// 					htmlstr += "<td>"+n.money+"</td>";
+// 					htmlstr += "<td>未消费</td>";
+// 					htmlstr += "<td><a href='{:U("ding_xq",array("id"=>"+n.id+","mdm"=>$_GET["mdm"]))}' class='del'>查看详情</a></td></tr>";
+// 				});				
+// 			}
+// 			$("#list").html(htmlstr);
+// 			$("#page").html(json[0]._page);
+// 		}	
+// 	});
+// }
+
+
+$(function(){
+  
+})
+$('#datetimepicker').datetimepicker({
+	lang:'ch',
+  format:"Y-m-d",      //格式化日期
+  timepicker:false,    //关闭时间选项
+});
+$('#datetimepicker1').datetimepicker({
+	lang:'ch',
+  format:"Y-m-d",      //格式化日期
+  timepicker:false,    //关闭时间选项
+});
+$( '.del' ).click( function () {
+        return confirm('确认要执行删除操作吗？');
+    });
+function playSound(id,obj){
+  var audio = document.getElementById(id);
+  if(audio.paused){
+    audio.play();
+    $(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+    audio.addEventListener('ended', function () {  
+//      alert('over');
+      $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+    }, false);
+    return;
+  }
+  audio.pause();
+  $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+  
+}
+
+function wechat(can){
+  var fs = can;
+  var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+  var url = skip_url + "?s=/Home/Dingdan/ding_list/keyword/"+fs;
+  window.location.href = url;
+}
+</script> 
+</block>

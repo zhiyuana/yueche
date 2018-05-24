@@ -1,0 +1,86 @@
+<extend name="Base/common" />
+<block name="body">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />		
+		<script type="text/javascript" src="__STATIC__/dingdan/js/jquery-1.7.1.js"></script>
+		<!--<script type="text/javascript" src="__STATIC__/dingdan/bootstrap.min.js"></script>-->
+		<script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+		<style>
+			body{padding:0;margin:0;font-size:14px;font-family:"微软雅黑";background: #fff;}
+			ul,li{list-style: none;}
+			a{text-decoration: none;}
+			.car {height:40px;}
+			.sub{padding:15px;}
+			.car_date,.car_all{display: inline-block;}
+			.car_date{margin-right:30px;}
+			label{float: left;margin-right: 20px;line-height: 34px;}
+			.form-control{float: left;width:8%;margin-right: 50px;}
+			#data{height: 34px;width: 150px;}
+			select{width: 150px;height: 34px;}	
+			.car_data{margin-top:60px;}
+			.lis div{height: 40px;;line-height: 37px;float: left;border-radius:5px;padding:2px 4px;border: 1px solid #ddd;text-align: center;position: relative;margin:0.9%;width: 100%;}
+		    .lis{width: 15%;padding: 5px;border: 1px dashed #ddd;border-top:0 ;border-left: 0;float: left;}		   
+			.lis:last-child{border-right:0 ;}		    
+		    .liss:last-child{border-right:0 ;}
+		    .lis:nth-of-type(4),.lis:nth-of-type(8),.lis:nth-of-type(12),.lis:nth-of-type(16),.lis:nth-of-type(20),.lis:nth-of-type(24){border-right:0 ;}
+		</style>
+		<div class="sub">
+			<div class="car">
+				<div class="car_date">
+					<label>日期：</label>
+					<input  type="text" id="data"  value=""  />
+				</div>
+				<div class="car_number">
+					<label>车号：</label>
+					<select id="ch" onchange="carNumber()">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+					</select>
+				</div>
+			</div>
+			<div class="car_data">
+				<table>
+					<tbody>
+						<div class='lis'><div value=''>13:00-14:00<i></i></div></div>
+						<div class='lis'><div value=''>13:00-14:00<i></i></div></div>
+						<div class='lis'><div value=''>13:00-14:00<i></i></div></div>
+						<div class='lis'><div value=''>13:00-14:00<i></i></div></div>
+						<div class='lis'><div value=''>13:00-14:00<i></i></div></div>
+						<div class='lis'><div value=''>13:00-14:00<i></i></div></div>
+						<div class='lis'><div value=''>13:00-14:00<i></i></div></div>
+						<div class='lis'><div value=''>13:00-14:00<i></i></div></div>
+						<div class='lis'><div value=''>13:00-14:00<i></i></div></div>
+						<div class='lis'><div value=''>13:00-14:00<i></i></div></div>
+					</tbody>
+				</table>
+			</div>
+        </div>
+      
+        <script>
+	        $('#data').datetimepicker({
+			 	lang:"ch", //语言选择中文 注：旧版本 新版方法：$.datetimepicker.setLocale('ch');
+	      		format:"Y-m-d",      //格式化日期
+	      		timepicker:false,    //关闭时间选项		    
+				onSelectDate:function(ct,$i){
+				  console.log(11)
+				}
+			})	
+			function carNumber(){
+				
+			}
+        	var myDate = new Date();  
+			var ch = $("#ch").val();
+			var year = myDate.getFullYear();
+		    var month = myDate.getMonth()+1;   
+		    var strDate = myDate.getDate(); 
+		    if (month >= 1 && month <= 9) {
+	            month = "0" + month;
+	        }
+	        if (strDate >= 0 && strDate <= 9) {
+	            strDate = "0" + strDate;
+	        }
+		    var datatime = year+'-'+month+'-'+strDate;
+		    $("#data").val(datatime)
+        </script>
+</block>

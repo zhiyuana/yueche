@@ -1,0 +1,266 @@
+<extend name="Base/common" />
+<block name="body">
+  <link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/bookstrap.css" />
+  <link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.min.js"></script>
+  <script type="text/javascript" src="__STATIC__/dingdan/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+  <style type="text/css">
+  @font-face {
+    font-family: 'iconfont';
+    src: url('__PUBLIC__/iconfont/iconfont.eot');
+    src: url('__PUBLIC__/iconfont/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('__PUBLIC__/iconfont/iconfont.woff') format('woff'),
+    url('__PUBLIC__/iconfont/iconfont.ttf') format('truetype'),
+    url('__PUBLIC__/iconfont/iconfont.svg#iconfont') format('svg');
+    }
+  .iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    /*color:#efef6a;*/
+    color:#75754b;
+  }
+  .jho:hover{
+    /*color:#75754b;*/
+    color:#efef6a;
+  }
+  </style>
+  <div class="span9 page_message">
+  
+    <section id="contents"> <include file="Addons/_nav" />
+      <!-- 数据列表 -->
+        <div class="data-table" style="margin-top:20px;">
+        <div class="table-striped">
+        <div style="padding-bottom: 20px;">
+          <form action="{:U('xiao_Download',array('mdm'=>I('mdm'),'status'=>2))}" method="post">
+                <input id="data_riqi" type="hidden" value=""/>
+                <input type="text" id="datetimepicker" name="datetimepicker" value="{$datetimepicker}" placeholder="开始时间段搜索" style="width: 145px;margin-bottom: 0;"/>&nbsp;-
+                <input id="data_riqi1" type="hidden" value=""/>
+                <input type="text" id="datetimepicker1" name="datetimepicker1" value="{$datetimepicker1}" placeholder="结束时间段搜索" style="width: 145px;margin-bottom: 0;"/>
+                <input type="text" name="keywords" value="{$keywords}" placeholder="身份证号或手机号搜索" style="width: 235;margin: 0 10px;" id="keywords">
+                <a class="btn" id="sousuo" style="">搜 索</a>
+                <input type="submit" value="下 载" class="btn" style="margin-left:10px;">
+                <span class="btn iconfont jho" id="weixin" onclick="wechat(1)" style="padding:6px 24px;font-size: 20px; background:#fff">学员：&#xe612;</span>
+                <span class="btn iconfont jho" id="xianxia" onclick="wechat(2)" style="padding:6px 24px;font-size: 20px; background:#fff">驾校：&#xe65b;</span>
+                <input type="hidden" id="fs" name="fs" value="{$keyword}">
+          </form>
+        </div>  
+        </div>
+        </div>
+    <div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1" class="table table-bordered">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>学员姓名</th>
+                <th>预约日期</th>
+                <th>预约时间段</th>
+                <th>预约车号</th>
+                <th>下单时间</th>
+                <th>金额</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody id="list">
+              <volist name="xiao_list" id="vo">
+                <tr>
+                  <td type="headimgurl">{$vo.id}</td>
+                  <td type="content" style="position:relative">{$vo.xname}
+                  <a  title= "{$vo.jxname}" class="iconfont" style="position:absolute;right:0;top:0; ">
+                  <if condition="$vo['fs'] eq 1">&#xe612;
+                  <else /> 
+                  &#xe65b;
+                  </if></a></td>
+                  <td >{$vo.pdata}</td>
+                  <td >{$vo.ptime}</td>
+                  <td >{$vo.pch}</td>
+                  <!-- <td >{$vo['transaction_id'] ? $vo['transaction_id'] : $vo['dbh']}</td> -->
+                  <td >{$vo.daddtime}</td>
+                  <td >{$vo.money}</td>
+                  <td >已消费</td>
+                  <td>
+                    <a href="{:U('xiao_xq',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}">查看详情</a><!--  |
+                    
+                    <a href="{:U('dingdan_del',array('id'=>$vo[id],'mdm'=>$_GET['mdm']))}" class="del">删除</a> -->
+                    <a class="monrl" style="float: right;cursor: pointer;" name="{$vo.id}">修改订单状态</a>
+                  </td>
+                </tr>
+              </volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page"> {$_page} </div>
+    </section>
+  </div>
+  <!--点击修改订单状态弹出模态框-->
+  <div class="modal fade bs-example-modal-sm" role="dialog" id="myModal"  aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 200px;">
+    <div class="modal-dialog modal-sm" role="document">       
+      <div class="modal-content">
+        <div class="modal-header" style="font-size: 16px;text-align: center;">
+        订单状态修改
+      </div>
+        <div class="modal-body" >
+          <p style="display: inline-block;">修改订单状态：</p>
+          <div style="display: inline-block;">
+            <select style="width: 120px;height:34px;" id="ddlRegType">
+                <option class="status" value="2">已消费</option>
+                <option class="status" value="0">未消费</option>
+                <!-- <option class="status" value="1">退款</option>
+                <option class="status" value="3">退款中</option> -->
+            </select> 
+          </div>                          
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default mod_quxiao" data-dismiss="modal">取消</button>
+          <button class="btn btn-default" id="mod_btn">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</block>
+<block name="script"> 
+  <?php if($keyword == '1'){ ?>
+    <script type="text/javascript">
+      $('#weixin').css('color','#efef6a')
+    </script>
+  <?php }else if($keyword == '2'){ ?>
+    <script type="text/javascript">
+      $('#xianxia').css('color','#efef6a')
+    </script>
+  <?php } ?>
+<script type="text/javascript">
+  $(".monrl").click(function(){
+        // alert($(this).attr('name'));
+        var mod_id = $(this).attr('name');
+
+        $("#myModal").modal("show");
+        $("#mod_btn").click(function(){
+          var mod_status = $("#ddlRegType").find("option:selected").attr('value');
+          $.ajax({
+            url      :  "{:U('Dingdan/mod_xiao')}",
+            type     :  "POST",
+            dataType :  "text",
+            data     :  {mod_id:mod_id,mod_status:mod_status},
+            success  :  function(data){
+                if(data == 1){
+                  alert('修改成功!');
+                  window.location.reload();
+                  $("#myModal").modal("hide");
+                }
+                if(data == 0 ||　data == 4){
+                  alert('修改失败!');
+                  window.location.reload();
+                }
+            }
+          });
+        });
+        //取消按钮
+        $(".mod_quxiao").click(function(){
+            window.location.reload();
+        });
+  });
+
+</script>
+<script type="text/javascript">
+$('#sousuo').click(function(){
+  var datetimepicker = $("#datetimepicker").val();
+  var datetimepicker1 =  $("#datetimepicker1").val();
+  var keywords = $("#keywords").val();
+  if(datetimepicker == "" && datetimepicker1 == "" && keywords == "")
+  {
+    alert("搜索条件不能为空!");
+    return false;
+  }
+  else if((datetimepicker == '' || datetimepicker1 == '') && keywords == "")
+  {
+    alert("请选择时间段");
+    return false;
+  }
+  else
+  {
+    var fs = $("#fs").val();
+    //var url = "http://yueche.siwoinfo.com/index.php?s=/Home/Dingdan/xiao_list/datetimepicker/"+datetimepicker+"/datetimepicker1/"+datetimepicker1;
+    var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+      var url = skip_url + "?s=/Home/Dingdan/xiao_list/keyword/"+fs+"/datetimepicker/"+datetimepicker+"/datetimepicker1/"+datetimepicker1+"/keywords/"+keywords;
+      $('#sousuo').attr('href',url);
+  }
+})
+// function search(){ 
+//  var datetimepicker = $("#datetimepicker").val();
+//  var datetimepicker1 =  $("#datetimepicker1").val();
+//  var dataStr = "datetimepicker="+datetimepicker+"&datetimepicker1="+datetimepicker1;
+//  $.ajax({
+//    url:"{:U('Dingdan/xiao_list')}",
+//    type:"POST",
+//    data:dataStr,
+//    dataType:"json",
+//    success:function(json){
+//      htmlstr ="";
+//      if(json == 'null' || json == null || json.count=='0'){
+//        htmlstr += "<tr><td colspan='8'  style='text-align:center'>未检索到相关信息</td></tr>"; 
+//      }else{
+//        $.each(json,function(i,n){    
+//          htmlstr += "<tr><td>"+n.id+"</td>";
+//          htmlstr += "<td>"+n.xname+"</td>";
+//          htmlstr += "<td>"+n.pdata+"</td>";
+//          htmlstr += "<td>"+n.transaction_id+"</td>";
+//          htmlstr += "<td>"+n.daddtime+"</td>";
+//          htmlstr += "<td>"+n.money+"</td>";
+//          htmlstr += "<td>已消费</td>";
+//          htmlstr += "<td><a href='{:U("xiao_xq",array("id"=>"+n.id+","mdm"=>$_GET["mdm"]))}' class='del'>查看详情</a></td></tr>";
+//        });
+//      }
+//      $("#list").html(htmlstr);
+
+//    } 
+//  });
+// }  
+  
+$(function(){
+  
+})
+$('#datetimepicker').datetimepicker({
+	format:'Y-m-d',
+  lang:'ch',
+  timepicker:false,
+});
+$('#datetimepicker1').datetimepicker({
+	format:'Y-m-d',
+	timepicker:false,
+  lang:'ch'
+});
+$( '.del' ).click( function () {
+        return confirm('确认要执行删除操作吗？');
+    });
+function playSound(id,obj){
+  var audio = document.getElementById(id);
+  if(audio.paused){
+    audio.play();
+    $(obj).find('img').attr('src',IMG_PATH+'/icon_sound_play.gif');
+    audio.addEventListener('ended', function () {  
+      $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+    }, false);
+    return;
+  }
+  audio.pause();
+  $(obj).find('img').attr('src',IMG_PATH+'/icon_sound.png');
+  
+}
+function wechat(can){
+  var fs = can;
+  var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+  var url = skip_url + "?s=/Home/Dingdan/xiao_list/keyword/"+fs;
+  window.location.href = url;
+}
+</script> 
+</block>

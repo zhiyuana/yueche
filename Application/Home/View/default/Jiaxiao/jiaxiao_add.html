@@ -1,0 +1,96 @@
+<extend name="Base/common" />
+
+ <block name="body">
+ 
+  <div class="span9 page_message">
+     
+    <section id="contents"> <include file="Addons/_nav" />
+       <div class="tab-content"> 
+    <!-- <script type="text/javascript" src="__STATIC__/fabu/js/jquery-1.10.1.min.js"></script> -->
+    <!-- <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script> -->
+    <script type="text/javascript" src="__STATIC__/fabu/js/ajaxfileupload.js"></script>
+
+       <script type="text/javascript">
+          function checkForm()
+        {   
+          if($("#jxname").val() == ""){
+            alert('请填写驾校名称！');
+            return false;
+          }
+          if($("#jxfname").val() == ""){
+            alert('请填写负责人姓名！');
+            return false;
+          }
+          if($("#jxphone").val() == ""){
+            alert('请填写驾校电话！');
+            return false;
+          }
+           
+        }
+        </script>
+
+	<form action="{:U('Jiaxiao/jiaxiao_insert')}" method="post" onsubmit="return checkForm();" >
+       <div>
+	        <div style="width:48%;margin-right: 20px;float: left;">
+	            <label style="line-height: 36px;"><span class="need_flag">*</span>驾校名称：</label>               
+	            <input type="text" class="text input-large" id="jxname" name="jxname" value=""
+	            style="border-radius: 5px;float: right;width: 324px;"><br>
+	        </div>
+	        <div style="width:47%;margin-right: 20px;float: left;">
+	            <label style="line-height: 36px;"><span class="need_flag">* </span>负责人姓名：</label>               
+	            <input type="text" class="text input-large" id="jxfname" name="jxfname" value="" style="border-radius: 5px;float: right;width: 324px;" > 
+	        </div>
+      	</div>
+       <div >              
+      	<div >       
+	        <div style="width:48%;margin-right: 20px;float: left;">
+	            <label style="line-height: 36px;"><span class="need_flag">* </span>驾校联系方式 ：  </label>             
+	            <input type="text" id="jxphone" class="text input-large" name="jxphone" value="" style="border-radius: 5px;float: right;width: 324px;" > 
+	        </div>
+      	</div>
+      </div>
+        <div class="form-item form_bh">
+            <!-- <button class="btn">确定</button> -->
+            <input type="submit" class="btn"  value="确定"/>
+            <a class="btn" id="go_back">返回</a>
+         </div>
+	     </form>	
+            </div>
+           </div>
+      </section>
+	
+  </div>
+</block>
+
+<block name="script">
+  <link href="__STATIC__/datetimepicker/css/datetimepicker.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <php>if(C('COLOR_STYLE')=='blue_color') echo '
+    <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    ';</php>
+  <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.js"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script> 
+  <script type="text/javascript">
+$('#submit').click(function(){
+    $('#form').submit();
+});
+
+$(function(){
+
+	initUploadFile(function(data,name){
+		var old_title = $('#title').val();
+		if(old_title==''){
+			var data = $.parseJSON(data);
+			var title = data.name.replace('.'+data.ext, '');
+			$('#title').val(title);		
+		}
+	});
+    showTab();
+	
+});
+//返回点击事件
+$("#go_back").click(function(){
+    window.history.go(-1);
+});
+</script> 
+</block>

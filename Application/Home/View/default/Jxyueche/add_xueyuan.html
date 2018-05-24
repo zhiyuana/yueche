@@ -1,0 +1,308 @@
+<extend name="Base/common" />
+<block name="body">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+    <script type="text/javascript" src="__STATIC__/dingdan/js/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="__STATIC__/dingdan/js/bootstrap.min.js"></script>
+    <style>
+        ul,
+        li {
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        /*.car {height:40px;}*/
+        
+        .sub {
+            padding: 15px;
+            color: #000;
+        }
+        
+        .car_date,
+        .car_all {
+            display: inline-block;
+        }
+        
+        .car_date {
+            margin-right: 30px;
+            color: #000;
+        }
+        
+        .car_date label {
+            font-weight: normal;
+        }
+        
+        .car_date input {
+            color: #000;
+        }
+        
+        label {
+            float: left;
+            margin-right: 20px;
+            line-height: 34px;
+        }
+        
+        .form-control {
+            float: left;
+            width: 8%;
+            margin-right: 50px;
+        }
+        
+        #data {
+            height: 17px;
+            width: 150px;
+        }
+        
+        select {
+            width: 167px;
+            height: 34px;
+        }
+        
+        .car_data {
+            margin-top: 60px;
+        }
+        
+        .day i {
+            background: url(__STATIC__/dingdan/item_sel.gif) no-repeat;
+            display: none;
+            bottom: 0;
+            height: 12px;
+            overflow: hidden;
+            position: absolute;
+            right: 0;
+            text-indent: -9999em;
+            width: 12px;
+        }
+        
+        .data-table table tr>th:first-child {
+            width: 30px;
+        }
+        
+        .data-table table tr>td:first-child {
+            width: 30px;
+            text-align: center;
+        }
+        
+        .day1 {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 2px 4px;
+            text-align: center;
+            position: relative
+        }
+        
+        .day {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 2px 4px;
+            text-align: center;
+            position: relative
+        }
+        .day_dis {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 2px 4px;
+            text-align: center;
+            position: relative
+        }
+        
+        .fenduan {
+            height: 220px;
+            overflow-y: auto;
+            padding: 15px;
+            overflow-x: auto;
+            width: 1162px;
+        }
+        
+        .fenduan table {
+            border: 1px solid #ddd;
+            width: 100%;
+            border-spacing: 0;
+            border-collapse: collapse;
+            background-color: transparent;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        
+        .fenduan tr {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
+        }
+        
+        .fenduan table th {
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+        }
+        
+        .fenduan td {
+            border: 1px solid #ddd;
+            padding: 6px;
+            line-height: 1.42857143;
+            vertical-align: top;
+        }
+        
+        .fenduan td .day {
+            cursor: pointer;
+        }
+
+        .select {
+            width: 100px;
+            height: 37px;
+        }
+        .day_dis{
+            height: 26px;
+        }
+    </style>
+    <div class="span9 page_message">
+        <form name="tijiao" action='{:U("Jxyueche/add_dingdan")}' method="post" id="myform">
+        <section id="contents">
+            <ul class="tab-nav nav">
+            <li class="current"><a href="javascript:void(0)">学员信息</a></li>
+            </ul>
+            <!-- 数据列表 -->
+            <div class="data-table" style="margin-top:0px;">
+                <div class="table-striped">
+                    <div class="sub">
+                        <div class="car_date" style="margin-right: 10px;">
+                            <label style="margin:0">驾校：</label>
+                            <input type="text" id="jx_name" value="{$jxname}" readonly="readonly" />
+                            <input type="hidden" name="jxid" id="jxid" value="{$jxid}">
+                        </div>
+                        <div class="car_date" style="margin-right: 10px;">
+                            <label style="margin:0">教练：</label>
+                            <input type="text" id="jl_name" value="{$jname}" readonly="readonly" />
+                        </div>
+                        <div class="car_date" style="margin-right: 10px;">
+                            <label style="margin:0">学员信息：</label>
+                            <select name="" id="selected">
+                                    <option value="">请选择学员</option>
+                                <volist name="xueyuan_list" id="vo">
+                                    <option value="{$vo.xname}" xid="{$vo.xid}" class='myop'>{$vo.xname}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;" class="fenduan">
+                <table class="table table-bordered">
+                    <thead>
+                        <th colspan="6">
+                            <div style="width: 56px;display: inline-block; ">学员信息</div>
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr class='mytr'>
+                            <td style="width:15%;"><div class='day_dis'></div></td>
+                            <td style="width:15%;"><div class='day_dis'></div></td>
+                            <td style="width:15%;"><div class='day_dis'></div></td>
+                            <td style="width:15%;"><div class='day_dis'></div></td>
+                            <td style="width:15%;"><div class='day_dis'></div></td>
+                            <td style="width:15%;"><div class='day_dis'></div></td>
+                        <tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <input type="hidden" name="datainfo" value='{$datainfo}' id="datainfo">
+            <input type="hidden" name="time_count" value="{$time_count}" id="time_count">
+            <input type="hidden" name="xid_str" value='' id="xid_str">
+            <!-- <input type="hidden" name="originator" value="{$code}"> -->
+            <div style="margin-bottom: 20px;">
+                <input type="button" class="btn" value="下一步" style="width: 10%;margin-left: 43%;font-size:18px;background: #feca14;color: #fff;" />
+            </div>
+        </section>
+        </form>
+    </div>
+</block>
+<block name="script">
+<script>
+    //选择学员
+    $('#selected').on('change',function(){
+        var str = $(this).val();
+        var obj = {};
+        for(var i = 0; i<$('.myop').length; i++){
+            if($('.myop')[i].value==str){
+                obj.xid = $($('.myop')[i]).attr('xid');
+            }
+        }
+        for(var i=0;i<$('.day_dis').length;i++){
+            if($('.day_dis').eq(i).html()==str){
+                return false;
+            }else if($('.day_dis').eq(i).html()==''){
+                $('.day_dis').eq(i).html(str); 
+                $('.day_dis').eq(i).attr('xid',obj.xid)
+                return false;
+            }
+        }
+    });
+    //删除选择学员
+    $('.mytr td').on('click','div',function(e){
+       $(e.target).html('');
+    })
+    //提交选择学员信息
+    $('.btn').click(function(){
+        var xid_str = '';
+        for(var i=0;i<$('.day_dis').length;i++){
+            if($('.day_dis').eq(i).html() != ''){
+                xid_str += $('.day_dis').eq(i).attr('xid') + ',';
+            }
+        }
+        xid_str = xid_str.substring(0,xid_str.length - 1);
+        var strarr = xid_str.split(',');
+        var xid_count = strarr.length;//选择学员个数
+        var time_count = $('#time_count').val();//预约的小时数
+        $("#xid_str").val(xid_str);//给学员input框xid_str赋值
+
+        if($("#xid_str").val() == ''){
+            alert('请选择学员！');
+            return false;
+        }else{
+            var time_count2 = time_count*2;
+            if(xid_count > time_count2){
+                alert('所选学员数量不能超过'+time_count2+'个！');
+                return false;
+            }else if(xid_count < time_count){
+                alert('所选学员数量不能少于'+time_count+'个!');
+                return false;
+            }else{
+                if($("#xid_str").val() != '' &&  $('#datainfo').val() != ''){
+                    // $("#myform").submit();
+                    var xid_str = $("#xid_str").val();
+                    var jxid = $("#jxid").val();
+                    var datainfo = $("#datainfo").val();
+                    $.ajax({
+                        url:"{:U('Jxyueche/add_dingdan')}",
+                        data:{'xid_str':xid_str,'jxid':jxid,'datainfo':datainfo},
+                        type:'post',
+                        dataType:'json',
+                        success:function(res){
+                            var status =  res.status;
+                            if(status == 0){
+                                window.location.href = res.url;
+                            }else if(status == 1){
+                                alert('订单添加失败，请重新约车！');
+                                window.location.href = res.url;
+                            }
+                        }
+                    })
+                }else{
+                    alert('学员或预约时间信息有误！');
+                    return false;
+                }
+            }
+        }
+        
+
+        // alert($('#time_count').val());
+        // alert($("#xid_str").val());return false;
+
+        
+    });
+</script>
+</block>

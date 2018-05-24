@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+		<title>驾校</title>
+		<link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/style.css">
+		<script src="{:ADDON_PUBLIC_PATH}/jquery.min.js"></script>
+		<script src="{:ADDON_PUBLIC_PATH}/select.js"></script>
+		<!-- <script src="{:ADDON_PUBLIC_PATH}/jiao_select.js"></script> -->
+		<script>
+			function checkForm(){ 
+				if($("#jiaxiao").val() == ""){
+		          	alert("请选择驾校!");
+		            return false;
+		        }
+				var id =$("#date2").val();  
+				// alert(id) 
+				var jxname = $("#jiaxiao").val();
+				window.location.href = "http://yueche.siwoinfo.com/index.php?s=/addon/Forms/Wap/xueyuan/jxid/"+id+"";
+			}
+        
+		</script>
+		<style>
+			header{height: 180px;width: 100%;}
+			img{width: 100%;height: 100%;}
+		</style>
+	</head>
+	<body>
+		<header>
+			<img src="{:ADDON_PUBLIC_PATH}/jiakao1.png" alt="图片正在加载" style="position: relative;"/>
+		</header>
+		<form action="" id="form" method="post" >
+		<div class="message">
+	    <ul>
+			<li class="row" style="margin-top: 0;">
+				<label class="col-sm-2 control-label lab">驾校<span class="Required">*</span>：</label><br />
+				<div class="col-sm-10 ">
+			        <input id="jiaxiao" type="text"  value="" name="jiaxiao" style="height: 34px;border: 0;border-bottom:1px solid #ddd;outline:medium;width: 100%;padding: 5px 0;">
+			       <!-- <input id="jia_xiao1"  type="hidden" value="" />-->
+					<input type="hidden" id="date2" value="" name="jxid"/>
+				</div>
+				<p id="list" style="display:none">{$json}</p>
+			</li>
+		</ul>	
+		</div>
+		<div class="btn_submit" style="margin-top: 60px;">
+			<input  onClick="checkForm()"  id="regBtn" class="btn" value="确定" style="width: 53%;margin-left: 23%;font-size:18px;background: #feca14;color: #fff;"/>
+		</div>
+		</form>	
+		 <script type="text/javascript">
+	        var list = $("#list").text();
+	        // document.write(list)
+	        var datas = eval(list);
+			$.selectSuggest('jiaxiao',datas);  
+	// 		$("#jiaxiao").bind("change", function(){ 
+	//  			var id =$("#date2").val();         				
+	// 			$.ajax({
+	// 	            type:"post",
+	// 	            url:"{:addons_url('Forms://Wap/jiaolian')}",
+	// 	            data:{id:id},
+	// 	            dataType:"json",
+	// 	            success:function(result){
+	// //				    document.write(result)
+	// 	            	var arr = eval(result);
+	// 	            	$.select('testInput',arr); 
+	// 	            }
+	// 	        });
+	// 	  });
+ 	   </script>
+</body>
+</html>

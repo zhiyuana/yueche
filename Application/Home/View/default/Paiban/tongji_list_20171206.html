@@ -1,0 +1,94 @@
+<extend name="Base/common" />
+<block name="body">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/dingdan/css/jquery.datetimepicker.css" />
+ <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.min.js"></script>
+  <script type="text/javascript" src="__STATIC__/dingdan/js/jquery.datetimepicker.js"></script>
+  <div class="span9 page_message">
+    <section id="contents"> <include file="Addons/_nav" />
+      <!-- 数据列表 -->
+        <div class="data-table" style="margin-top:20px;">
+        </div>
+        <input type="text" value="{$data}" id="datetimepicker9" style="width: 140px; margin-left: 20px;"/>
+        <a class="btn" style="margin-bottom: 8px;" id="search_btn">搜索</a>
+  </div>
+       <script type="text/javascript">
+          $('#search_btn').click(function(){
+            var data = $('#datetimepicker9').val();
+            if(data == ''){
+              alert('请选择要搜索的日期')
+            }else{
+              //var url = "http://yueche.siwoinfo.com/index.php?s=/Home/Paiban/paiban_list/data/"+data;
+              var skip_url =   "http://" + window.location.hostname + window.location.pathname;
+              var url = skip_url + "?s=/Home/Paiban/tongji_list/data/"+data;
+
+              $('#search_btn').attr('href',url);
+            }
+          });
+          $('#datetimepicker9').datetimepicker({
+              lang:"ch", //语言选择中文 注：旧版本 新版方法：$.datetimepicker.setLocale('ch');
+              format:"Y-m-d",      //格式化日期
+              timepicker:false,    //关闭时间选项
+          });
+       </script>
+
+       
+		<div class="data-table">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th style="width:">日期</th>
+                <th style="width:">车辆编号</th>
+      				  <th style="width:62%;">发布时间段 ( 红色为已预约 )</th>
+                <!-- <th>预约时间段</th> -->
+                <th>发布时长</th>
+                <th>预约时长</th>
+                <th style="">操作</th>
+              </tr>
+            </thead>
+
+            <!-- 列表 -->
+            <tbody>
+                  <volist name="tongji_list" id="vo">
+                    <tr>
+                      <td>{$vo.data}</td>
+                      <td>{$vo.ch}</td>
+                      <td>
+                          <!-- 预约的时间段标红色 -->
+                          <volist name="vo['yuyue']" id="yy">
+                            <if condition="$yy">
+                                <span style="margin-right:8px; background: red; border-radius: 5px; padding: 2px 4px;text-align: center">{$yy}</span>
+                            <else>
+
+                            </if>
+                          </volist>
+                          <!-- 没有预约的 -->
+                          <volist name="vo['fabu']" id="sub">
+                                  <span style="margin-right:8px; border:1px solid gray;    border-radius: 5px; padding: 2px 4px; text-align: center">{$sub}</span>
+                          </volist>
+                          
+                      </td>
+                      <!-- <td>{$vo.yuyueshijian}</td> -->
+                      <td>{$vo.fbshichang}</td>
+                      <td>{$vo.shichang}</td>
+                      <td>
+                        <a href="{:U('tongji_xq',array('data'=>$vo[data],'ch'=>$vo[ch]))}">查看详情</a>
+                      </td>
+                    </tr>
+                  </volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </if>
+      <div class="page"> {$_page} </div>
+    </section>
+  </div>
+
+</block>
+<block name="script"> 
+<script type="text/javascript">
+ 
+</script> 
+</block>

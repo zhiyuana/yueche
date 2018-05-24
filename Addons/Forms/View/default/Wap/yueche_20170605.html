@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+		<meta content="yes" name="apple-mobile-web-app-capable">
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+	    <meta content="telephone=no" name="format-detection">
+	    <meta content="email=no" name="format-detection">
+		<title>车辆预约</title>
+		<link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/LCalendar.css">
+		<link rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/style.css">
+		<script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/jquery-1.7.1.js"></script>
+		<script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/LCalendar.js"></script>
+		<script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/bootstrap.min.js"></script>
+		<style>
+			/*.table{margin-bottom: 10px;}*/
+			.day{float: left;border-radius:5px;padding:2px 4px;border: 1px solid #ddd;text-align: center;position: relative;margin:0.9%;}
+			.lis div{float: left;border-radius:5px;padding:2px 4px;border: 1px solid #ddd;text-align: center;position: relative;margin:0.9%;}
+			.liss div{float: left;border-radius:5px;padding:2px 4px;border: 1px solid #ddd;text-align: center;position: relative;margin:0.9%;}
+			.day1{float: left;border-radius:5px;padding:2px 4px;border: 1px solid #ddd;text-align: center;position: relative;margin:0.9%;}
+			.lis div i{background: url({:ADDON_PUBLIC_PATH}/item_sel.gif) no-repeat;display: none; bottom: 0;height: 12px;overflow: hidden;position: absolute;right: 0;text-indent: -9999em;width: 12px;}
+		    .lis{width: 25%;padding: 5px;border: 1px dashed #ddd;border-top:0 ;border-left: 0;float: left;}		   
+		    .liss{width: 25%;padding: 5px;border: 1px dashed #ddd;border-top:0 ;border-left: 0;float: left;}		   
+		    .lis:last-child{border-right:0 ;}		    
+		    .liss:last-child{border-right:0 ;}
+		    .lis:nth-of-type(4),.lis:nth-of-type(8),.lis:nth-of-type(12),.lis:nth-of-type(16),.lis:nth-of-type(20),.lis:nth-of-type(24){border-right:0 ;}
+		    .liss:nth-of-type(4),.liss:nth-of-type(8),.liss:nth-of-type(12),.liss:nth-of-type(16),.liss:nth-of-type(20),.liss:nth-of-type(24){border-right:0 ;}		    
+		    #active{float: left;border-radius:5px;padding:1px 3px;border: 2px solid #f90;text-align: center;position: relative;margin:0.9%;}		    
+		    /*.tishi{height: 20px;text-align: center;line-height: 20px;margin-top: 3px;}
+		    .tishi span{display: inline-block;margin-left: 10px;color: red;}*/		    
+		</style>
+	</head>
+	<body>
+
+		<header><h1 class="bg-primary" style="background: #feca14;">车辆预约</h1></header>
+		<!--<div class="tishi">
+		    <i class="iconfont">&#xe637;</i><span>练车必须要有教练跟随</span>
+		</div>-->
+		<div class="car">
+			<ul class="car_all" >	
+				<li class="row" >
+					<label class="col-sm-2 control-label lab">日期：</label>
+					<div class="col-sm-10 clear" >
+						 <input type="hidden" id="data"  value="" />
+						 <input id="demo1" oninput="dateChange()" type="text" readonly="" data-lcalendar="2016-05-11,2018-05-11" style="border-radius: 0;height: 34px;"/>
+					</div>
+				</li>
+			</ul>	
+			<ul>
+				<li class="row" >
+					<label class="col-sm-2 control-label lab">车号：</label>
+					<div class="col-sm-10 clear">
+						<select class="form-control" id="ch" name="ch" style="border-radius: 0;padding-left: 5px;">
+						<?php 
+							for($i = 1;$i < 41;$i++){
+						?>
+						<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+						<?php	 
+							}
+						?>
+						</select>
+					</div>
+				</li>
+			</ul>	
+				<script type="text/javascript">
+					// $(document).ready(function () {
+						function dateChange(){							
+							var ch = $("#ch").val();
+								var data = $("#data").val();
+								var demo1 = $("#demo1").val();
+								demo1 = demo1.replace(/-/g,'/');
+								//取得选择的时间戳
+								var timestamp2 = Date.parse(new Date(demo1));  			
+                                timestamp2 = parseInt(timestamp2 / 1000);
+                                //取得当前时间戳
+                                var timeStamp = new Date(new Date().setHours(0, 0, 0, 0)) / 1000;
+								if(timestamp2<timeStamp){
+									$("tbody").html('');
+									var htmls="<p style='text-align:center;margin-top:10%;font-size:16px;'>当前时间已过期，不能预约</p>";
+						            $("tbody").append(htmls);
+								}else{
+					    		$.ajax({
+						            type:"post",
+						            url:"{:addons_url('Forms://Wap/Paiban')}",
+						            data:{ch:ch,data:data},
+						            dataType:"json",
+						            success:function(result){
+						            	var status = result.status;
+						            	if(status == 0){
+						            		$("tbody").html('');
+						            		 var htmls="<p style='text-align:center;margin-top:10%;font-size:16px;'>当前没有可以选择的车辆！</p>";
+						            		 $("tbody").append(htmls);
+						            	}else{
+						            		$("tbody").html('');
+				                            $("input[name='id']").val('');
+						            		var data = eval(result);
+											 $.each(data, function (index, item) {
+											     //循环获取数据    
+											     var id = data[index].id;
+											     var time = data[index].time;
+											     var ch = data[index].ch;
+											     var status = data[index].status;
+											     //获取到时间段的前4位数跟日期进行拼接转化为时间戳
+		        								 var dtime = time.substring(0, 5);
+		        								 var ptime=demo1 + ' ' +dtime;
+		        								 //当前的时间加上时间段
+												 var times2 = Date.parse(new Date(ptime));  			
+	                                             times2 = parseInt(times2  / 1000);		        								
+//	                                             //获取当前时间的时间戳
+	                                             var times = new Date().getTime(); 			
+				                                 times = parseInt(times / 1000); 				                                
+				                                 if(times2<times){
+				                                 	var htmls="";
+					                             }else{  
+												     if(status == 1){
+												     	var htmls="<div class='liss'><div style='background:#ccc;' class='day1'>"+time+"<i></i></div></div>";
+												     }else{
+												        var htmls="<div class='lis'><div value='"+id+"' class='day'>"+time+"<i></i></div></div>";
+												     }
+											     }
+												$("tbody").append(htmls);
+												
+											 }); 
+											 
+//											 $(" .lis").find("div").click(function(){
+//												$(" .lis").find("div").attr("id","")
+//												$(" .lis").find("div").find("i").css("display","none");
+//												$(this).attr("id","active");
+//												$(this).find("i").css("display","block");													
+//												var text = $(this).text();
+//                                              var value=this.getAttribute("value");
+//		                                        //alert(value)
+//				                                $("input[name='id']").val(value);
+//											})
+											$(".day").toggle(function(){
+												this.style.borderColor= "#f90";
+												this.style.borderWidth="2px";
+												this.style.padding="1px 3px";
+			                                    var text = $(this).text();
+			                                    $(this).find("i").css("display","block");
+			                                    var value=this.getAttribute("value")+',';
+			                                    //alert(value)
+				                                  var data =  $("input[name='id']").val();
+				                                  var id = data+value;
+				                                 $("input[name='id']").val(id);
+											},function(){
+												this.style.borderColor= "#ddd";
+												this.style.borderWidth="1px";
+												this.style.padding = "2px 4px";
+			                                    var value=this.getAttribute("value");
+			                                    var strs= new Array(); //定义一数组 
+			                                     var data =  $("input[name='id']").val();
+			                                     var str = data.substring(0,data.length-1);
+			                                    var strs = str.split(",");
+			                                    var array = new Array();
+			                                    for (i=0;i<strs.length ;i++ )
+												{
+													if(value != strs[i]){
+														array += strs[i]+',';
+													}
+												} 
+												$("input[name='id']").val(array);
+												//alert($("input[name='id']").val())
+												$(this).find("i").css("display","none");
+												
+											}) 
+						            	}
+					            	
+						            }
+						        });
+						       }
+						}
+				</script>		
+			<div class="data" style="display:none;"></div>
+			<input type="hidden" name="id" value="">
+			<div class="car_data">
+				<table class="table">
+					<tbody style="display: block;">
+					<script type="text/javascript">
+						$(document).ready(function () {
+							$("#ch").change(function(){
+								var ch = $("#ch").val();							
+								var  data= $("#data").val();
+							    var data_time = $("#demo1").val();
+								 //获取当天的时间戳
+								 var pdata = datatime.replace(/-/g,'/');
+								 var pdata1=Date.parse(new Date(pdata));
+								 pdata1=parseInt(pdata1 / 1000);
+								 //获取选择的时间戳
+								 data_time = data_time.replace(/-/g,'/');										
+								 var timestamp = Date.parse(new Date(data_time));
+								 timestamp=parseInt(timestamp / 1000);
+								if(pdata1>timestamp){
+                                 	$("tbody").html('');
+									var htmls="<p style='text-align:center;margin-top:10%;font-size:16px;'>当前时间已过期，不能预约</p>";
+						            $("tbody").append(htmls);
+                                 }else{
+						    		$.ajax({
+							            type:"post",
+							            url:"{:addons_url('Forms://Wap/Paiban')}",
+							            data:{ch:ch,data:data},
+							            dataType:"json",
+							            success:function(result){
+							            	var status = result.status;
+							            	if(status == 0){
+							            		$("tbody").html('');
+							            		 var htmls="<p style='text-align:center;margin-top:10%;font-size:16px;'>当前没有可以选择的车辆！</p>";
+							            		 $("tbody").append(htmls);
+							            	}else{
+							            		$("tbody").html('');
+					                            $("input[name='id']").val('');
+							            		var data = eval(result);
+												 $.each(data, function (index, item) {
+												     //循环获取数据    											
+												     var id = data[index].id;
+												     var time = data[index].time;
+												     var ch = data[index].ch;
+												     var status = data[index].status;
+												     //取得选择的时间戳											    
+												     data_time = data_time.replace(/-/g,'/');										
+													 var timestamp = Date.parse(new Date(data_time));
+													 timestamp=parseInt(timestamp / 1000);
+													 //datatime当天的日期 
+													 var pdata = datatime.replace(/-/g,'/');// 将-替换成/，因为下面这个构造函数只支持/分隔的日期字符串
+			        								 var dtime = time.substring(0, 5);
+			        								 var ptime=pdata + ' ' +dtime;
+			        								 //当前的时间加上时间段
+													 var times2 = Date.parse(new Date(ptime));  			
+		                                             times2 = parseInt(times2  / 1000);			        								
+		                                             //获取当前时间的时间戳
+		                                             var times = new Date().getTime(); 			
+					                                 times = parseInt(times / 1000); 				                                
+					                                 if(times2<times&&timestamp<times){
+					                                 	var htmls="";
+					                                 }else{
+						                                if(status == 1){
+													     	var htmls="<div class='liss'><div style='background:#ccc;' class='day1'>"+time+"<i></i></div></div>";
+													    }else{
+													        var htmls="<div class='lis'><div value='"+id+"' class='day'>"+time+"<i></i></div></div>";
+													    }
+					                                 }											     
+													$("tbody").append(htmls);
+													
+												 }); 
+	//											 //选择当前预约的时间段
+//	                                              $(" .lis").find("div").click(function(){
+//													$(" .lis").find("div").attr("id","")
+//													$(" .lis").find("div").find("i").css("display","none");
+//													$(this).attr("id","active");
+//													$(this).find("i").css("display","block");													
+//													 var text = $(this).text();
+//	                                                var value=this.getAttribute("value");
+//					                                $("input[name='id']").val(value);
+//												})
+                                           $(".day").toggle(function(){
+												this.style.borderColor= "#f90";
+												this.style.borderWidth="2px";
+												this.style.padding="1px 3px";
+			                                    var text = $(this).text();
+			                                    $(this).find("i").css("display","block");
+			                                    var value=this.getAttribute("value")+',';
+			                                    //alert(value)
+				                                  var data =  $("input[name='id']").val();
+				                                  var id = data+value;
+				                                 $("input[name='id']").val(id);
+											},function(){
+												this.style.borderColor= "#ddd";
+												this.style.borderWidth="1px";
+												this.style.padding = "2px 4px";
+			                                    var value=this.getAttribute("value");
+			                                    var strs= new Array(); //定义一数组 
+			                                     var data =  $("input[name='id']").val();
+			                                     var str = data.substring(0,data.length-1);
+			                                    var strs = str.split(",");
+			                                    var array = new Array();
+			                                    for (i=0;i<strs.length ;i++ )
+												{
+													if(value != strs[i]){
+														array += strs[i]+',';
+													}
+												} 
+												$("input[name='id']").val(array);
+												//alert($("input[name='id']").val())
+												$(this).find("i").css("display","none");
+												
+											})
+							            	}
+						            	
+							            }
+							        });
+							    }    
+							});
+						});
+					</script>
+					<script>
+					    var myDate = new Date();  
+						var ch = $("#ch").val();
+						var year = myDate.getFullYear();
+					    var month = myDate.getMonth()+1;   
+					    var strDate = myDate.getDate(); 
+					    if (month >= 1 && month <= 9) {
+				            month = "0" + month;
+				        }
+				        if (strDate >= 0 && strDate <= 9) {
+				            strDate = "0" + strDate;
+				        }
+					    var datatime = year+'-'+month+'-'+strDate;
+					    
+//                      setInterval(function(){
+			                $.ajax({
+					            type:"post",
+					            url:"{:addons_url('Forms://Wap/Paiban')}",
+					            data:{ch:ch,data:datatime},
+					            dataType:"json",
+					            success:function(result){
+					            	var status = result.status;
+					            	if(status == 0){
+					            		$("tbody").html('');
+					            		 var htmls="<p style='text-align:center;margin-top:10%;font-size:16px;'>当前没有可以选择的车辆！</p>";
+					            		 $("tbody").append(htmls);
+					            	}else{
+					            		$("tbody").html('');
+			                            $('.data').html('');
+			                            $("input[name='id']").val('');
+					            		var data = eval(result);
+										 $.each(data, function (index, item) {
+										     //循环获取数据    
+										     var id = data[index].id;
+										     //alert(id)
+										     var time = data[index].time;
+										     var ch = data[index].ch;
+										     var status = data[index].status;
+										     //当前的时间
+										     var pdata = datatime.replace(/-/g,'/');// 将-替换成/，因为下面这个构造函数只支持/分隔的日期字符串	        								 
+			                                 var dtime = time.substring(0, 5);
+	        								 var ptime=pdata + ' ' +dtime;
+	        								 //当前的时间加上时间段
+											 var times2 = Date.parse(new Date(ptime));  			
+                                             times2 = parseInt(times2  / 1000);
+                                             //获取当前的时间戳
+                                             var times = new Date().getTime(); 			
+			                                 times = parseInt(times / 1000); 
+			                                 if(times2<times){
+			                                 	var htmls="";
+			                                 }else{
+			                                 	if(status == 1){
+											     	var htmls="<div class='liss'><div style='background:#ccc;' class='day1'>"+time+"<i></i></div></div>";
+											    }else{
+											        var htmls="<div class='lis'><div value='"+id+"' class='day'>"+time+"<i></i></div></div>";
+											    }
+			                                 }		     
+											$("tbody").append(htmls);
+											
+										 }); 
+//										    $(" .lis").find("div").click(function(){
+//												$(" .lis").find("div").attr("id","")
+//												$(" .lis").find("div").find("i").css("display","none");
+//												$(this).attr("id","active");
+//												$(this).find("i").css("display","block");				
+//												 var text = $(this).text();
+//		                                        var value=this.getAttribute("value");
+//				                                $("input[name='id']").val(value);
+//										   })
+                                            $(".day").toggle(function(){
+												this.style.borderColor= "#f90";
+												this.style.borderWidth="2px";
+												this.style.padding="1px 3px";
+			                                    var text = $(this).text();
+			                                    $(this).find("i").css("display","block");
+			                                    var value=this.getAttribute("value")+',';
+			                                    //alert(value)
+				                                  var data =  $("input[name='id']").val();
+				                                  var id = data+value;
+				                                 $("input[name='id']").val(id);
+											},function(){
+												this.style.borderColor= "#ddd";
+												this.style.borderWidth="1px";
+												this.style.padding = "2px 4px";
+			                                    var value=this.getAttribute("value");
+			                                    var strs= new Array(); //定义一数组 
+			                                     var data =  $("input[name='id']").val();
+			                                     var str = data.substring(0,data.length-1);
+			                                    var strs = str.split(",");
+			                                    var array = new Array();
+			                                    for (i=0;i<strs.length ;i++ )
+												{
+													if(value != strs[i]){
+														array += strs[i]+',';
+													}
+												} 
+												$("input[name='id']").val(array);
+												//alert($("input[name='id']").val())
+												$(this).find("i").css("display","none");
+												
+											})
+					            	}
+					            }
+					        });
+                       // },1000)
+			    		
+					</script>
+					</tbody>
+				</table>
+			</div>
+			<div style="margin-bottom: 20px;">
+				<input type="submit" class="btn" onClick="checkForm()" value="下一步" style="width: 53%;margin-left: 23%;font-size:18px;background: #feca14;color: #fff;"/>
+			</div>
+		</div>
+		<script type="text/javascript">
+			function checkForm(){
+				var id = $("input[name='id']").val();
+				//alert(id)
+				var str = id.substring(0,id.length-1);
+				//var array = new Array();
+				var ie=str.split(",");
+				
+				var len=ie.length;
+				//给id按从小到大排序
+				var sory = ie.sort();
+				//alert(sory)
+				var ids=sory+',';
+				//alert(ids)
+				//return false;
+				if(!id){
+					alert('请选择时间段！');
+					return false;
+				}
+				if(len>6){
+					alert("最多预约6个小时");
+					return false;
+				}
+				$.ajax({
+		            type:"post",
+		            url:"{:addons_url('Forms://Wap/xuanze')}",
+		            data:{id:ids},
+		            dataType:"json",
+		            success:function(result){
+		            	//document.write(result)
+		            	if(result.status == 0){
+		            		alert(result.msg);
+                   			window.location.href = result.url;
+		            	}else{
+	            		    //alert("练车必须要有教练跟随!")
+                   			window.location.href = result.url;
+		            	}
+		            }
+		        });
+
+	    		// $.ajax({
+		     //        type:"post",
+		     //        url:"{:addons_url('Forms://Wap/addDingdan')}",
+		     //        data:{id:id},
+		     //        dataType:"json",
+		     //        success:function(result){
+		     //        	//document.write(result)
+		     //        	if(result.status == 0){
+		     //        		alert(result.msg);
+		     //        	}else if(result.status == 2){
+		     //        		alert("请先填写个人资料！");
+		     //        		window.location.href = result.url;
+		     //        	}else{
+		     //        		    //alert("练车必须要有教练跟随!")
+       //                 			window.location.href = result.url;
+		     //        	}
+		     //        }
+		     //    });
+		       ;
+			}
+		</script>
+	</body>
+	<script>
+		var calendar = new LCalendar();
+	    calendar.init({
+	        'trigger': '#demo1', //标签id
+	        'type': 'date', //date 调出日期选择 datetime 调出日期时间选择 time 调出时间选择 ym 调出年月选择,
+	        'minDate': '1900-1-1', //最小日期
+	        'maxDate': (new Date().getFullYear()+1) + '-' + (new Date().getMonth() + 2) + '-' + (new Date().getDate() +5)//最大日期
+	    });
+	    function curDateTime(){  
+	        var d = new Date();   
+	        var year = d.getFullYear();   
+	        var month = d.getMonth()+1;   
+	        var date = d.getDate();   
+	        var curDateTime= year;  
+	        if(month>9)  
+	            curDateTime = curDateTime +"-"+month;  
+	        else  
+	            curDateTime = curDateTime +"-0"+month;  
+	        if(date>9)  
+	            curDateTime = curDateTime +"-"+date;  
+	        else  
+	            curDateTime = curDateTime +"-0"+date;  
+	        return curDateTime;  
+	    }
+		$("#demo1").val(curDateTime());
+		$("#data").val(curDateTime());
+	</script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+		<script>
+	//静态变量
+		 wx.config({
+		    debug: false,
+		    appId: "{$jsapiParams.appId}",
+		    timestamp: '{$jsapiParams.timestamp}',
+		    nonceStr: '{$jsapiParams.nonceStr}',
+		    signature: '{$jsapiParams.signature}',
+		    // jsApiList : [ 'checkJsApi', 'onMenuShareTimeline','onMenuShareAppMessage', 'getLocation', 'openLocation','hideOptionMenu','chooseImage' ,'uploadImage','downloadImage']
+		    jsApiList : [ 'checkJsApi', 'onMenuShareTimeline','onMenuShareAppMessage', 'getLocation', 'openLocation','hideOptionMenu','chooseImage' ,'uploadImage','downloadImage','scanQRCode']
+		  });
+		   wx.ready(function () {
+		 	  // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
+		       wx.checkJsApi({
+		           jsApiList : [ 'getNetworkType', 'previewImage' ,'uploadImage','downloadImage','scanQRCode'],
+		           success : function(res) {
+		           }
+		       });
+		
+		   wx.error(function(res){
+		   	alert("请在微信客户端打开");
+		   });
+		   
+		   });
+		  
+	</script>
+</html>
